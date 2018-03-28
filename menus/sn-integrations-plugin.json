@@ -4,10 +4,6 @@
       "label": "SimpleNexus Integrations Team",
       "submenu": [
         {
-          "label": "Toggle test",
-          "command": "sn-integrations-plugin:toggle"
-        },
-        {
           "label": "Beautify SimpleNexus JSON",
           "command": "sn-integrations-plugin:beautify"
         },
