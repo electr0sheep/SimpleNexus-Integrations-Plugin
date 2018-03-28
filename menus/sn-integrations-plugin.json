@@ -1,0 +1,56 @@
+{
+  "menu": [
+    {
+      "label": "SimpleNexus Integrations Team",
+      "submenu": [
+        {
+          "label": "Toggle test",
+          "command": "sn-integrations-plugin:toggle"
+        },
+        {
+          "label": "Beautify SimpleNexus JSON",
+          "command": "sn-integrations-plugin:beautify"
+        },
+        {
+          "label": "Show Available Placeholders",
+          "command": "sn-integrations-plugin:showAvailablePlaceholders"
+        },
+        {
+          "label": "Generate boilerplate",
+          "submenu": [
+            {
+              "label": "1003",
+              "command": "sn-integrations-plugin:generate1003Json"
+            },
+            {
+              "label": "PreQual",
+              "submenu": [
+                {
+                  "label": "HTML",
+                  "command": "sn-integrations-plugin:generatePrequalHtml"
+                },
+                {
+                  "label": "JSON",
+                  "command": "sn-integrations-plugin:generatePrequalJson"
+                }
+              ]
+            },
+            {
+              "label": "PreApproval",
+              "submenu": [
+                {
+                  "label": "HTML",
+                  "command": "sn-integrations-plugin:generatePreapprovalHtml"
+                },
+                {
+                  "label": "JSON",
+                  "command": "sn-integrations-plugin:generatePreapprovalJson"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

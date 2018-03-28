@@ -1,0 +1,31 @@
+{
+  "name": "sn-integrations-plugin",
+  "main": "./lib/sn-integrations-plugin",
+  "version": "1.0.0",
+  "description": "Plugin for SimpleNexus Integrations Team.",
+  "keywords": [
+    "SimpleNexus",
+    "Integrations"
+  ],
+  "activationCommands": {
+    "atom-workspace": [
+      "sn-integrations-plugin:beautify",
+      "sn-integrations-plugin:generate1003Json",
+      "sn-integrations-plugin:generatePrequalHtml",
+      "sn-integrations-plugin:generatePrequalJson",
+      "sn-integrations-plugin:generatePreapprovalHtml",
+      "sn-integrations-plugin:generatePreapprovalJson",
+      "sn-integrations-plugin:showAvailablePlaceholders",
+      "sn-integrations-plugin:toggle"
+    ]
+  },
+  "repository": "https://github.com/atom/sn-integrations-plugin",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "deep-equal": "^1.0.1",
+    "promise": "^8.0.1"
+  }
+}

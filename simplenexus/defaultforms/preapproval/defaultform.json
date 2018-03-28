@@ -1,0 +1,288 @@
+{
+  "name": "Pre-Approval Form",
+  "structure": [
+    {
+      "fields": [
+        "borrower_first_name",
+        "borrower_last_name",
+        "coborrower_first_name",
+        "coborrower_last_name",
+        "purchase_price",
+        "loan_amount",
+        "down_payment",
+        "loan_term"
+      ],
+      "instructions": "Please confirm the loan amount being approved"
+    }
+  ],
+  "values": {
+  },
+  "fields": [
+    {
+      "min": 0,
+      "title": "Address",
+      "key": "address",
+      "max": 0,
+      "description": "Borrower's Address",
+      "type": "text",
+      "required": true
+    },
+    {
+      "placeholder": "first name",
+      "min": 1,
+      "title": "First Name",
+      "key": "borrower_first_name",
+      "description": "Borrower First Name",
+      "required": true,
+      "type": "text",
+      "max": 100
+    },
+    {
+      "placeholder": "last name",
+      "min": 1,
+      "title": "Last Name",
+      "key": "borrower_last_name",
+      "description": "Borrower Last Name",
+      "required": true,
+      "type": "text",
+      "max": 100
+    },
+    {
+      "min": 0,
+      "title": "City",
+      "key": "city",
+      "max": 0,
+      "description": "Borrower's City",
+      "type": "text",
+      "required": true
+    },
+    {
+      "placeholder": "first name",
+      "min": 1,
+      "title": "Co-Borrower First Name",
+      "key": "coborrower_first_name",
+      "description": "Co-Borrower First Name",
+      "required": true,
+      "type": "text",
+      "max": 100
+    },
+    {
+      "placeholder": "last name",
+      "min": 1,
+      "title": "Co-Borrower Last Name",
+      "key": "coborrower_last_name",
+      "description": "Co-Borrower Last Name",
+      "required": true,
+      "type": "text",
+      "max": 100
+    },
+    {
+      "min": 0,
+      "title": "Down Payment",
+      "key": "down_payment",
+      "max": 0,
+      "description": "Down Payment",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Down Payment %",
+      "key": "down_payment_percent",
+      "max": 0,
+      "description": "Down Payment %",
+      "type": "text",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Email",
+      "key": "email",
+      "max": 0,
+      "description": "Borrower Email",
+      "type": "email",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Expiration Date",
+      "key": "expiration_date",
+      "max": 2027,
+      "description": "Expiration Date of Pre-Qual",
+      "type": "date",
+      "required": true
+    },
+    {
+      "placeholder": "first name",
+      "min": 1,
+      "title": "First Name",
+      "key": "first_name",
+      "description": "Borrower First Name",
+      "required": true,
+      "type": "text",
+      "max": 100
+    },
+    {
+      "min": 0,
+      "title": "Interest Rate %",
+      "key": "interest_rate",
+      "max": 0,
+      "description": "Interest Rate %",
+      "type": "text",
+      "required": true
+    },
+    {
+      "placeholder": "last name",
+      "min": 1,
+      "title": "Last Name",
+      "key": "last_name",
+      "description": "Borrower Last Name",
+      "required": true,
+      "type": "text",
+      "max": 100
+    },
+    {
+      "min": 0,
+      "title": "Loan Amount",
+      "key": "loan_amount",
+      "max": 0,
+      "description": "Amount of Loan",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Program",
+      "key": "loan_program",
+      "max": 0,
+      "description": "Loan Program",
+      "type": "single_choice",
+      "choices": [
+        "FHA",
+        "Conventional",
+        "USDA",
+        "VA"
+      ],
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Term of Loan",
+      "key": "loan_term",
+      "max": 0,
+      "description": "Term of Loan",
+      "type": "single_choice",
+      "choices": [
+        "30 years",
+        "20 years",
+        "15 years",
+        "10 years",
+        "5 years"
+      ],
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Type",
+      "key": "loan_type",
+      "max": 0,
+      "description": "Loan Type",
+      "type": "single_choice",
+      "choices": [
+        "FHA",
+        "Conventional",
+        "USDA",
+        "VA"
+      ],
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Maximum Payment Amount",
+      "key": "max_piti",
+      "max": 0,
+      "description": "Maximum Payment Amount",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "placeholder": "middle name",
+      "min": 1,
+      "title": "Middle Name",
+      "key": "middle_name",
+      "description": "Borrower Middle Name",
+      "required": false,
+      "type": "text",
+      "max": 100
+    },
+    {
+      "min": 0,
+      "title": "Phone",
+      "key": "phone",
+      "max": 0,
+      "description": "Phone Number",
+      "type": "phone",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Estimated Property Taxes",
+      "key": "property_taxes",
+      "max": 0,
+      "description": "Estimated Property Taxes",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Property Type",
+      "key": "property_type",
+      "max": 0,
+      "description": "Property Type",
+      "type": "single_choice",
+      "choices": [
+        "Primary Residence",
+        "Secondary",
+        "Investment"
+      ],
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Purchase Price",
+      "key": "purchase_price",
+      "max": 0,
+      "description": "Purchase Price",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "State",
+      "key": "state",
+      "max": 0,
+      "description": "Borrower's State",
+      "type": "state",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Zipcode",
+      "key": "zip",
+      "max": 0,
+      "description": "Borrower's Zipcode",
+      "type": "zip",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Maximum LTV",
+      "key": "ltv_percentage",
+      "max": 0,
+      "description": "Maximum LTV",
+      "type": "percentage",
+      "required": true
+    }
+  ],
+  "version": "1.0"
+}
