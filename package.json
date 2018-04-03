@@ -7,18 +7,6 @@
     "SimpleNexus",
     "Integrations"
   ],
-  "activationCommands": {
-    "atom-workspace": [
-      "sn-integrations-plugin:beautify",
-      "sn-integrations-plugin:generate1003Json",
-      "sn-integrations-plugin:generatePrequalHtml",
-      "sn-integrations-plugin:generatePrequalJson",
-      "sn-integrations-plugin:generatePreapprovalHtml",
-      "sn-integrations-plugin:generatePreapprovalJson",
-      "sn-integrations-plugin:showAvailablePlaceholders",
-      "sn-integrations-plugin:toggle"
-    ]
-  },
   "repository": "https://github.com/atom/sn-integrations-plugin",
   "license": "MIT",
   "engines": {
@@ -27,5 +15,12 @@
   "dependencies": {
     "deep-equal": "^1.0.1",
     "promise": "^8.0.1"
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "4.0.0": "provide"
+      }
+    }
   }
 }
