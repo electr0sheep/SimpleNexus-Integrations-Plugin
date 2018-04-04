@@ -175,7 +175,7 @@ class UserLoanApp < ActiveRecord::Base
     end
     self.save!
 
-    self.update_consent_documents
+    self.update_consent_documents(self.phases_complete - 1)
 
     clear_cache
 
@@ -540,6 +540,8 @@ class UserLoanApp < ActiveRecord::Base
           line << "O"
         elsif values['property_own'] == "Rent"
           line << "R"
+        elsif values['property_own'] == "Living Rent Free"
+          line << "X"
         else
           line << " "
         end
@@ -574,6 +576,8 @@ class UserLoanApp < ActiveRecord::Base
           line << "O"
         elsif values['prev_property_own'] == "Rent"
           line << "R"
+        elsif values['prev_property_own'] == "Living Rent Free"
+          line << "X"
         else
           line << " "
         end
@@ -609,6 +613,8 @@ class UserLoanApp < ActiveRecord::Base
           line << "O"
         elsif values['coborrower_property_own'] == "Rent"
           line << "R"
+        elsif values['coborrower_property_own'] == "Living Rent Free"
+          line << "X"
         else
           line << " "
         end
@@ -643,6 +649,8 @@ class UserLoanApp < ActiveRecord::Base
           line << "O"
         elsif values['coborrower_prev_property_own'] == "Rent"
           line << "R"
+        elsif values['coborrower_prev_property_own'] == "Living Rent Free"
+          line << "X"
         else
           line << " "
         end
@@ -1594,6 +1602,12 @@ class UserLoanApp < ActiveRecord::Base
     if values['borrower_previous_employer_years']
       values['custom_BE0213'] = values['borrower_previous_employer_years']
     end
+    if values['borrower_previous_line_of_work_years']
+      values['custom_BE0215'] = to_int_or_empty(values['borrower_previous_line_of_work_years'])
+    end
+    if values['borrower_previous_self_employed']
+      values['custom_BE0216'] = boolean_to_y_n(values['borrower_previous_self_employed'])
+    end
     if values['borrower_previous_employer_months']
       values['custom_BE0233'] = values['borrower_previous_employer_months']
     end
@@ -1633,6 +1647,12 @@ class UserLoanApp < ActiveRecord::Base
     end
     if values['coborrower_previous_employer_years']
       values['custom_CE0213'] = values['coborrower_previous_employer_years']
+    end
+     if values['coborrower_previous_line_of_work_years']
+      values['custom_CE0216'] = to_int_or_empty(values['coborrower_previous_line_of_work_years'])
+    end
+    if values['coborrower_previous_self_employed']
+      values['custom_CE0215'] = boolean_to_y_n(values['coborrower_previous_self_employed'])
     end
     if values['coborrower_previous_employer_months']
       values['custom_CE0233'] = values['coborrower_previous_employer_months']
@@ -2040,10 +2060,10 @@ class UserLoanApp < ActiveRecord::Base
             values['custom_4131'] = 'Internet'
           end
 
-          if company_id == 111119 && has_hmda_multichoice?
+          if has_hmda_multichoice?
             if values['coborrower_ethnicity'].present?
               values['coborrower_ethnicity'].each do |ethnicity|
-              ethnicity = ethnicity.lstrip
+              ethnicity = ethnicity.lstrip.gsub("-", "")
                 if ethnicity == 'Hispanic or Latino'
                   values['custom_4213'] = 'Y'
                 elsif ethnicity == 'Mexican'
@@ -2064,32 +2084,6 @@ class UserLoanApp < ActiveRecord::Base
                   values['custom_4246'] = 'Y'
                 else
                   values['custom_4188'] = 'Y'
-                end
-              end
-            end
-          elsif has_hmda_multichoice?
-            values['custom_1531'] = values['coborrower_ethnicity_main']
-            if values['coborrower_ethnicity_main'] == 'Hispanic or Latino'
-              values['custom_1531'] = 'Hispanic or Latino'
-            elsif values['coborrower_ethnicity_main'] == 'Not Hispanic or Latino'
-              values['custom_1531'] = 'Not Hispanic or Latino'
-            elsif values['coborrower_ethnicity_main'] == 'I do not wish to provide this information'
-              values['custom_1531'] = 'Information not provided'
-            elsif values['coborrower_ethnicity_main'] == 'Not Applicable'
-              values['custom_1531'] = 'Not applicable'
-            end
-
-            if values['coborrower_ethnicity'].present?
-              values['coborrower_ethnicity'].each do |ethnicity|
-              ethnicity = ethnicity.lstrip
-                if ethnicity == 'Mexican'
-                  values['custom_4159'] = 'Y'
-                elsif ethnicity == 'Puerto Rican'
-                  values['custom_4160'] = 'Y'
-                elsif ethnicity == 'Cuban'
-                  values['custom_4161'] = 'Y'
-                else ethnicity == 'Other Hispanic or Latino'
-                  values['custom_4162'] = 'Y'
                 end
               end
             end
@@ -2127,7 +2121,7 @@ class UserLoanApp < ActiveRecord::Base
           if has_hmda_multichoice?
             if values['coborrower_race'].present?
               values['coborrower_race'].each do |race|
-                race = race.lstrip
+                race = race.lstrip.gsub("-", "")
                 if race == 'American Indian or Alaska Native'
                   values['custom_1532'] = 'Y'
                 elsif race == "Asian"
@@ -2458,10 +2452,10 @@ class UserLoanApp < ActiveRecord::Base
           values['custom_4143'] = 'Internet'
         end
 
-        if company_id == 111119 && has_hmda_multichoice?
+        if has_hmda_multichoice?
           if values['ethnicity'].present?
             values['ethnicity'].each do |ethnicity|
-            ethnicity = ethnicity.lstrip
+            ethnicity = ethnicity.lstrip.gsub("-", "")
               if ethnicity == 'Hispanic or Latino'
                  values['custom_4210'] = 'Y'
               elsif ethnicity == 'Mexican'
@@ -2480,32 +2474,6 @@ class UserLoanApp < ActiveRecord::Base
                 values['custom_4212'] = 'Y'
               else
                 values['custom_4243'] = 'Y'
-              end
-            end
-          end
-        elsif has_hmda_multichoice?
-          values['custom_1523'] = values['ethnicity_main']
-          if values['ethnicity_main'] = 'Hispanic or Latino'
-            values['custom_1523'] = 'Hispanic or Latino'
-           elsif values['ethnicity_main'] == 'Not Hispanic or Latino'
-            values['custom_1523'] = 'Not Hispanic or Latino'
-          elsif values['ethnicity_main'] == 'I do not wish to provide this information'
-            values['custom_1523'] = 'Information not provided'
-          else values['ethnicity_main'] == 'Not Applicable'
-            values['custom_1523'] = 'Not applicable'
-          end
-
-          if values['ethnicity'].present?
-            values['ethnicity'].each do |ethnicity|
-              ethnicity = ethnicity.lstrip
-              if ethnicity == "Mexican"
-                values['custom_4144'] = "Y"
-              elsif ethnicity == "Puerto Rican"
-                values['custom_4145'] = "Y"
-              elsif ethnicity == "Cuban"
-                values['custom_4146'] = "Y"
-              else ethnicity == "Other Hispanic or Latino"
-                values['custom_4147'] = "Y"
               end
             end
           end
@@ -2543,7 +2511,7 @@ class UserLoanApp < ActiveRecord::Base
         if has_hmda_multichoice?
           if values['race'].present?
             values['race'].each do |race|
-              race = race.lstrip
+              race = race.lstrip.gsub("-", "")
               if race == "American Indian or Alaska Native"
                 values['custom_1524'] = "Y"
               elsif race == "Asian"
@@ -2663,21 +2631,19 @@ class UserLoanApp < ActiveRecord::Base
         end
 
         #borrower
-        if has_hmda_multichoice?
-          if values['gender'].present?
-            values['gender'].each do |gender|
-              case gender
-              when 'Male'
-                values['custom_4194'] = 'Y'
-              when 'Female'
-                values['custom_4193'] = 'Y'
-              when 'I do not wish to provide this information'
-                values['custom_4195'] = 'Y'
-              when 'Information Not Provide'
-                values['custom_4245'] = 'Y'
-              when 'Not Applicable'
-                values['custom_4196'] = 'Y'
-              end
+        if has_hmda_multichoice? && values['gender'].present? && values['gender'].kind_of?(Array) 
+          values['gender'].each do |gender|
+            case gender
+            when 'Male'
+              values['custom_4194'] = 'Y'
+            when 'Female'
+              values['custom_4193'] = 'Y'
+            when 'I do not wish to provide this information'
+              values['custom_4195'] = 'Y'
+            when 'Information Not Provided'
+              values['custom_4245'] = 'Y'
+            when 'Not Applicable'
+              values['custom_4196'] = 'Y'
             end
           end
         elsif values['gender'].present?
@@ -2704,23 +2670,21 @@ class UserLoanApp < ActiveRecord::Base
 
 
         #coborrower
-        if has_hmda_multichoice?
-          if values['coborrower_gender'].present?
-            values['coborrower_gender'].each do |gender|
-              case gender
-              when 'Male'
-                values['custom_4198'] = 'Y'
-              when 'Female'
-                values['custom_4197'] = 'Y'
-              when 'I do not wish to provide this information'
-                values['custom_4199'] = 'Y'
-              when 'Information Not Provide'
-                values['custom_4248'] = 'Y'
-              when 'Not Applicable'
-                values['custom_4200'] = 'Y'
-              when 'No Coapplicant'
-                values['custom_4189'] = 'Y'
-              end
+        if has_hmda_multichoice? && values['coborrower_gender'].present? && values['coborrower_gender'].kind_of?(Array)
+          values['coborrower_gender'].each do |gender|
+            case gender
+            when 'Male'
+              values['custom_4198'] = 'Y'
+            when 'Female'
+              values['custom_4197'] = 'Y'
+            when 'I do not wish to provide this information'
+              values['custom_4199'] = 'Y'
+            when 'Information Not Provided'
+              values['custom_4248'] = 'Y'
+            when 'Not Applicable'
+              values['custom_4200'] = 'Y'
+            when 'No Coapplicant'
+              values['custom_4189'] = 'Y'
             end
           end
         elsif values['coborrower_gender'].present?
@@ -2971,6 +2935,11 @@ class UserLoanApp < ActiveRecord::Base
 
     if values.key?('is_firsttimer')
       values['custom_934'] = boolean_to_y_n(values['is_firsttimer'])
+    end
+
+    #USA Mortgage
+    if values['referral_source']
+      values['custom_cx.simplenexusref'] = values['referral_source']
     end
 
     #Eagle Home authorization
@@ -4172,17 +4141,29 @@ class UserLoanApp < ActiveRecord::Base
     end
   end
 
-  def update_consent_documents
+  def update_consent_documents(phase)
+    fields_in_phase = fields_in_phase(phase)
+    econsent_fields = econsent_fields_lookup
+    credit_auth_fields = credit_auth_field_lookup
 
-    if self.app_user&.servicer_profile&.company&.generate_econsent_form || self.servicer_profile&.company&.generate_econsent_form
+    if (self.app_user&.servicer_profile&.company&.generate_econsent_form || self.servicer_profile&.company&.generate_econsent_form) && econsent_fields[:borrower].present? && fields_in_phase.include?(econsent_fields[:borrower]["key"])
       GenerateEconsentDocJob.perform_later( :user_loan_app_id => self.id )
     end #end only generating for companies with the option enabled
 
 
-    if self.app_user&.servicer_profile&.company&.generate_credit_auth_form || self.servicer_profile&.company&.generate_credit_auth_form
+    if (self.app_user&.servicer_profile&.company&.generate_credit_auth_form || self.servicer_profile&.company&.generate_credit_auth_form) && credit_auth_fields[:borrower].present? && fields_in_phase.include?(credit_auth_fields[:borrower]["key"])
       GenerateCreditAuthDocJob.perform_later( :user_loan_app_id => self.id )
     end #end only generating if company has setting enabled
 
+  end
+
+  def fields_in_phase(phase)
+    json = JSON.parse(UserLoanApp.get_right_structure(self.loan_app_json, phase))
+    fields = []
+    json["structure"].each do |section|
+      fields << section["fields"]
+    end
+    fields.flatten
   end
 
   def delete_consent_documents
