@@ -195,13 +195,6 @@
     },
     {
       "fields": [
-        "provide_demographics"
-      ],
-      "instructions": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below."
-    },
-    {
-      "condition": "provide_demographics",
-      "fields": [
         "ethnicity",
         "race",
         "gender"
@@ -326,14 +319,6 @@
       "instructions": "What was the purpose of your other property?"
     },
     {
-      "condition": "has_coborrower",
-      "fields": [
-        "coborrower_provide_demographics"
-      ],
-      "instructions": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below."
-    },
-    {
-      "condition": "coborrower_provide_demographics",
       "fields": [
         "coborrower_ethnicity",
         "coborrower_race",
@@ -966,15 +951,6 @@
     },
     {
       "min": 0,
-      "title": "Provide demographic information?",
-      "key": "provide_demographics",
-      "max": 0,
-      "description": "Would you like to enter demographic information?",
-      "type": "boolean",
-      "required": false
-    },
-    {
-      "min": 0,
       "title": "Ethnicity",
       "key": "ethnicity",
       "max": 0,
@@ -1427,15 +1403,6 @@
         "Joint With Spouse",
         "Joint With Other Than Spouse"
       ]
-    },
-    {
-      "min": 0,
-      "title": "Provide demographic information?",
-      "key": "coborrower_provide_demographics",
-      "max": 0,
-      "description": "Would Co-Borrower like to provide demographic information?",
-      "type": "boolean",
-      "required": false
     },
     {
       "min": 0,
