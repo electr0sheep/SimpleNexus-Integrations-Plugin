@@ -18,6 +18,7 @@
     },
     {
       "fields": [
+        "address",
         "city",
         "state",
         "zip",
