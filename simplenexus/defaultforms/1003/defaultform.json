@@ -549,7 +549,7 @@
     {
       "placeholder": "",
       "min": 0,
-      "title": "I authorize this credit check.",
+      "title": "I authorize this Credit Check.",
       "text": "During your mortgage loan application process, this institution performs a credit check that requires us to obtain and confirm information regarding your personal and financial background. This credit check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "credit_authorization",
       "description": "",
