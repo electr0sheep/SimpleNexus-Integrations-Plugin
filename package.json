@@ -13,9 +13,15 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
+    "atom-package-deps": "latest",
     "deep-equal": "^1.0.1",
     "promise": "^8.0.1"
   },
+  "package-deps": [
+    "atom-ide-ui",
+    "ide-html",
+    "ide-json"
+  ],
   "providedServices": {
     "autocomplete.provider": {
       "versions": {
