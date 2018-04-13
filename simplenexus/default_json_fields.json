@@ -180,12 +180,132 @@
         "referral_name",
         "coborrower_email",
         "coborrower_property_own",
-        "coborrower_is_self_employed"
+        "coborrower_is_self_employed",
+        "mailing_same_as_current",
+        "mailing_city",
+        "mailing_state",
+        "mailing_zip",
+        "coborrower_mailing_same_as_current",
+        "coborrower_mailing_state",
+        "coborrower_mailing_zip",
+        "coborrower_mailing_city",
+        "prev_property_own",
+        "mailing_address",
+        "race_asian",
+        "pacific_islander",
+        "ethnicity_latino",
+        "provide_demographics",
+        "coborrower_prev_property_own",
+        "coborrower_mailing_address",
+        "coborrower_provide_demographics",
+        "coborrower_ethnicity_latino",
+        "coborrower_race_asian",
+        "coborrower_pacific_islander"
       ]
     }
   ],
   "values": [],
   "fields": [
+    {
+      "min": 0,
+      "title": "Pacific Islander Origin",
+      "choices": [
+        "Native Hawaiian",
+        "Guamanian or Chamorro",
+        "Samoan",
+        "Other Pacific Islander"
+      ],
+      "key": "coborrower_pacific_islander",
+      "max": 0,
+      "description": "Pacific Islander Origin",
+      "type": "single_choice",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Asian Origin",
+      "choices": [
+        "Asian Indian",
+        "Chinese",
+        "Filipino",
+        "Japanese",
+        "Korean",
+        "Vietnamese",
+        "Other Asian"
+      ],
+      "key": "coborrower_race_asian",
+      "max": 0,
+      "description": "Asian Origin",
+      "type": "single_choice",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Ethnicity Hispanic or Latino",
+      "key": "coborrower_ethnicity_latino",
+      "max": 0,
+      "description": "Ethnicity Hispanic or Latino",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Mexican",
+        "Puerto Rican",
+        "Cuban",
+        "Other Hispanic or Latino"
+      ],
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Provide demographic information?",
+      "key": "coborrower_provide_demographics",
+      "max": 0,
+      "description": "Would Co-Borrower like to provide demographic information?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Street Address",
+      "key": "coborrower_mailing_address",
+      "max": 0,
+      "description": "Street Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Did you own your previous property?*",
+      "key": "coborrower_prev_property_own",
+      "max": 0,
+      "description": "Did you own your previous property?*",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Provide demographic information?",
+      "key": "provide_demographics",
+      "max": 0,
+      "description": "Would you like to enter demographic information?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Ethnicity Latino",
+      "key": "ethnicity_latino",
+      "max": 0,
+      "description": "Ethnicity Latino",
+      "type": "single_choice",
+      "choices": [
+        "Mexican",
+        "Puerto Rican",
+        "Cuban",
+        "Other Hispanic or Latino"
+      ],
+      "required": false
+    },
     {
       "min": 0,
       "title": "Purpose",
@@ -415,7 +535,7 @@
       "max": 0,
       "description": "Street Address",
       "type": "text",
-      "required": true
+      "required": false
     },
     {
       "min": 1,
@@ -424,7 +544,7 @@
       "max": 22,
       "description": "Borrower's City",
       "type": "text",
-      "required": true
+      "required": false
     },
     {
       "min": 0,
@@ -433,7 +553,7 @@
       "max": 0,
       "description": "Borrower's State",
       "type": "state",
-      "required": true
+      "required": false
     },
     {
       "min": 0,
@@ -442,7 +562,7 @@
       "max": 0,
       "description": "Borrower's Zipcode",
       "type": "zip",
-      "required": true
+      "required": false
     },
     {
       "min": 0,
@@ -469,7 +589,7 @@
       "max": 0,
       "description": "Property Zip",
       "type": "zip",
-      "required": true
+      "required": false
     },
     {
       "min": 0,
@@ -1538,7 +1658,7 @@
       "max": 0,
       "description": "Months at Previous Employer",
       "type": "integer",
-      "required": true
+      "required": false
     },
     {
       "min": 0,
@@ -1949,6 +2069,130 @@
       "description": "Is Co-Borrower self-employed?",
       "type": "boolean",
       "required": false
+    },
+    {
+      "min": 0,
+      "title": "Mailing address the same as your current address?",
+      "key": "mailing_same_as_current",
+      "max": 0,
+      "description": "Mailing address the same as your current address?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "City",
+      "key": "mailing_city",
+      "max": 0,
+      "description": "Borrower's Mailing City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "State",
+      "key": "mailing_state",
+      "max": 0,
+      "description": "Borrower's Mailing State",
+      "type": "state",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Zipcode",
+      "key": "mailing_zip",
+      "max": 0,
+      "description": "Borrower's Mailing Zipcode",
+      "type": "zip",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Co-Borrower's mailing address is the same as their current address.",
+      "key": "coborrower_mailing_same_as_current",
+      "max": 0,
+      "description": "Co-Borrower's mailing address is the same as their current address.",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "State",
+      "key": "coborrower_mailing_state",
+      "max": 0,
+      "description": "State",
+      "allowAllStates": true,
+      "type": "state",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Zipcode",
+      "key": "coborrower_mailing_zip",
+      "max": 0,
+      "description": "Zipcode",
+      "type": "zip",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Mailing City",
+      "key": "coborrower_mailing_city",
+      "max": 100,
+      "description": "City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Did you own your previous property?*",
+      "key": "prev_property_own",
+      "max": 0,
+      "description": "Did you own your previous property?*",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Street Address",
+      "key": "mailing_address",
+      "max": 0,
+      "description": "Street Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Asian Origin",
+      "choices": [
+        "Asian Indian",
+        "Chinese",
+        "Filipino",
+        "Japanese",
+        "Korean",
+        "Vietnamese",
+        "Other Asian"
+      ],
+      "key": "race_asian",
+      "max": 0,
+      "description": "Asian Origin",
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Pacific Islander Origin",
+      "choices": [
+        "Native Hawaiian",
+        "Guamanian or Chamorro",
+        "Samoan",
+        "Other Pacific Islander"
+      ],
+      "key": "pacific_islander",
+      "max": 0,
+      "description": "Pacific Islander Origin",
+      "type": "single_choice",
+      "required": true
     }
   ],
   "version": ""
