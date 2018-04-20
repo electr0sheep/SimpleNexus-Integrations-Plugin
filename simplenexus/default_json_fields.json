@@ -3,6 +3,7 @@
   "structure": [
     {
       "fields": [
+        "additional_conditions",
         "additional_info",
         "address",
         "address_required",
@@ -360,6 +361,12 @@
   ],
   "values": [],
   "fields": [
+    {
+      "key": "additional_conditions",
+      "type": "text",
+      "title": "Additional terms and conditions",
+      "description": "Additional terms and conditions"
+    },
     {
       "type": "text",
       "key": "additional_info",

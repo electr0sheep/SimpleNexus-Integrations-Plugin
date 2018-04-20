@@ -191,7 +191,7 @@
       "fields": [
         "alimony_amount"
       ],
-      "instructions": "What is the amount of your alimony or child support?"
+      "instructions": "What is the amount of your alimony and/or child support?"
     },
     {
       "fields": [
@@ -319,6 +319,13 @@
       "instructions": "What was the purpose of your other property?"
     },
     {
+      "condition": "coborrower_has_alimony",
+      "fields": [
+        "coborrower_alimony_amount"
+      ],
+      "instructions": "What is the amount of your alimony and/or child support?"
+    },
+    {
       "fields": [
         "coborrower_ethnicity",
         "coborrower_race",
@@ -372,7 +379,10 @@
       "instructions": "Borrower econsent"
     }
   ],
-  "values": {},
+  "values": {
+    "provide_demographics": "1",
+    "coborrower_provide_demographics": "1"
+  },
   "fields": [
     {
       "min": 0,
@@ -942,10 +952,10 @@
     },
     {
       "min": 0,
-      "title": "Alimony Amount",
+      "title": "Alimony and/or Child Support Amount",
       "key": "alimony_amount",
       "max": 0,
-      "description": "Alimony Amount",
+      "description": "Alimony and/or Child Support Amount",
       "type": "currency",
       "required": false
     },
@@ -1404,6 +1414,15 @@
         "Joint With Spouse",
         "Joint With Other Than Spouse"
       ]
+    },
+    {
+      "min": 0,
+      "title": "Alimony and/or Child Support Amount",
+      "key": "coborrower_alimony_amount",
+      "max": 0,
+      "description": "Alimony and/or Child Support Amount",
+      "type": "currency",
+      "required": false
     },
     {
       "min": 0,

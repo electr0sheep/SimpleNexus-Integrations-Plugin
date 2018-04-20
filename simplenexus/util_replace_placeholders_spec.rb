@@ -998,7 +998,7 @@ RSpec.describe "Util replace placeholders" do
       it "[LO_LINK_TO_APP_USER]" do
         text = "[LO_LINK_TO_APP_USER]"
         replaced = replace_for_app_user( text )
-        expect( replaced ).to eq( '' )
+        expect( replaced ).to eq( "<a href='https://simplenexus.com/servicer_leads/index/#{@servicer_profile.id}?search_code=#{@app_user.id}'>https://simplenexus.com/servicer_leads/index/#{@servicer_profile.id}?search_code=#{@app_user.id}</a>" )
       end
       it "[LO_NAME]" do
         text = "[LO_NAME]"

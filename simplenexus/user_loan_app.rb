@@ -1,6 +1,12 @@
 # coding: utf-8
 class UserLoanApp < ActiveRecord::Base
   include LoanAppCreditAuth
+
+  class FilelessIO < StringIO
+    attr_accessor :original_filename
+    attr_accessor :content_type
+  end
+
   # == Constants ============================================================
 
   # == Attributes ===========================================================
@@ -440,7 +446,7 @@ class UserLoanApp < ActiveRecord::Base
     elsif values["purchase_price"].present?
       if values['down_payment_pct'].present?
         down_payment_pct = fix_num(values['down_payment_pct']).to_f
-        down_payment = down_payment_pct * fix_num( values[ "purchase_price" ] ).to_f
+        down_payment = down_payment_pct / 100 * fix_num( values[ "purchase_price" ] ).to_f
       elsif values['loan_amount']
         down_payment = fix_num( values[ "purchase_price" ] ).to_f - fix_num( values['loan_amount'] ).to_f
       else
@@ -1463,7 +1469,7 @@ class UserLoanApp < ActiveRecord::Base
     response['borrower']['last_name'] = values['last_name'] || ''
     response['borrower']['suffix'] = values['suffix'] || ''
     response['borrower']['ssn'] = values['ssn'] || ''
-    
+
     response['borrower']['dob'] = to_date_or_empty(values["dob"])
     response['borrower']['work_phone'] = values['borrower_work_phone'].present? ? values['borrower_work_phone'].gsub(/\D/,"") : ''
     response['borrower']['home_phone'] = values['borrower_home_phone'].present? ? values['borrower_home_phone'].gsub(/\D/,"") : ''
@@ -1580,6 +1586,7 @@ class UserLoanApp < ActiveRecord::Base
 
     if values['borrower_previous_employer_name']
       values['custom_BE0202'] = values['borrower_previous_employer_name']
+      values['custom_BE0209'] = 'N'
     end
     if values['borrower_previous_employer_address']
       values['custom_BE0204'] = values['borrower_previous_employer_address']
@@ -1603,10 +1610,10 @@ class UserLoanApp < ActiveRecord::Base
       values['custom_BE0213'] = values['borrower_previous_employer_years']
     end
     if values['borrower_previous_line_of_work_years']
-      values['custom_BE0215'] = to_int_or_empty(values['borrower_previous_line_of_work_years'])
+      values['custom_BE0216'] = to_int_or_empty(values['borrower_previous_line_of_work_years'])
     end
     if values['borrower_previous_self_employed']
-      values['custom_BE0216'] = boolean_to_y_n(values['borrower_previous_self_employed'])
+      values['custom_BE0215'] = boolean_to_y_n(values['borrower_previous_self_employed'])
     end
     if values['borrower_previous_employer_months']
       values['custom_BE0233'] = values['borrower_previous_employer_months']
@@ -1626,6 +1633,7 @@ class UserLoanApp < ActiveRecord::Base
 
     if values['coborrower_previous_employer_name']
       values['custom_CE0202'] = values['coborrower_previous_employer_name']
+      values['custom_CE0209'] = 'N'
     end
     if values['coborrower_previous_employer_address']
       values['custom_CE0204'] = values['coborrower_previous_employer_address']
@@ -1698,6 +1706,10 @@ class UserLoanApp < ActiveRecord::Base
       response['co_borrower']['home_email'] = values['coborrower_email'] || ''
       response['co_borrower']['work_email'] = values['coborrower_work_email'] || ''
       response['co_borrower']['comments'] = values['co_borrower_comments'] || ''
+
+      if values['coborrower_school_years'].present?
+        values['custom_71'] = to_int_or_empty(values['coborrower_school_years'])
+      end
 
       # co-borrower eConsent
       if values.key?('coborrower_econsent')
@@ -1979,70 +1991,7 @@ class UserLoanApp < ActiveRecord::Base
         values['custom_FM0332'] = values['net_rental_income_3']
       end
 
-      if values['has_outstanding_judgements_explanation'].present?
-        values['custom_CX.1003.BOR.DECL.169'] = values['has_outstanding_judgements_explanation']
-      end
 
-      if values['has_bankruptcy_date'].present?
-        values['custom_CX.1003.BOR.DECL.265'] = to_date_or_empty(values['has_bankruptcy_date'])
-      end
-
-      if values['has_foreclosure_date'].present?
-        values['custom_CX.1003.BOR.DECL.170'] = to_date_or_empty(values['has_foreclosure_date'])
-      end
-
-      if values['party_to_lawsuit_explanation'].present?
-        values['custom_CX.1003.BOR.DECL.172'] = values['party_to_lawsuit_explanation']
-      end
-
-      if values['has_obligations_explanation'].present?
-        values['custom_CX.1003.BOR.DECL.1057'] = values['has_obligations_explanation']
-      end
-
-      if values['has_delinquent_debt_explanation'].present?
-        values['custom_CX.1003.BOR.DECL.463'] = values['has_delinquent_debt_explanation']
-      end
-
-      if values['is_down_payment_borrowed_explanation'].present?
-        values['custom_CX.1003.BOR.DECL.174'] = values['is_down_payment_borrowed_explanation']
-      end
-
-      if values['is_comaker_or_endorser_explanation'].present?
-        values['custom_CX.1003.BOR.DECL.171'] = values['is_comaker_or_endorser_explanation']
-      end
-
-      if value_is_truthy(values['has_coborrower'])
-        if values['coborrower_school_years'].present?
-           values['custom_71'] = to_int_or_empty(values['coborrower_school_years'])
-        end
-        if values['coborrower_has_outstanding_judgements_explanation'].present?
-          values['custom_CX.1003.COBOR.DECL.175'] = values['coborrower_has_outstanding_judgements_explanation']
-        end
-        if values['coborrower_has_bankruptcy_date'].present?
-          values['custom_CX.1003.COBOR.DECL.266'] = to_date_or_empty(values['coborrower_has_bankruptcy_date'])
-        end
-        if values['coborrower_has_foreclosure_date'].present?
-          values['custom_CX.1003.COBOR.DECL.176'] = to_date_or_empty(values['coborrower_has_foreclosure_date'])
-        end
-        if values['coborrower_party_to_lawsuit_explanation'].present?
-          values['custom_CX.1003.COBOR.DECL.178'] = values['coborrower_party_to_lawsuit_explanation']
-        end
-        if values['coborrower_has_obligations_explanation'].present?
-          values['custom_CX.1003.COBOR.DECL.1197'] = values['coborrower_has_obligations_explanation']
-        end
-        if values['coborrower_has_delinquent_debt_explanation'].present?
-          values['custom_CX.1003.COBOR.DECL.464'] = values['coborrower_has_delinquent_debt_explanation']
-        end
-        if values['coborrower_down_payment_borrowed_explanation'].present?
-          values['custom_CX.1003.COBOR.DECL.180'] = values['coborrower_down_payment_borrowed_explanation']
-        end
-        if values['coborrower_is_comaker_or_endorser_explanation'].present?
-          values['custom_CX.1003.COBOR.DECL.177'] = values['coborrower_is_comaker_or_endorser_explanation']
-        end
-        if values['coborrower_alimony_amount'].present?
-          values['custom_CX.1003.COBOR.DECL.179'] = values['coborrower_alimony_amount']
-        end
-      end
 
       #New flow utilizing multichoice
       if has_hmda
@@ -2109,13 +2058,13 @@ class UserLoanApp < ActiveRecord::Base
               values['custom_1531'] = 'Not Hispanic or Latino'
             elsif values['coborrower_ethnicity'] == 'I do not wish to provide this information'
               values['custom_1531'] = 'Information not provided'
-            else values['coborrower_ethnicity'] == 'Not Applicable'
+            elsif values['coborrower_ethnicity'] == 'Not Applicable'
               values['custom_1531'] = 'Not applicable'
             end
           end
 
           if values['coborrower_other_hispanic_or_latino_origin']
-            values['coborrower_other_hispanic_or_latino_origin'] = values['custom_4136']
+            values['custom_4136'] = values['coborrower_other_hispanic_or_latino_origin']
           end
 
           if has_hmda_multichoice?
@@ -2154,10 +2103,11 @@ class UserLoanApp < ActiveRecord::Base
                   values['custom_4173'] = 'Y'
                 elsif race == "White"
                   values['custom_1536'] = 'Y'
-                elsif race == 'I do not wish to provide this information'
-                  values['custom_1537'] = 'Y'
-                else race == 'Not applicable'
+                elsif race == 'Not applicable'
                   values['custom_1538'] = 'Y'
+                # default to information not provided
+                else
+                  values['custom_4253'] = 'Y'
                 end
               end
             end
@@ -2255,9 +2205,9 @@ class UserLoanApp < ActiveRecord::Base
               when "White"
                 values['custom_1536'] = "Y"
               when "Information not provided"
-                values['custom_1537'] = "Y"
+                values['custom_4247'] = "Y"
               when "I do not wish to provide this information"
-                values['custom_1537'] = "Y"
+                values['custom_4253'] = "Y"
             end
           end
 
@@ -2304,22 +2254,22 @@ class UserLoanApp < ActiveRecord::Base
     response['property']['estimated_value'] = values['property_est_value'] || ''
     response['property']['appraised_value'] = values['property_appraised_value'] || ''
     if values['property_year_built'].present?
-      response['custom_18'] = to_int_or_empty(values['property_year_built'])
+      values['custom_18'] = to_int_or_empty(values['property_year_built'])
     end
 
     if values['property_number_of_units'].present?
-      response['custom_16'] = to_int_or_empty(values['property_number_of_units'])
+      values['custom_16'] = to_int_or_empty(values['property_number_of_units'])
     end
 
     if values['monthly_house_expense'].present?
-      response['custom_737'] = values['monthly_house_expense']
+      values['custom_737'] = values['monthly_house_expense']
     end
 
     # main loan info on application
     response['loan'] = {}
     response['loan']['purchase_price'] = values['purchase_price'].present? ? fix_num(values['purchase_price'] ).to_f : 0.0
     response['loan']['down_payment_pct'] = values['down_payment_pct'].present? ? fix_num(values['down_payment_pct']).to_f : 0.0
-    response['custom_1335'] = values['down_payment_amount'].present? ? fix_num(values['down_payment_amount']).to_f : 0.0
+    values['custom_1335'] = values['down_payment_amount'].present? ? fix_num(values['down_payment_amount']).to_f : 0.0
 
     if values["loan_amount"].present?
       response['loan']['loan_amt'] = fix_num( values['loan_amount'] ) || 0
@@ -2327,6 +2277,16 @@ class UserLoanApp < ActiveRecord::Base
       response['loan']['loan_amt'] = fix_num( values['purchase_price'] ).to_i - (fix_num(values['purchase_price'] ).to_i * fix_num(values['down_payment_pct']).to_i/100)  || 0
     end
     response['loan']['loan_type'] = values['loan_type'] || 0
+
+    case values ['loan_type']
+      when 'USDA'
+        response['loan']['loan_type'] = 'FarmersHomeAdministration'
+      when 'USDA-RHS'
+        response['loan']['loan_type'] = 'FarmersHomeAdministration'
+      else
+        response['loan']['loan_type'] = values['loan_type'] || 0
+    end
+
     response['loan']['est_closing_date'] = ''
     response['loan']['term'] = values['loan_term'] || 0
     if values['loan_purpose'].present?
@@ -2341,8 +2301,26 @@ class UserLoanApp < ActiveRecord::Base
       end
     end
     response['loan']['purpose'] = values['loan_purpose'] || 0
-    response['loan']['amort_type'] = 'Fixed'
+
+    if values['amortization_type']
+        if values['amortization_type'].include? 'Fixed'
+          response['loan']['amort_type'] = 'Fixed'
+        elsif values['amortization_type'].include? 'ARM'
+          response['loan']['amort_type'] = 'AdjustableRate'
+        elsif values['amortization_type'].include? 'Other'
+          response['loan']['amort_type'] = 'OtherAmortizationType'
+        elsif values['amortization_type'].include? 'GPM'
+          response['loan']['amort_type'] = 'GraduatedPaymentMortgage'
+        end
+    else
+      response['loan']['amort_type'] = 'Fixed'
+    end
+
     response['loan']['application_date'] = "#{self.submitted_at}"
+
+    if values['purpose_of_refinance']
+      values['custom_19'] = values['purpose_of_refinance']
+    end
 
     if values['current_lien']
       values['custom_26'] = values['current_lien']
@@ -2383,9 +2361,76 @@ class UserLoanApp < ActiveRecord::Base
     #   end
     # end
 
-    # Monarch special rules
-    if company_id == 8 && values['credit_authorization'] && value_is_truthy(values['credit_authorization'])
-      values['custom_CX.CREDITAUTH.ONLINE'] = 'X'
+    # BANKSOUTH
+    if company_id == 111320
+
+      if values['has_outstanding_judgements_explanation'].present?
+        values['custom_CX.1003.BOR.DECL.169'] = values['has_outstanding_judgements_explanation']
+      end
+
+      if values['has_bankruptcy_date'].present?
+        values['custom_CX.1003.BOR.DECL.265'] = to_date_or_empty(values['has_bankruptcy_date'])
+      end
+
+      if values['has_foreclosure_date'].present?
+        values['custom_CX.1003.BOR.DECL.170'] = to_date_or_empty(values['has_foreclosure_date'])
+      end
+
+      if values['party_to_lawsuit_explanation'].present?
+        values['custom_CX.1003.BOR.DECL.172'] = values['party_to_lawsuit_explanation']
+      end
+
+      if values['has_obligations_explanation'].present?
+        values['custom_CX.1003.BOR.DECL.1057'] = values['has_obligations_explanation']
+      end
+
+      if values['has_delinquent_debt_explanation'].present?
+        values['custom_CX.1003.BOR.DECL.463'] = values['has_delinquent_debt_explanation']
+      end
+
+      if values['is_down_payment_borrowed_explanation'].present?
+        values['custom_CX.1003.BOR.DECL.174'] = values['is_down_payment_borrowed_explanation']
+      end
+
+      if values['is_comaker_or_endorser_explanation'].present?
+        values['custom_CX.1003.BOR.DECL.171'] = values['is_comaker_or_endorser_explanation']
+      end
+
+      if value_is_truthy(values['has_coborrower'])
+        if values['coborrower_has_outstanding_judgements_explanation'].present?
+          values['custom_CX.1003.COBOR.DECL.175'] = values['coborrower_has_outstanding_judgements_explanation']
+        end
+        if values['coborrower_has_bankruptcy_date'].present?
+          values['custom_CX.1003.COBOR.DECL.266'] = to_date_or_empty(values['coborrower_has_bankruptcy_date'])
+        end
+        if values['coborrower_has_foreclosure_date'].present?
+          values['custom_CX.1003.COBOR.DECL.176'] = to_date_or_empty(values['coborrower_has_foreclosure_date'])
+        end
+        if values['coborrower_party_to_lawsuit_explanation'].present?
+          values['custom_CX.1003.COBOR.DECL.178'] = values['coborrower_party_to_lawsuit_explanation']
+        end
+        if values['coborrower_has_obligations_explanation'].present?
+          values['custom_CX.1003.COBOR.DECL.1197'] = values['coborrower_has_obligations_explanation']
+        end
+        if values['coborrower_has_delinquent_debt_explanation'].present?
+          values['custom_CX.1003.COBOR.DECL.464'] = values['coborrower_has_delinquent_debt_explanation']
+        end
+        if values['coborrower_down_payment_borrowed_explanation'].present?
+          values['custom_CX.1003.COBOR.DECL.180'] = values['coborrower_down_payment_borrowed_explanation']
+        end
+        if values['coborrower_is_comaker_or_endorser_explanation'].present?
+          values['custom_CX.1003.COBOR.DECL.177'] = values['coborrower_is_comaker_or_endorser_explanation']
+        end
+        if values['coborrower_alimony_amount'].present?
+          values['custom_CX.1003.COBOR.DECL.179'] = values['coborrower_alimony_amount']
+        end
+      end
+
+      if values.key?('borrower_share_info_authorization')
+        values['custom_CX.PRIVACY.POLICY.OPUOUT.'] = boolean_to_yes_no(values['borrower_share_info_authorization'])
+        values['custom_CX.PRIVACY.POL.OPUOUT.DATE'] = self.submitted_at
+      end
+
     end
 
     # OnQ source mapping
@@ -2413,11 +2458,62 @@ class UserLoanApp < ActiveRecord::Base
     # USA Mortgage source mapping
     if company_id == 111282
       values['custom_CX.SIMPLENEXUS'] = self.find_source
+
+      if values['referral_source']
+        values['custom_cx.simplenexusref'] = values['referral_source']
+      end
+    end
+
+    # LeaderOne source mapping
+    if company_id == 111172
+      values['custom_CX.CD.LEADSOURCE'] = self.find_source
     end
 
     # First Choice source mapping
     if company_id == 111271
       values['custom_CX.VERBAL.CONSENT'] = self.borrower_name + "- Consent logged @" + self.submitted_at&.strftime("%m/%d/%Y %l:%M:%S %p")
+    end
+
+    if company_id == 111221
+      #Eagle Home authorization
+      if values.key?('eagle_authorization')
+        values['custom_CX.BA.AUTHVERIFY.B1'] = boolean_to_y_n(values['eagle_authorization'])
+        if value_is_truthy(values['eagle_authorization'])
+          values['custom_CX.BA.AUTHBY.B1'] = servicer_profile.full_name
+          values['custom_CX.BA.AUTHDATE.B1'] = self.submitted_at
+          values['custom_CX.BA.AUTHMETHOD.B1'] = 'Internet'
+        end
+      end
+
+      if values.key?('coborrower_eagle_authorization')
+        values['custom_CX.BA.AUTHVERIFY.B2'] = boolean_to_y_n(values['coborrower_eagle_authorization'])
+        if value_is_truthy('coborrower_eagle_authorization')
+          values['custom_CX.BA.AUTHBY.B2'] = servicer_profile.full_name
+          values['custom_CX.BA.AUTHDATE.B2'] = self.submitted_at
+          values['custom_CX.BA.AUTHMETHOD.B2'] = 'Internet'
+        end
+      end
+    end
+
+    if company_id == 111211
+      if values.key?('borrower_share_info_authorization') && value_is_truthy(values['borrower_share_info_authorization'])
+        #  MCLEAN
+        values['custom_CX.BORAUTH.DATE'] = self.submitted_at
+      end
+    end
+
+    #Townebank mappings
+    if company_id == 8
+      values['custom_CX.CREDITAUTH.A1'] = values['mothers_maiden_name']
+      values['custom_CX.CREDITAUTH.A2'] = values['graduate_from']
+      values['custom_CX.CREDITAUTH.A3'] = values['name_of_street']
+      values['custom_CX.CREDITAUTH.A4'] = values['favorite_vacation']
+      values['custom_CX.CREDITAUTH.BY'] = values['auth_provided_by']
+      values['custom_CX.CREDITAUTH.NAME'] = servicer_profile.full_name
+
+      if values['credit_authorization'] && value_is_truthy(values['credit_authorization'])
+        values['custom_CX.CREDITAUTH.ONLINE'] = 'X'
+      end
     end
 
     # Obviously you can have assets on a refi but those amounts would be mapped elsewhere.
@@ -2505,7 +2601,7 @@ class UserLoanApp < ActiveRecord::Base
         end
 
         if values['other_hispanic_or_latino_origin']
-          values['other_hispanic_or_latino_origin'] = values['custom_4125']
+          values['custom_4125'] = values['other_hispanic_or_latino_origin']
         end
 
         if has_hmda_multichoice?
@@ -2544,10 +2640,11 @@ class UserLoanApp < ActiveRecord::Base
                 values['custom_4158'] = 'Y'
               elsif race == "White"
                 values['custom_1528'] = 'Y'
-              elsif race == "I do not wish to provide this information"
-                values['custom_1529'] = 'Y'
-              else race == "Not applicable"
+              elsif race == "Not applicable"
                 values['custom_1530'] = 'Y'
+              # default to information not provided
+              else
+                values['custom_4252'] = 'Y'
               end
             end
           end
@@ -2631,7 +2728,7 @@ class UserLoanApp < ActiveRecord::Base
         end
 
         #borrower
-        if has_hmda_multichoice? && values['gender'].present? && values['gender'].kind_of?(Array) 
+        if has_hmda_multichoice? && values['gender'].present? && values['gender'].kind_of?(Array)
           values['gender'].each do |gender|
             case gender
             when 'Male'
@@ -2748,8 +2845,13 @@ class UserLoanApp < ActiveRecord::Base
       end
     end
 
-    if values['military_explanation']
-      values['custom_955'] = values['military_explanation']
+    if values['military_explanation'] && values['military_explanation'].present?
+      case values['military_explanation']
+        when "Separated from Service"
+          values['custom_955'] = "SeparatedFromService"
+        when "In Service"
+          values['custom_955'] = "InService"
+      end
     end
 
     if values['legal_name_borrower']
@@ -2762,10 +2864,63 @@ class UserLoanApp < ActiveRecord::Base
     if values['title_held']
       values['custom_33'] = values['title_held']
     end
-    if values['down_payment_source']
-      values['custom_34'] = values['down_payment_source']
-    end
 
+    if values['down_payment_source'] && values['down_payment_source'].present?
+      case values['down_payment_source']
+        when "Bridge Loan"
+          values['custom_34'] = "BridgeLoan"
+        when "Cash On Hand"
+          values['custom_34'] = "CashOnHand"
+        when "Checking/Savings"
+          values['custom_34'] = "CheckingSavings"
+        when "Deposit On Sales Contract"
+          values['custom_34'] = "DepositOnSalesContract"
+        when "Equity On Pending Sale"
+          values['custom_34'] = "EquityOnPendingSale"
+        when "Equity On Sold Property"
+          values['custom_34'] = "EquityOnSoldProperty"
+        when "Equity On Subject Property"
+          values['custom_34'] = "EquityOnSubjectProperty"
+        when "Gift Funds"
+          values['custom_34'] = "GiftFunds"
+        when "Life Insurance Cash Value"
+          values['custom_34'] = "LifeInsuranceCashValue"
+        when "Lot Equity"
+          values['custom_34'] = "LotEquity"
+        when "Other Type Of Down Payment"
+          values['custom_34'] = "OtherTypeOfDownPayment"
+        when "Rent With Option to Purchase"
+          values['custom_34'] = "RentWithOptionToPurchase"
+        when "Retirement Funds"
+          values['custom_34'] = "RetirementFunds"
+        when "Sale Of Chattel"
+          values['custom_34'] = "SaleOfChattel"
+        when "Secured Borrower Funds"
+          values['custom_34'] = "SecuredBorrowerFunds"
+        when "Stocks And Bonds"
+          values['custom_34'] = "StocksAndBonds"
+        when "Sweat Equity"
+          values['custom_34'] = "SweatEquity"
+        when "Trade Equity"
+          values['custom_34'] = "TradeEquity"
+        when "Trust Funds"
+          values['custom_34'] = "TrustFunds"
+        when "Unsecured Borrowed Funds"
+          values['custom_34'] = "UnsecuredBorrowedFunds"
+        when "FHA - Gift-Source N/A"
+          values['custom_34'] = "FHAGiftSourceNA"
+        when "FHA - Gift - Source Relative"
+          values['custom_34'] = "FHAGiftSourceRelative"
+        when "FHA - Gift - Source Government Assistance"
+          values['custom_34'] = "FHAGiftSourceGovernmentAssistance"
+        when "FHA - Gift - Source Nonprofit/Religious/Community – Seller Funded"
+          values['custom_34'] = "FHAGiftSourceNonprofitSellerFunded"
+        when "FHA - Gift - Source Nonprofit/Religious/Community – Non-Seller Funded"
+          values['custom_34'] = "FHAGiftSourceNonprofitNonSellerFunded"
+        when "FHA - Gift - Source Employer"
+          values['custom_34'] = "FHAGiftSourceEmployer"
+      end
+    end
 
     if values['property_type']
       if values['property_type'] == 'Single Family'
@@ -2797,6 +2952,10 @@ class UserLoanApp < ActiveRecord::Base
       else
         values['custom_3335'] = 'OwnerOccupied'
       end
+    end
+
+    if values['bank_name']
+      values['custom_DD0102'] = values['bank_name']
     end
 
     values['custom_101'] = values['monthly_income'] || 0
@@ -2937,39 +3096,6 @@ class UserLoanApp < ActiveRecord::Base
       values['custom_934'] = boolean_to_y_n(values['is_firsttimer'])
     end
 
-    #USA Mortgage
-    if values['referral_source']
-      values['custom_cx.simplenexusref'] = values['referral_source']
-    end
-
-    #Eagle Home authorization
-    if values.key?('eagle_authorization')
-      values['custom_CX.BA.AUTHVERIFY.B1'] = boolean_to_y_n(values['eagle_authorization'])
-      if value_is_truthy(values['eagle_authorization'])
-        values['custom_CX.BA.AUTHBY.B1'] = servicer_profile.full_name
-        values['custom_CX.BA.AUTHDATE.B1'] = self.submitted_at
-        values['custom_CX.BA.AUTHMETHOD.B1'] = 'Internet'
-      end
-    end
-
-    if values.key?('coborrower_eagle_authorization')
-      values['custom_CX.BA.AUTHVERIFY.B2'] = boolean_to_y_n(values['coborrower_eagle_authorization'])
-      if value_is_truthy('coborrower_eagle_authorization')
-        values['custom_CX.BA.AUTHBY.B2'] = servicer_profile.full_name
-        values['custom_CX.BA.AUTHDATE.B2'] = self.submitted_at
-        values['custom_CX.BA.AUTHMETHOD.B2'] = 'Internet'
-      end
-    end
-
-    #Townebank mappings
-    if company_id == 8
-      values['custom_CX.CREDITAUTH.A1'] = values['mothers_maiden_name']
-      values['custom_CX.CREDITAUTH.A2'] = values['graduate_from']
-      values['custom_CX.CREDITAUTH.A3'] = values['name_of_street']
-      values['custom_CX.CREDITAUTH.A4'] = values['favorite_vacation']
-      values['custom_CX.CREDITAUTH.BY'] = values['auth_provided_by']
-      values['custom_CX.CREDITAUTH.NAME'] = servicer_profile.full_name
-    end
 
 
     # other contacts section
@@ -2991,9 +3117,9 @@ class UserLoanApp < ActiveRecord::Base
 
     unless values['custom_1811']
       if values['type_of_property']
-        if values['type_of_property'] == 'Primary Residence'
+        if values['type_of_property'].include? 'Primary'
           values['custom_1811'] = 'PrimaryResidence'
-        elsif values['type_of_property'] == 'Secondary Residence'
+        elsif values['type_of_property'].include? 'Secondary'
           values['custom_1811'] = 'SecondHome'
         else
           values['custom_1811'] = 'Investor'
@@ -4142,18 +4268,27 @@ class UserLoanApp < ActiveRecord::Base
   end
 
   def update_consent_documents(phase)
-    fields_in_phase = fields_in_phase(phase)
-    econsent_fields = econsent_fields_lookup
-    credit_auth_fields = credit_auth_field_lookup
+    # if we are a servicer submitted loan app, then we don't want to generate consent documents
+    if self.app_user.present?
+      fields_in_phase = fields_in_phase(phase)
+      econsent_fields = econsent_fields_lookup
+      credit_auth_fields = credit_auth_field_lookup
+      share_info_fields = share_info_auth_field_lookup
 
-    if (self.app_user&.servicer_profile&.company&.generate_econsent_form || self.servicer_profile&.company&.generate_econsent_form) && econsent_fields[:borrower].present? && fields_in_phase.include?(econsent_fields[:borrower]["key"])
-      GenerateEconsentDocJob.perform_later( :user_loan_app_id => self.id )
-    end #end only generating for companies with the option enabled
+
+      if (self.app_user&.servicer_profile&.company&.generate_econsent_form || self.servicer_profile&.company&.generate_econsent_form) && econsent_fields[:borrower].present? && fields_in_phase.include?(econsent_fields[:borrower]["key"])
+        GenerateEconsentDocJob.perform_later( :user_loan_app_id => self.id )
+      end #end only generating for companies with the option enabled
 
 
-    if (self.app_user&.servicer_profile&.company&.generate_credit_auth_form || self.servicer_profile&.company&.generate_credit_auth_form) && credit_auth_fields[:borrower].present? && fields_in_phase.include?(credit_auth_fields[:borrower]["key"])
-      GenerateCreditAuthDocJob.perform_later( :user_loan_app_id => self.id )
-    end #end only generating if company has setting enabled
+      if (self.app_user&.servicer_profile&.company&.generate_credit_auth_form || self.servicer_profile&.company&.generate_credit_auth_form) && credit_auth_fields[:borrower].present? && fields_in_phase.include?(credit_auth_fields[:borrower]["key"])
+        GenerateCreditAuthDocJob.perform_later( :user_loan_app_id => self.id )
+      end #end only generating if company has setting enabled
+
+      if (self.app_user&.servicer_profile&.company&.generate_share_info_auth_form || self.servicer_profile&.company&.generate_share_info_auth_form) && share_info_fields[:borrower].present? && fields_in_phase.include?(share_info_fields[:borrower]["key"])
+        GenerateShareInfoAuthDocJob.perform_later( :user_loan_app_id => self.id )
+      end #end only generating if company has setting enabled
+    end
 
   end
 
@@ -4167,17 +4302,18 @@ class UserLoanApp < ActiveRecord::Base
   end
 
   def delete_consent_documents
-    loan_doc = self.app_user.user.loan_docs.where( doc_type: "econsent" ).first
-    loan_doc.destroy if loan_doc
-    loan_doc = self.app_user.user.loan_docs.where( doc_type: "credit_authorization" ).first
-    loan_doc.destroy if loan_doc
+    if self.app_user&.user&.loan_docs
+      loan_doc = self.app_user.user.loan_docs.where( doc_type: "econsent" ).destroy_all
+      loan_doc = self.app_user.user.loan_docs.where( doc_type: "credit_authorization" ).destroy_all
+      loan_doc = self.app_user.user.loan_docs.where( doc_type: "share_info_authorization" ).destroy_all
+    end
   end
 
 
   def missing_econsent_document?
-    if ((self.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'econsent').count == 0 && 
-      (self.owner_loan.present? && self.owner_loan.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'econsent').count == 0)) && 
-      self.econsent_fields_lookup[:borrower].present? && 
+    if ((self.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'econsent').count == 0 &&
+      (self.owner_loan.present? && self.owner_loan.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'econsent').count == 0)) &&
+      self.econsent_fields_lookup[:borrower].present? &&
       (self.app_user&.servicer_profile&.company&.generate_econsent_form || self.servicer_profile&.company&.generate_econsent_form))
       return true
     end
@@ -4254,7 +4390,7 @@ class UserLoanApp < ActiveRecord::Base
         @coborrower_last_name = json["values"]["coborrower_last_name"]
         @coborrower_email = json['values']['coborrower_email']
 
-        @econsent_field = econsent_fields[:borrower] 
+        @econsent_field = econsent_fields[:borrower]
         @coborrower_econsent_field = econsent_fields[:coborrower]
 
         @borrower_accepted = false
@@ -4293,27 +4429,26 @@ class UserLoanApp < ActiveRecord::Base
           loan_doc.fingerprint = hash
           loan_doc.save!
           Rails.logger.info "[e-consent] saved new loan doc: #{loan_doc}"
-          
+
 
           # since we just saved the doc, force the read from the slave so we can guarantee we have the record
           ActiveRecordSlave.read_from_master do
             loan_doc.reload
           end
 
-          Rails.logger.info "[e-consent] reload new loan doc id: #{loan_doc.id}"
-
-          temp_path            = "#{Rails.root}/tmp/#{loan_doc.guid}-#{filename}"
-          File.open(temp_path, 'wb') { |file| file.write( new_pdf ) }
-          File.open(temp_path) { |f| loan_doc.image.store!(f) }
-          loan_doc.save!
-          Rails.logger.info "[e-consent] saved new loan doc to s3: #{loan_doc.image_url}"
           begin
-            File.delete(temp_path)
-          rescue => ex2 
+            Rails.logger.info "[e-consent] #{loan_doc.guid} - #{self.guid} - reload new loan doc id: #{loan_doc.id}"
+            doc_name = "#{loan_doc.guid}-#{filename}"
+            doc_file = FilelessIO.new(new_pdf)
+            doc_file.original_filename = doc_name
+            doc_file.content_type = MimeMagic.by_path(doc_name)
+            loan_doc.image.store!(doc_file)
+            loan_doc.save!
+            Rails.logger.info "[e-consent] #{loan_doc.guid} - #{self.guid} - saved new loan doc to s3: #{loan_doc.image_url}"
+          rescue => ex
             NewRelic::Agent.notice_error(ex)
-            Rails.logger.error ex
+            Rails.logger.error("[e-consent] #{loan_doc.guid} - #{self.guid} - #{ex}")
           end
-
 
           if @servicer&.effective_loan_los.blank?
             SendEconsentDocToLoJob.perform_later(
@@ -4335,8 +4470,8 @@ class UserLoanApp < ActiveRecord::Base
   end
 
   def missing_credit_auth_document?
-    if ((self.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'credit_authorization').count == 0 && 
-      (self.owner_loan.present? && self.owner_loan.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'credit_authorization').count == 0)) && 
+    if ((self.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'credit_authorization').count == 0 &&
+      (self.owner_loan.present? && self.owner_loan.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'credit_authorization').count == 0)) &&
       self.credit_auth_field_lookup[:borrower].present? &&
       (self.app_user&.servicer_profile&.company&.generate_credit_auth_form || self.servicer_profile&.company&.generate_credit_auth_form))
       return true
@@ -4381,7 +4516,7 @@ class UserLoanApp < ActiveRecord::Base
     end
 
     return {:borrower => borrower_credit_auth_field, :coborrower => coborrower_credit_authorization_field}
-    
+
   end
 
 
@@ -4394,7 +4529,7 @@ class UserLoanApp < ActiveRecord::Base
     # for servicer submitted loan apps, the app user will be nil and we swon't have an app_user.servicer_profile. So skip generation.
     if @servicer.present?
       json              = JSON.parse( self.loan_app_json )
-      
+
       credit_auth_fields = credit_auth_field_lookup
 
       # Use loan app borrower name and email if availible
@@ -4422,7 +4557,7 @@ class UserLoanApp < ActiveRecord::Base
 
         begin
           # used in the html template
-          @credit_authorization_field = credit_auth_fields[:borrower] 
+          @credit_authorization_field = credit_auth_fields[:borrower]
           @coborrower_credit_authorization_field = credit_auth_fields[:coborrower]
           @borrower_accepted = self.value_is_truthy(json["values"][credit_auth_fields[:borrower]])
           @coborrower_accepted = self.value_is_truthy(json["values"][credit_auth_fields[:coborrower]])
@@ -4452,16 +4587,18 @@ class UserLoanApp < ActiveRecord::Base
             loan_doc.reload
           end
 
-          temp_path            = "#{Rails.root}/tmp/#{loan_doc.guid}-#{filename}"
-          File.open(temp_path, 'wb') { |file| file.write( new_pdf ) }
-          File.open(temp_path) { |f| loan_doc.image.store!(f) }
-          loan_doc.save!
-
           begin
-            File.delete(temp_path)
-          rescue => ex 
+            Rails.logger.info "[credit auth] #{loan_doc.guid} - #{self.guid} - reload new loan doc id: #{loan_doc.id}"
+            doc_name = "#{loan_doc.guid}-#{filename}"
+            doc_file = FilelessIO.new(new_pdf)
+            doc_file.original_filename = doc_name
+            doc_file.content_type = MimeMagic.by_path(doc_name)
+            loan_doc.image.store!(doc_file)
+            loan_doc.save!
+            Rails.logger.info "[credit auth] #{loan_doc.guid} - #{self.guid} - saved new loan doc to s3: #{loan_doc.image_url}"
+          rescue => ex
             NewRelic::Agent.notice_error(ex)
-            Rails.logger.error ex
+            Rails.logger.error("[credit auth] #{loan_doc.guid} - #{self.guid} - #{ex}")
           end
 
           if @servicer&.effective_loan_los.blank?
@@ -4473,13 +4610,163 @@ class UserLoanApp < ActiveRecord::Base
         rescue => ex
           NewRelic::Agent.notice_error(ex)
           Rails.logger.error ex.message + "\n" + ex.backtrace.join("\n")
-        end   
+        end
       end
       if temporarily_set_submitted_at
         self.submitted_at = nil
       end
     end
-    
+
+    return loan_doc
+  end
+
+  def missing_share_info_auth_document?
+    if ((self.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'share_info_authorization').count == 0 &&
+      (self.owner_loan.present? && self.owner_loan.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'share_info_authorization').count == 0)) &&
+      self.share_info_auth_field_lookup[:borrower].present? &&
+      (self.app_user&.servicer_profile&.company&.generate_share_info_auth_form || self.servicer_profile&.company&.generate_credit_auth_form))
+      return true
+    end
+    return false
+  end
+
+  def share_info_auth_field_lookup
+    @user             = self.app_user&.user
+    json              = JSON.parse( self.loan_app_json )
+    borrower_share_info_field = nil
+    if json["structure"][0].is_a?(Hash)
+      structure = [json["structure"]]
+    else
+      structure = json["structure"]
+    end
+    structure.first(self.phases_complete).each do |phase|
+      phase.each do |section|
+        if @user.app_user
+          if section["fields"].include?( "borrower_share_info_authorization" )
+            borrower_share_info_field = json["fields"].select{|f| f["key"] == "borrower_share_info_authorization"}.first
+            break
+          end
+        end
+      end
+    end
+
+    coborrower_share_info_field = nil
+    if json["structure"][0].is_a?(Hash)
+      structure = [json["structure"]]
+    else
+      structure = json["structure"]
+    end
+    structure.first(self.phases_complete).each do |phase|
+      phase.each do |section|
+        if @user.app_user
+          if section["fields"].include?( "coborrower_share_info_authorization" )
+            coborrower_share_info_field =  json["fields"].select{|f| f["key"] == "coborrower_share_info_authorization"}.first
+          end
+        end
+      end
+    end
+
+    return {:borrower => borrower_share_info_field, :coborrower => coborrower_share_info_field}
+
+  end
+
+  def generate_share_info_auth_document
+    @user_loan_app    = self # used in the erb
+    @user             = self.app_user&.user
+    @servicer         = self.app_user&.servicer_profile
+    loan_doc          = nil #returning this
+
+    # for servicer submitted loan apps, the app user will be nil and we swon't have an app_user.servicer_profile. So skip generation.
+    if @servicer.present?
+      json              = JSON.parse( self.loan_app_json )
+
+      share_info_auth_fields = share_info_auth_field_lookup
+
+      # Use loan app borrower name and email if availible
+      @borrower_email = json["values"]["email"].present? ? json["values"]["email"] : @user.email
+      @borrower_first_name = json["values"]["first_name"].present? ? json["values"]["first_name"]
+        : json["values"]["borrower_first_name"].present? ? json["values"]["borrower_first_name"]
+        : @user.name
+      @borrower_last_name = json["values"]["last_name"].present? ? json["values"]["last_name"]
+        : json["values"]["borrower_last_name"].present? ? json["values"]["borrower_last_name"]
+        : @user.last_name
+
+      @coborrower_first_name = json["values"]["coborrower_first_name"]
+      @coborrower_last_name = json["values"]["coborrower_last_name"]
+
+      #in multiphase loans, we nil out the submitted_at date. If we need to regenerate this, the date will be nil, so lets temporarily set it to the last log entry so
+      # we can regenerate. We won't save it though.
+      temporarily_set_submitted_at = false
+      if self.submitted_at.nil?
+        created_at = user_loan_app_logs.where(event: 'submit').last&.created_at
+        self.submitted_at = created_at
+        temporarily_set_submitted_at = true
+      end
+
+      if self.submitted_at.present? && share_info_auth_fields[:borrower].present? && self.value_is_truthy(json["values"][share_info_auth_fields[:borrower]["key"]])
+
+        begin
+          # used in the html template
+          @borrower_share_info_authorization_field = share_info_auth_fields[:borrower]
+          @coborrower_share_info_authorization_field = share_info_auth_fields[:coborrower]
+          @borrower_accepted = self.value_is_truthy(json["values"][share_info_auth_fields[:borrower]])
+          @coborrower_accepted = self.value_is_truthy(json["values"][share_info_auth_fields[:coborrower]])
+          share_info_auth_erb  = ERB.new(SystemSetting.share_info_authorization_template)
+          share_info_auth_html = share_info_auth_erb.result(binding)
+          new_pdf      = HtmlToPdf::html_to_pdf(share_info_auth_html).force_encoding('utf-8')
+          hash          = Digest::MD5.hexdigest(new_pdf)
+          filename      = "Share Info Authorization Document.pdf"
+
+          loan_doc             = LoanDoc.new
+          loan_doc.app_user    = self.app_user
+          loan_doc.user        = self.app_user&.user
+          if self.owner_loan.present?
+            loan_doc.owner     = self.owner_loan
+          else
+            loan_doc.owner     = self
+          end
+          loan_doc.name        = filename
+          loan_doc.status      = 'los-import'
+          loan_doc.doc_type    = 'share_info_authorization'
+          loan_doc.origin      = 'system'
+          loan_doc.fingerprint = hash
+          loan_doc.save!
+
+          # since we just saved the doc, force the read from the master so we can guarantee we have the record
+          ActiveRecordSlave.read_from_master do
+            loan_doc.reload
+          end
+
+          begin
+            Rails.logger.info "[share info auth] #{loan_doc.guid} - #{self.guid} - reload new loan doc id: #{loan_doc.id}"
+            doc_name = "#{loan_doc.guid}-#{filename}"
+            doc_file = FilelessIO.new(new_pdf)
+            doc_file.original_filename = doc_name
+            doc_file.content_type = MimeMagic.by_path(doc_name)
+            loan_doc.image.store!(doc_file)
+            loan_doc.save!
+            Rails.logger.info "[share info auth] #{loan_doc.guid} - #{self.guid} - saved new loan doc to s3: #{loan_doc.image_url}"
+          rescue => ex
+            NewRelic::Agent.notice_error(ex)
+            Rails.logger.error("[share info auth] #{loan_doc.guid} - #{self.guid} - #{ex}")
+          end
+
+          if @servicer&.effective_loan_los.blank?
+            SendShareInfoDocToLoJob.perform_later(
+              :sp_id => @servicer.id,
+              :loan_doc_id => loan_doc.id
+            )
+          end
+        rescue => ex
+          NewRelic::Agent.notice_error(ex)
+          Rails.logger.error ex.message + "\n" + ex.backtrace.join("\n")
+        end
+      end
+      if temporarily_set_submitted_at
+        self.submitted_at = nil
+      end
+    end
+
     return loan_doc
   end
 
@@ -4523,6 +4810,8 @@ class UserLoanApp < ActiveRecord::Base
         json["values"][key] = json["values"][key].to_s.gsub(/[^0-9.]/,'')
       elsif field && field["type"] == "phone" && json["values"][key].present?
         json["values"][key] = json["values"][key].to_s.gsub(/[^0-9]/,'')
+      elsif field && field["type"] == "text" && json["values"][key].present?
+        json["values"][key] = json["values"][key].to_s.gsub(/\n/, '')
       end
     end
     self.loan_app_json = json.to_json

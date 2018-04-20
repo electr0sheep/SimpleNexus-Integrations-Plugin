@@ -160,7 +160,7 @@ class CustomForm < ActiveRecord::Base
       set_value form_def, 'loan_purpose', loan.loan_purpose
       set_value form_def, 'loan_number', loan.loan_number
       set_value form_def, 'interest_rate', loan.interest_rate
-      set_value form_def, 'down_payment_percent', get_percentage(loan.cash_from_borrower,loan.loan_amount).to_s
+      set_value form_def, 'down_payment_percent', loan.downpayment_pct
       set_value form_def, 'down_payment', loan.cash_from_borrower
       set_value form_def, 'property_address', loan.loan_property&.street
       set_value form_def, 'property_city', loan.loan_property&.city
@@ -172,7 +172,7 @@ class CustomForm < ActiveRecord::Base
       set_value form_def, 'monthly_payment', loan.total_monthly_pmt
       set_value form_def, 'apr', loan.apr
       set_value form_def, 'p_and_i_payment', loan.p_and_i_payment
-      set_value form_def, 'ltv_percentage', loan.ltv_percentage
+      set_value form_def, 'ltv_pct', loan.ltv_pct
       set_value form_def, 'credit_report_expiration_date', loan.credit_report_expiration_date
       set_value form_def, 'cash_to_close', loan.cash_to_close
       set_value form_def, 'relying_on_sale_or_lease_to_qualify', loan.relying_on_sale_or_lease_to_qualify
@@ -223,7 +223,7 @@ class CustomForm < ActiveRecord::Base
       set_value form_def, 'loan_purpose', loan.loan_purpose
       set_value form_def, 'loan_number', loan.loan_number
       set_value form_def, 'interest_rate', loan.interest_rate
-      set_value form_def, 'down_payment_percent', get_percentage(loan.cash_from_borrower,loan.loan_amount).to_s
+      set_value form_def, 'down_payment_percent', loan.downpayment_pct
       set_value form_def, 'down_payment', loan.cash_from_borrower
       set_value form_def, 'property_address', loan.remote_loan_property&.street
       set_value form_def, 'property_city', loan.remote_loan_property&.city
@@ -235,7 +235,7 @@ class CustomForm < ActiveRecord::Base
       set_value form_def, 'monthly_payment', loan.total_monthly_pmt
       set_value form_def, 'apr', loan.apr
       set_value form_def, 'p_and_i_payment', loan.p_and_i_payment
-      set_value form_def, 'ltv_percentage', loan.ltv_percentage
+      set_value form_def, 'ltv_pct', loan.ltv_pct
       set_value form_def, 'credit_report_expiration_date', loan.credit_report_expiration_date
       set_value form_def, 'cash_to_close', loan.cash_to_close
       set_value form_def, 'relying_on_sale_or_lease_to_qualify', loan.relying_on_sale_or_lease_to_qualify

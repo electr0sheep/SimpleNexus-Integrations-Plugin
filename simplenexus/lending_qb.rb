@@ -117,20 +117,7 @@ class LendingQB < EncompassBrokerPuller
     end
 
     if values['loan_purpose'].present?
-      if template
-        template_json = ActiveSupport::JSON.decode(template)
-        if template_json
-          purpose = values['loan_purpose']
-          if template_json[purpose].present? 
-            template = template_json[purpose]
-          elsif template_json['default'].present?
-            template = template_json['default']
-          else
-            template = ""
-          end
-        end
-      end
-
+      purpose = values['loan_purpose']
       if values['loan_purpose'] == 'Refinance' || values['loan_purpose'] == 'No Cash-Out Refinance'
         values['loan_purpose'] = 1
       elsif values['loan_purpose'] == 'Cash-Out Refinance'
@@ -141,16 +128,57 @@ class LendingQB < EncompassBrokerPuller
         values['loan_purpose'] = 0
       end
       loan_fields << {:@id => "sLPurposeT", :content! => values['loan_purpose']}
+    else
+      purpose = ""
+    end
+
+    if template
+      template_json = ActiveSupport::JSON.decode(template)
+      if template_json
+        if template_json[purpose].present? 
+          template = template_json[purpose]
+        elsif template_json['default'].present?
+          template = template_json['default']
+        else
+          template = ""
+        end
+      end
     end
     puts "TEMPLATE " + template.to_s
 
     # CREATE LOAN (based on template selected above)
-    response = client.call( :create_lead ) do
-      message sTicket: auth_ticket, sTemplateNm: template
+    option_fields = [
+      {:@id => "IsLead", :content! => true},
+      {:@id => "TemplateNm", :content! => template},
+      {:@id => "IsTestFile", :content! => false}
+    ]
+
+    record_fields = [
+      {:@id => "Login", :content! => lo.los_user_id},
+      {:@id => "UserType", :content! => "B"},
+      {:@id => "Role", :content! => "LoanOfficer"}
+    ]
+
+    assignment_records = [{field: record_fields}]
+    option_collection = [{:@id => "Assignments", :content! => {record: assignment_records}}]
+
+    options = {
+      "LOXmlFormat" => {
+        :field => option_fields,
+        :collection => option_collection
+      }
+    }
+    optionsXml = Gyoku.xml(options)
+
+    response = client.call( :create_with_options ) do
+      message sTicket: auth_ticket, optionsXml: optionsXml
     end
 
     body = response.body
-    loan_number = body[:create_lead_response][:create_lead_result]
+    response_xml = body[:create_with_options_response][:create_with_options_result]
+    xml_doc = Nokogiri::XML(response_xml)
+    loan_number = xml_doc.xpath("//result//loan//field").text
+
 
     puts "created lead: " + loan_number
 
@@ -209,6 +237,7 @@ class LendingQB < EncompassBrokerPuller
         values['property_type'] = 12
       end
       loan_fields << {:@id => "sProdSpT", :content! => values['property_type']}
+      # loan_fields << {:@id => "sGseSpT", :content! => values['property_type']}
     end
 
     borrower_fields = []
@@ -225,7 +254,16 @@ class LendingQB < EncompassBrokerPuller
       borrower_fields << {:@id => "aBDob", :content! => dob_date}
     end
 
-    if values['gender'].present? && ( values['gender'] == "Male" || values['gender'] == "Female" )
+    if values['gender'].present?
+      if values['gender'] == "Male"
+        values['gender'] = 1
+      elsif values['gender'] == "Female"
+        values['gender'] = 2
+      elsif values['gender'] == "Male and Female"
+        values['gender'] = 5
+      elsif values['gender'] == "I do not wish to provide this information"
+        values['gender'] = 4
+      end
       borrower_fields << {:@id => "aBGender", :content! => values['gender']}
     end
 
@@ -272,12 +310,7 @@ class LendingQB < EncompassBrokerPuller
       borrower_fields << {:@id => "aBZip", :content! => zip}
     end
 
-    if values['mailing_address_same_as_current'].present? && value_is_truthy(values['mailing_address_same_as_current'])
-      borrower_fields << {:@id => "aBAddrMail", :content! => address}
-      borrower_fields << {:@id => "aBCityMail", :content! => city}
-      borrower_fields << {:@id => "aBStateMail", :content! => state}
-      borrower_fields << {:@id => "aBZipMail", :content! => zip}
-    else
+    if values['mailing_different_than_current'].present? && value_is_truthy(values['mailing_different_than_current'])
       if values['mailing_address'].present?
         borrower_fields << {:@id => "aBAddrMail", :content! => values['mailing_address']}
       end
@@ -290,6 +323,11 @@ class LendingQB < EncompassBrokerPuller
       if values['zip'].present?
         borrower_fields << {:@id => "aBZipMail", :content! => values['mailing_zip']}
       end
+    else
+      borrower_fields << {:@id => "aBAddrMail", :content! => address}
+      borrower_fields << {:@id => "aBCityMail", :content! => city}
+      borrower_fields << {:@id => "aBStateMail", :content! => state}
+      borrower_fields << {:@id => "aBZipMail", :content! => zip}
     end
     borrower_fields << {:@id => "aBInterviewMethodT", :content! => 4}
 
@@ -298,6 +336,10 @@ class LendingQB < EncompassBrokerPuller
         values['property_own'] = 0
       elsif values['property_own'] == 'Rent'
         values['property_own'] = 1
+      elsif values['property_own'] == 'Living Rent Free'
+        values['property_own'] = 3
+      else
+        values['property_own'] = 2
       end
       borrower_fields << {:@id => "aBAddrT", :content! => values['property_own']}
     end
@@ -343,7 +385,7 @@ class LendingQB < EncompassBrokerPuller
     end
 
     # previous employers
-    employment_records = []
+    borr_employment_records = []
     employment_fields = []
     if values['borrower_previous_employer_name'].present?
       employment_fields << {:@id => "EmplrNm", :content! => values['borrower_previous_employer_name']}
@@ -368,16 +410,16 @@ class LendingQB < EncompassBrokerPuller
       employment_fields << {:@id => "EmplmtStartD", :content! => values['previous_employer_start_date']}
     end
     if values['previous_employer_end_date'].present?
-      employment_fields << {:@id => "EmplmtStartD", :content! => values['previous_employer_start_date']}
+      employment_fields << {:@id => "EmplmtEndD", :content! => values['previous_employer_end_date']}
     end
 
     if employment_fields.any?
-      employment_records << {field: employment_fields}
+      borr_employment_records << {field: employment_fields}
     end
 
-    if values['has_alimony']
+    if values['has_alimony'].present?
       borrower_fields << {:@id => "aBDecAlimony", :content! => boolean_to_yes_no(values['has_alimony'])}
-      if values['has_alimony'].to_s == "1"
+      if values['alimony_payment'].present?
         borrower_fields << {:@id => "aAlimonyPmt", :content! => fix_num( values['alimony_payment'] )}
       end
     end
@@ -585,7 +627,16 @@ class LendingQB < EncompassBrokerPuller
         borrower_fields << {:@id => "aCDob", :content! => coborrower_dob_date}
       end
 
-      if values['coborrower_gender'].present? && ( values['coborrower_gender'] == "Male" || values['coborrower_gender'] == "Female" )
+      if values['coborrower_gender'].present?
+        if values['coborrower_gender'] == "Male"
+          values['coborrower_gender'] = 1
+        elsif values['coborrower_gender'] == "Female"
+          values['coborrower_gender'] = 2
+        elsif values['coborrower_gender'] == "Male and Female"
+          values['coborrower_gender'] = 5
+        elsif values['coborrower_gender'] == "I do not wish to provide this information"
+          values['coborrower_gender'] = 4
+        end
         borrower_fields << {:@id => "aCGender", :content! => values['coborrower_gender']}
       end
 
@@ -620,24 +671,19 @@ class LendingQB < EncompassBrokerPuller
         borrower_fields << {:@id => "aCAddr", :content! => caddress}
       end
       if values['coborrower_city'].present?
-        ccity = values['city']
+        ccity = values['coborrower_city']
         borrower_fields << {:@id => "aCCity", :content! => ccity}
       end
       if values['coborrower_state'].present?
-        cstate = values['state']
+        cstate = values['coborrower_state']
         borrower_fields << {:@id => "aCState", :content! => cstate}
       end
       if values['coborrower_zip'].present?
-        czip = values['zip']
+        czip = values['coborrower_zip']
         borrower_fields << {:@id => "aCZip", :content! => czip}
       end
 
-      if values['coborrower_mailing_address_same_as_current'].present? && value_is_truthy(values['coborrower_mailing_address_same_as_current'])
-        borrower_fields << {:@id => "aCAddrMail", :content! => caddress}
-        borrower_fields << {:@id => "aCCityMail", :content! => ccity}
-        borrower_fields << {:@id => "aCStateMail", :content! => cstate}
-        borrower_fields << {:@id => "aCZipMail", :content! => czip}
-      else
+      if values['coborrower_mailing_address_different_than_current'].present? && value_is_truthy(values['coborrower_mailing_address_different_than_current'])
         if values['coborrower_mailing_address'].present?
           borrower_fields << {:@id => "aCAddrMail", :content! => values['coborrower_mailing_address']}
         end
@@ -650,6 +696,11 @@ class LendingQB < EncompassBrokerPuller
         if values['coborrower_zip'].present?
           borrower_fields << {:@id => "aCZipMail", :content! => values['coborrower_mailing_zip']}
         end
+      else
+        borrower_fields << {:@id => "aCAddrMail", :content! => caddress}
+        borrower_fields << {:@id => "aCCityMail", :content! => ccity}
+        borrower_fields << {:@id => "aCStateMail", :content! => cstate}
+        borrower_fields << {:@id => "aCZipMail", :content! => czip}
       end
       borrower_fields << {:@id => "aCInterviewMethodT", :content! => 4}
 
@@ -658,6 +709,8 @@ class LendingQB < EncompassBrokerPuller
           values['coborrower_property_own'] = 0
         elsif values['coborrower_property_own'] == 'Rent'
           values['coborrower_property_own'] = 1
+        elsif values['coborrower_property_own'] == 'Living Rent Free'
+          values['coborrower_property_own'] = 3
         else
           values['coborrower_property_own'] = 2
         end
@@ -745,6 +798,7 @@ class LendingQB < EncompassBrokerPuller
         end
       end
 
+      cborr_employment_records = []
       employment_fields = []
       if values['coborrower_previous_employer_name'].present?
         employment_fields << {:@id => "EmplrNm", :content! => values['coborrower_previous_employer_name']}
@@ -769,16 +823,16 @@ class LendingQB < EncompassBrokerPuller
         employment_fields << {:@id => "EmplmtStartD", :content! => values['coborrower_previous_employer_start_date']}
       end
       if values['coborrower_previous_employer_end_date'].present?
-        employment_fields << {:@id => "EmplmtStartD", :content! => values['coborrower_previous_employer_start_date']}
+        employment_fields << {:@id => "EmplmtEndD", :content! => values['coborrower_previous_employer_end_date']}
       end
 
       if employment_fields.any?
-        employment_records << {field: employment_fields}
+        cborr_employment_records << {field: employment_fields}
       end
 
-      if values['coborrower_has_alimony']
+      if values['coborrower_has_alimony'].present?
         borrower_fields << {:@id => "aCDecAlimony", :content! => boolean_to_yes_no(values['coborrower_has_alimony'])}
-        if values['coborrower_has_alimony'].to_s == "1"
+        if values['coborrower_alimony_payment'].present?
           borrower_fields << {:@id => "aAlimonyPmt", :content! => fix_num( values['coborrower_alimony_payment'] )}
         end
       end
@@ -871,8 +925,11 @@ class LendingQB < EncompassBrokerPuller
     end
 
     collections = []
-    if employment_records.any?
-      collections << {:@id => "aEmpCollection", :content! => {record: employment_records}}
+    if borr_employment_records.any?
+      collections << {:@id => "aBEmpCollection", :content! => {record: borr_employment_records}}
+    end
+    if cborr_employment_records.any?
+      collections << {:@id => "aCEmpCollection", :content! => {record: cborr_employment_records}}
     end
     if asset_records.any?
       collections << {:@id => "aAssetCollection", :content! => {record: asset_records}}
@@ -936,9 +993,9 @@ class LendingQB < EncompassBrokerPuller
     if values[sn_prefix+'ethnicity'].present?
       if values[sn_prefix+'ethnicity'] == "Hispanic or Latino"
         ethnicity = 1
-      elsif values[sn_prefix+'ethnicity'] = "Not Hispanic or Latino"
+      elsif values[sn_prefix+'ethnicity'] == "Not Hispanic or Latino"
         ethnicity = 2
-      elsif values[sn_prefix+'ethnicity'] = "I do not wish to provide this information"
+      elsif values[sn_prefix+'ethnicity'] == "I do not wish to provide this information"
         ethnicity = nil
       else
         ethnicity = 0
@@ -1247,6 +1304,7 @@ class LendingQB < EncompassBrokerPuller
           loan_milestone.status = 'complete'
           loan_milestone.completed = true
           loan_milestone.status_time = Time.now
+          ms_loan_definition = loan_milestone.loan_milestone_definition
           if loan_milestone.message_sent
             ms_loan_definition = nil
           else
@@ -1352,6 +1410,12 @@ class LendingQB < EncompassBrokerPuller
     response['remote_referral_source'] = loan['sLeadSrcDesc']
     response['remote_rate_locked'] = loan['sRateLockStatusT']
     response['remote_lock_expiration'] = get_date(loan['sRLckdExpiredD'])
+    response['econsent_date'] = nil
+    response['intent_to_proceed'] = nil
+    response['closing_date'] = nil
+    response['last_doc_order_date'] = nil
+    response['doc_signing_date'] = nil
+    response['funding_date'] = nil
     # response['remote_estimated_completion'] = get_time(loan['DateOfEstimatedCompletion'])
     response['loan_program'] = loan['sLpTemplateNm']
     response['loan_type'] = map_loan_type(loan['sLT'])
@@ -1360,6 +1424,31 @@ class LendingQB < EncompassBrokerPuller
     response['loan_term'] = loan['sTerm'].to_i
     response['interest_rate'] = loan['sNoteIR'].nil? ? nil : loan['sNoteIR'].delete("%").to_f
     response['loan_amount'] = to_currency(loan['sLAmtCalc'])
+    response['loan_amount_total'] = to_currency(loan['sLAmtCalc'])
+    response['downpayment_pct'] = 0
+    response['downpayment_amount'] = 0
+    response['existing_lien_amt'] = 0
+    response['proposed_monthly_mtg'] = 0
+    response['proposed_monthly_otherfin'] = 0
+    response['proposed_monthly_hazins'] = 0
+    response['proposed_monthly_taxes'] = 0
+    response['proposed_monthly_mtgins'] = 0
+    response['proposed_monthly_hoa'] = 0
+    response['proposed_monthly_other'] = 0
+    response['total_monthly_pmt'] = 0
+    response['p_and_i_payment'] = 0
+    response['total_payment_le'] = 0
+    response['total_payment_cd'] = 0
+    response['initial_le_sent'] = nil
+    response['initial_le_received'] = nil
+    response['revised_le_sent'] = nil
+    response['revised_le_received'] = nil
+    response['initial_cd_sent'] = nil
+    response['initial_cd_received'] = nil
+    response['revised_cd_sent'] = nil
+    response['revised_cd_received'] = nil
+    response['approved_date'] = nil
+    response['payment_frequency'] = 'Monthly'
     response['amortization_type'] = map_amortization_type(loan['sFinMethT'])
     response['cash_from_borrower'] = to_currency(loan['sEquityCalc'])
     response['remote_loan_status'] = loan['sStatusT']
