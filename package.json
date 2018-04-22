@@ -1,13 +1,13 @@
 {
   "name": "SimpleNexus-Integrations-Plugin",
-  "main": "./lib/sn-integrations-plugin",
+  "main": "./lib/SimpleNexus-Integrations-Plugin",
   "version": "1.0.0",
   "description": "Plugin for SimpleNexus Integrations Team. Features: JSON Beautifier, Boilerplate files, Autocomplete+ integration",
   "keywords": [
     "SimpleNexus",
     "Integrations"
   ],
-  "repository": "https://github.com/electr0sheep/sn-integrations-pluginn",
+  "repository": "https://github.com/electr0sheep/SimpleNexus-Integrations-Plugin",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"

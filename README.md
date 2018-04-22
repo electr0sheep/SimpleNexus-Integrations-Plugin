@@ -1,23 +1,28 @@
-# sn-integrations-plugin
+# SimpleNexus-Integrations-Plugin
 Atom plugin for SimpleNexus' Integrations team
 
 ## Features
 ### Autocomplete+ Integration
-![Autocomplete Gif](./resources/sn-integrations-plugin-autocomplete.gif)
+![Autocomplete Gif](./resources/SimpleNexus-Integrations-Plugin-autocomplete.gif)
 
 ### JSON Beautifier
-![JSON Beautifier Gif](./resources/sn-integrations-plugin-beautify.gif)
+![JSON Beautifier Gif](./resources/SimpleNexus-Integrations-Plugin-beautify.gif)
 
 ### Generate Boilerplate
-![Boilerplate Gif](./resources/sn-integrations-plugin-boilerplate.gif)
+![Boilerplate Gif](./resources/SimpleNexus-Integrations-Plugin-boilerplate.gif)
 
 ### SICK touchbar integration!
-![Touchbar PNG](./resources/sn-integrations-plugin-touchbar.png)
+![Touchbar PNG](./resources/SimpleNexus-Integrations-Plugin-touchbar.png)
 
 ## Installation
 Clone the repo  
-`git clone git@github.com:electr0sheep/sn-integrations-plugin.git`
+`git clone git@github.com:electr0sheep/SimpleNexus-Integrations-Plugin.git`
 
 Install using apm  
-`cd sn-integrations-plugin`  
+`cd SimpleNexus-Integrations-Plugin`  
 `apm link`
+
+## Uninstallation
+Uninstall using apm
+`cd SimpleNexus-Integrations-Plugin`
+`apm unlink`

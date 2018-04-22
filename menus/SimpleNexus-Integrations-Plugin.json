@@ -5,29 +5,29 @@
       "submenu": [
         {
           "label": "Beautify SimpleNexus JSON",
-          "command": "sn-integrations-plugin:beautify"
+          "command": "SimpleNexus-Integrations-Plugin:beautify"
         },
         {
           "label": "Show Available Placeholders",
-          "command": "sn-integrations-plugin:showAvailablePlaceholders"
+          "command": "SimpleNexus-Integrations-Plugin:showAvailablePlaceholders"
         },
         {
           "label": "Generate boilerplate",
           "submenu": [
             {
               "label": "1003",
-              "command": "sn-integrations-plugin:generate1003Json"
+              "command": "SimpleNexus-Integrations-Plugin:generate1003Json"
             },
             {
               "label": "PreQual",
               "submenu": [
                 {
                   "label": "HTML",
-                  "command": "sn-integrations-plugin:generatePrequalHtml"
+                  "command": "SimpleNexus-Integrations-Plugin:generatePrequalHtml"
                 },
                 {
                   "label": "JSON",
-                  "command": "sn-integrations-plugin:generatePrequalJson"
+                  "command": "SimpleNexus-Integrations-Plugin:generatePrequalJson"
                 }
               ]
             },
@@ -36,11 +36,11 @@
               "submenu": [
                 {
                   "label": "HTML",
-                  "command": "sn-integrations-plugin:generatePreapprovalHtml"
+                  "command": "SimpleNexus-Integrations-Plugin:generatePreapprovalHtml"
                 },
                 {
                   "label": "JSON",
-                  "command": "sn-integrations-plugin:generatePreapprovalJson"
+                  "command": "SimpleNexus-Integrations-Plugin:generatePreapprovalJson"
                 }
               ]
             }
@@ -48,7 +48,7 @@
         },
         {
           "label": "Settings",
-          "command": "sn-integrations-plugin:openSettings"
+          "command": "SimpleNexus-Integrations-Plugin:openSettings"
         }
       ]
     }
