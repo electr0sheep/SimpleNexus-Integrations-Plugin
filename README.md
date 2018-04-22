@@ -3,16 +3,16 @@ Atom plugin for SimpleNexus' Integrations team
 
 ## Features
 ### Autocomplete+ Integration
-![Autocomplete Gif](https://github.com/electr0sheep/sn-integrations-plugin/blob/master/resources/sn-integrations-plugin-autocomplete.gif)
+![Autocomplete Gif](./resources/sn-integrations-plugin-autocomplete.gif)
 
 ### JSON Beautifier
-![JSON Beautifier Gif](https://github.com/electr0sheep/sn-integrations-plugin/blob/master/resources/sn-integrations-plugin-beautify.gif)
+![JSON Beautifier Gif](./resources/sn-integrations-plugin-beautify.gif)
 
 ### Generate Boilerplate
-![Boilerplate Gif](https://github.com/electr0sheep/sn-integrations-plugin/blob/master/resources/sn-integrations-plugin-boilerplate.gif)
+![Boilerplate Gif](./resources/sn-integrations-plugin-boilerplate.gif)
 
 ### SICK touchbar integration!
-![Touchbar PNG](https://github.com/electr0sheep/sn-integrations-plugin/blob/master/resources/sn-integrations-plugin-touchbar.png)
+![Touchbar PNG](./resources/sn-integrations-plugin-touchbar.png)
 
 ## Installation
 Clone the repo  
