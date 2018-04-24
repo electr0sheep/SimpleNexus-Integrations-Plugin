@@ -1955,10 +1955,10 @@
       "required": false
     },
     {
-      "min": 0,
+      "min": 9,
       "title": "SSN",
       "key": "coborrower_ssn",
-      "max": 0,
+      "max": 9,
       "description": "Co-Borrower's SSN",
       "type": "ssn",
       "required": false
@@ -3710,10 +3710,10 @@
       "max": 0
     },
     {
-      "min": 0,
+      "min": 9,
       "title": "SSN",
       "key": "ssn",
-      "max": 0,
+      "max": 9,
       "description": "Borrower's SSN",
       "type": "ssn",
       "required": false
