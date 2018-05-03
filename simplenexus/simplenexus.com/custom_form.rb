@@ -161,6 +161,7 @@ class CustomForm < ActiveRecord::Base
       set_value form_def, 'loan_number', loan.loan_number
       set_value form_def, 'interest_rate', loan.interest_rate
       set_value form_def, 'down_payment_percent', loan.downpayment_pct
+      set_value form_def, 'down_payment_amount', loan.downpayment_amount
       set_value form_def, 'down_payment', loan.cash_from_borrower
       set_value form_def, 'property_address', loan.loan_property&.street
       set_value form_def, 'property_city', loan.loan_property&.city
@@ -224,6 +225,7 @@ class CustomForm < ActiveRecord::Base
       set_value form_def, 'loan_number', loan.loan_number
       set_value form_def, 'interest_rate', loan.interest_rate
       set_value form_def, 'down_payment_percent', loan.downpayment_pct
+      set_value form_def, 'down_payment_amount', loan.downpayment_amount
       set_value form_def, 'down_payment', loan.cash_from_borrower
       set_value form_def, 'property_address', loan.remote_loan_property&.street
       set_value form_def, 'property_city', loan.remote_loan_property&.city
