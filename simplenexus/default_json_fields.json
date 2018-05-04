@@ -3654,17 +3654,12 @@
     },
     {
       "min": 0,
-      "title": "",
+      "title": "I am ready to submit the loan app",
       "key": "ready_to_submit",
       "max": 0,
-      "description": "",
+      "description": "I am ready to submit the loan app",
       "required": true,
-      "type": "single_choice",
-      "choices": [
-        "",
-        "Yes",
-        "No"
-      ]
+      "type": "agreement"
     },
     {
       "min": 0,
