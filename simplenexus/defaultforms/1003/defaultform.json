@@ -40,15 +40,25 @@
     },
     {
       "fields": [
-        "ssn"
-      ],
-      "instructions": "Please enter your social security number. This is secure & encrypted."
-    },
-    {
-      "fields": [
         "credit_authorization"
       ],
       "instructions": "Borrower Credit Authorization"
+    },
+    {
+    "condition": "credit_authorization",
+    "conditionValue": "1",
+    "fields": [
+      "ssn_required"
+    ],
+    "instructions": "Please enter your social security number. This is secure & encrypted."
+    },
+    {
+      "condition": "credit_authorization",
+      "conditionValue": "0",
+      "fields": [
+        "ssn"
+      ],
+      "instructions": "Please enter your social security number. This is secure & encrypted."
     },
     {
       "fields": [
@@ -305,11 +315,20 @@
       "instructions": "Co-Borrower Credit Authorization"
     },
     {
-      "condition": "has_coborrower",
+    "condition": "coborrower_credit_authorization",
+    "conditionValue": "1",
+    "fields": [
+      "coborrower_ssn_required"
+    ],
+    "instructions": "Please enter Co-Borrower's social security number."
+    },
+    {
+      "condition": "coborrower_credit_authorization",
+      "conditionValue": "0",
       "fields": [
         "coborrower_ssn"
       ],
-      "instructions": "Please enter Co-Borrower's social security number & date of birth."
+      "instructions": "Please enter Co-Borrower's social security number."
     },
     {
       "condition": "has_coborrower",
@@ -576,6 +595,24 @@
     },
     {
       "min": 0,
+      "title": "SSN",
+      "key": "ssn_required",
+      "max": 0,
+      "description": "",
+      "type": "ssn",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "SSN",
+      "key": "coborrower_ssn_required",
+      "max": 0,
+      "description": "",
+      "type": "ssn",
+      "required": true
+    },
+    {
+      "min": 0,
       "title": "Cell Phone",
       "key": "borrower_cell_phone",
       "max": 17,
@@ -608,8 +645,8 @@
       "text": "During your mortgage loan application process, this institution performs a credit check that requires us to obtain and confirm information regarding your personal and financial background. This credit check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "credit_authorization",
       "description": "",
-      "required": false,
-      "type": "agreement",
+      "required": true,
+      "type": "boolean",
       "max": 0
     },
     {
@@ -1333,8 +1370,8 @@
       "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "coborrower_credit_authorization",
       "description": "",
-      "required": false,
-      "type": "agreement",
+      "required": true,
+      "type": "boolean",
       "max": 0
     },
     {
