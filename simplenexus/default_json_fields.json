@@ -24,6 +24,7 @@
         "borrower_authorization",
         "borrower_cell_phone",
         "borrower_home_phone",
+        "borrower_is_employed",
         "borrower_previous_employer_address",
         "borrower_previous_employer_city",
         "borrower_previous_employer_months",
@@ -40,7 +41,9 @@
         "branch_of_service",
         "checking_account",
         "city",
+        "city_required",
         "coborrower_address",
+        "coborrower_address_required",
         "coborrower_alimony_amount",
         "coborrower_alimony_payment",
         "coborrower_asian_origin_other",
@@ -52,6 +55,7 @@
         "coborrower_cell_phone",
         "coborrower_checking_account",
         "coborrower_city",
+        "coborrower_city_required",
         "coborrower_commission",
         "coborrower_commissions",
         "coborrower_credit_authorization",
@@ -89,6 +93,7 @@
         "coborrower_intend_to_occupy",
         "coborrower_is_comaker_or_endorser",
         "coborrower_is_comaker_or_endorser_explanation",
+        "coborrower_is_employed",
         "coborrower_is_firsttimer",
         "coborrower_is_permanent_resident",
         "coborrower_is_primary_residence",
@@ -160,23 +165,29 @@
         "coborrower_real_estate_own_2_address",
         "coborrower_real_estate_own_2_city",
         "coborrower_real_estate_own_2_state",
+        "coborrower_real_estate_own_2_zip",
         "coborrower_real_estate_own_3_address",
         "coborrower_real_estate_own_3_city",
         "coborrower_real_estate_own_3_state",
+        "coborrower_real_estate_own_3_zip",
         "coborrower_real_estate_own_type_of_property_1",
         "coborrower_real_estate_own_type_of_property_2",
         "coborrower_real_estate_own_type_of_property_3",
         "coborrower_savings_account",
         "coborrower_school_years",
         "coborrower_ssn",
+        "coborrower_ssn_required",
         "coborrower_state",
+        "coborrower_state_required",
         "coborrower_suffix",
         "coborrower_two_years_at_current_address",
         "coborrower_two_years_at_current_employer",
         "coborrower_work_phone",
         "coborrower_zip",
+        "coborrower_zip_required",
         "commission",
         "commissions",
+        "contacts_agent_cell",
         "contacts_agent_company",
         "contacts_agent_email",
         "contacts_agent_name",
@@ -242,6 +253,7 @@
         "is_us_citizen",
         "is_veteran",
         "job_title",
+        "joint_credit",
         "last_name",
         "lead_source",
         "legal_name_borrower",
@@ -259,10 +271,12 @@
         "marital_status",
         "middle_name",
         "military_explanation",
+        "monthly_hazard_insurance_premium",
         "monthly_house_expense",
         "monthly_housing_expense",
         "monthly_income",
         "monthly_liabilities",
+        "monthly_real_estate_tax",
         "mortgage_and_liens_1",
         "mortgage_and_liens_2",
         "mortgage_and_liens_3",
@@ -302,6 +316,7 @@
         "privacy_agreement",
         "privacy_policy_disclaimer",
         "proof_of_income",
+        "property_address",
         "property_city",
         "property_months",
         "property_number_of_units",
@@ -319,6 +334,8 @@
         "race",
         "race_american_indian_other",
         "race_asian",
+        "ready_to_submit",
+        "ready_to_submit_phase_one",
         "real_estate_own_1_address",
         "real_estate_own_1_city",
         "real_estate_own_1_state",
@@ -342,6 +359,7 @@
         "ssn",
         "ssn_required",
         "state",
+        "state_required",
         "suffix",
         "title_held",
         "two_years_at_current_address",
@@ -351,11 +369,13 @@
         "type_of_service",
         "under_contract",
         "va_benefits",
+        "verification_of_assets",
         "verify_borrower_answer",
         "verify_borrower_question",
         "work_phone",
         "working_with_realtor",
-        "zip"
+        "zip",
+        "zip_required"
       ]
     }
   ],
@@ -383,9 +403,13 @@
       "required": false
     },
     {
+      "min": 0,
+      "title": "Street Address",
       "key": "address_required",
-      "type": "info",
-      "text": "If you agreed to Credit Authorization, your address is required information"
+      "max": 0,
+      "description": "Street Address",
+      "type": "text",
+      "required": true
     },
     {
       "min": 0,
@@ -560,11 +584,18 @@
     },
     {
       "min": 0,
-      "title": "Phone",
+      "title": "Home Phone",
       "key": "borrower_home_phone",
       "max": 0,
-      "description": "Phone Number",
+      "description": "Home Phone Number",
       "type": "phone",
+      "required": false
+    },
+    {
+      "title": "Self-employed?",
+      "description": "Self-employed?",
+      "key": "borrower_is_employed",
+      "type": "boolean",
       "required": false
     },
     {
@@ -715,9 +746,27 @@
       "required": false
     },
     {
+      "min": 1,
+      "title": "City",
+      "key": "city_required",
+      "max": 22,
+      "description": "",
+      "type": "text",
+      "required": true
+    },
+    {
       "min": 0,
       "title": "Street Address",
       "key": "coborrower_address",
+      "max": 0,
+      "description": "Co-Borrower's Street Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Street Address",
+      "key": "coborrower_address_required",
       "max": 0,
       "description": "Co-Borrower's Street Address",
       "type": "text",
@@ -826,6 +875,15 @@
     },
     {
       "min": 0,
+      "title": "City",
+      "key": "coborrower_city_required",
+      "max": 0,
+      "description": "Co-Borrower's City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Commission",
       "key": "coborrower_commission",
       "max": 0,
@@ -845,7 +903,7 @@
     {
       "placeholder": "",
       "min": 0,
-      "title": "I authorize this Credit Check. *",
+      "title": "I authorize this Credit Check.",
       "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "coborrower_credit_authorization",
       "description": "",
@@ -1045,8 +1103,7 @@
       ],
       "min_choices": 0,
       "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your gender"
+      "required": false
     },
     {
       "min": 0,
@@ -1152,7 +1209,7 @@
       "title": "Home Phone",
       "key": "coborrower_home_phone",
       "max": "17",
-      "description": "Home Phone",
+      "description": "Coborrower Home Phone",
       "type": "phone",
       "required": false
     },
@@ -1181,6 +1238,13 @@
       "max": 0,
       "description": "Co-maker or endorser explanation",
       "type": "text",
+      "required": false
+    },
+    {
+      "title": "Self-employed?",
+      "description": "Self-employed?",
+      "key": "coborrower_is_employed",
+      "type": "boolean",
       "required": false
     },
     {
@@ -1509,10 +1573,10 @@
     },
     {
       "min": 0,
-      "title": "Did you own your previous property?*",
+      "title": "Did you own your previous property?",
       "key": "coborrower_prev_property_own",
       "max": 0,
-      "description": "Did you own your previous property?*",
+      "description": "Did you own your previous property?",
       "type": "boolean",
       "required": false
     },
@@ -1692,19 +1756,19 @@
     },
     {
       "min": 0,
-      "title": "Can the Co-Borrower provide proof of income (for example, W-2 forms, pay stubs, or tax forms)?*",
+      "title": "Can the Co-Borrower provide proof of income (for example, W-2 forms, pay stubs, or tax forms)?",
       "key": "coborrower_proof_of_income",
       "max": 0,
-      "description": "Can the Co-Borrower provide proof of income (for example, W-2 forms, pay stubs, or tax forms)?*",
+      "description": "Can the Co-Borrower provide proof of income (for example, W-2 forms, pay stubs, or tax forms)?",
       "type": "boolean",
       "required": true
     },
     {
       "min": 0,
-      "title": "Months at this Address:",
+      "title": "Months at Current Address",
       "key": "coborrower_property_months",
       "max": 0,
-      "description": "Months at this Address:",
+      "description": "Coborrower's Months at Current Address",
       "type": "integer",
       "required": false
     },
@@ -1722,7 +1786,7 @@
       "title": "Years at Current Address",
       "key": "coborrower_property_years",
       "max": 0,
-      "description": "Co-Borrower Years at Current Address",
+      "description": "Co-Borrower's Years at Current Address",
       "type": "integer",
       "required": false
     },
@@ -1771,8 +1835,7 @@
       ],
       "min_choices": 0,
       "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your race"
+      "required": false
     },
     {
       "min": 0,
@@ -1865,6 +1928,15 @@
       "required": false
     },
     {
+      "min": 0,
+      "title": "Zip code",
+      "key": "coborrower_real_estate_own_2_zip",
+      "max": 0,
+      "description": "Zip code",
+      "type": "zip",
+      "required": false
+    },
+    {
       "min": "0",
       "title": "Street Address",
       "key": "coborrower_real_estate_own_3_address",
@@ -1889,6 +1961,15 @@
       "max": "0",
       "description": "State",
       "type": "state",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Zip code",
+      "key": "coborrower_real_estate_own_3_zip",
+      "max": 0,
+      "description": "Zip code",
+      "type": "zip",
       "required": false
     },
     {
@@ -1955,13 +2036,22 @@
       "required": false
     },
     {
-      "min": 0,
+      "min": 9,
       "title": "SSN",
       "key": "coborrower_ssn",
-      "max": 0,
+      "max": 9,
       "description": "Co-Borrower's SSN",
       "type": "ssn",
       "required": false
+    },
+    {
+      "min": 9,
+      "title": "SSN",
+      "key": "coborrower_ssn_required",
+      "max": 9,
+      "description": "Co-Borrower's SSN",
+      "type": "ssn",
+      "required": true
     },
     {
       "min": 0,
@@ -1972,6 +2062,16 @@
       "allowAllStates": true,
       "type": "state",
       "required": false
+    },
+    {
+      "min": 0,
+      "title": "State",
+      "key": "coborrower_state_required",
+      "max": 0,
+      "description": "Co-Borrower's State",
+      "allowAllStates": true,
+      "type": "state",
+      "required": true
     },
     {
       "min": 0,
@@ -2020,6 +2120,15 @@
     },
     {
       "min": 0,
+      "title": "Zipcode",
+      "key": "coborrower_zip_required",
+      "max": 0,
+      "description": "Co-Borrower's Zipcode",
+      "type": "zip",
+      "required": true
+    },
+    {
+      "min": 0,
       "title": "Commission",
       "key": "commission",
       "max": 0,
@@ -2033,6 +2142,15 @@
       "key": "commissions",
       "max": 0,
       "description": "Borrower's Commission",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Agent's Cell Phone Number",
+      "key": "contacts_agent_cell",
+      "max": 0,
+      "description": "Agent's Cell Phone Number",
       "type": "text",
       "required": false
     },
@@ -2404,8 +2522,7 @@
       ],
       "min_choices": 0,
       "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your gender"
+      "required": false
     },
     {
       "min": 0,
@@ -2705,6 +2822,12 @@
       "required": false
     },
     {
+      "key": "joint_credit",
+      "type": "boolean",
+      "title": "Jointly applying for credit",
+      "description": "Jointly applying for credit"
+    },
+    {
       "placeholder": "last name",
       "min": 1,
       "title": "Last Name",
@@ -2899,6 +3022,13 @@
       ]
     },
     {
+      "key": "monthly_hazard_insurance_premium",
+      "type": "currency",
+      "min": 0,
+      "description": "How much is the monthly hazard insurance premium?",
+      "title": "How much is the monthly hazard insurance premium?"
+    },
+    {
       "min": 0,
       "title": "Current Housing Payment",
       "key": "monthly_house_expense",
@@ -2937,6 +3067,13 @@
       "description": "Monthly Liabilities (alimony, child support)",
       "type": "currency",
       "required": false
+    },
+    {
+      "key": "monthly_real_estate_tax",
+      "type": "currency",
+      "min": 0,
+      "description": "How much is the monthly real estate tax/maintenance?",
+      "title": "How much is the monthly real estate tax/maintenance?"
     },
     {
       "min": 0,
@@ -3195,10 +3332,10 @@
     },
     {
       "min": 0,
-      "title": "Did you own your previous property?*",
+      "title": "Did you own your previous property?",
       "key": "prev_property_own",
       "max": 0,
-      "description": "Did you own your previous property?*",
+      "description": "Did you own your previous property?",
       "type": "boolean",
       "required": false
     },
@@ -3296,12 +3433,21 @@
     },
     {
       "min": 0,
-      "title": "Can you provide proof of income (for example, W-2 forms, pay stubs, or tax forms)?*",
+      "title": "Can you provide proof of income (for example, W-2 forms, pay stubs, or tax forms)?",
       "key": "proof_of_income",
       "max": 0,
-      "description": "Can you provide proof of income (for example, W-2 forms, pay stubs, or tax forms)?*",
+      "description": "Can you provide proof of income (for example, W-2 forms, pay stubs, or tax forms)?",
       "type": "boolean",
       "required": true
+    },
+    {
+      "min": 0,
+      "title": "Property Address",
+      "key": "property_address",
+      "max": 0,
+      "description": "Property Address",
+      "type": "text",
+      "required": false
     },
     {
       "min": 0,
@@ -3317,7 +3463,7 @@
       "title": "Months at Current Address",
       "key": "property_months",
       "max": 0,
-      "description": "Months at Current Address",
+      "description": "Borrower's Months at Current Address",
       "type": "integer",
       "required": false
     },
@@ -3393,7 +3539,7 @@
       "title": "Years at Current Address",
       "key": "property_years",
       "max": 0,
-      "description": "Years at Current Address",
+      "description": "Borrower's Years at Current Address",
       "type": "integer",
       "required": false
     },
@@ -3477,8 +3623,7 @@
       ],
       "min_choices": 0,
       "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your race"
+      "required": false
     },
     {
       "min": 0,
@@ -3506,6 +3651,24 @@
       "description": "Asian Origin",
       "type": "single_choice",
       "required": true
+    },
+    {
+      "min": 0,
+      "title": "I am ready to submit the loan app",
+      "key": "ready_to_submit",
+      "max": 0,
+      "description": "I am ready to submit the loan app",
+      "required": true,
+      "type": "agreement"
+    },
+    {
+      "min": 0,
+      "title": "I am finished with phase one",
+      "key": "ready_to_submit_phase_one",
+      "max": 0,
+      "description": "I am finished with phase one",
+      "required": true,
+      "type": "agreement"
     },
     {
       "min": "0",
@@ -3710,18 +3873,22 @@
       "max": 0
     },
     {
-      "min": 0,
+      "min": 9,
       "title": "SSN",
       "key": "ssn",
-      "max": 0,
+      "max": 9,
       "description": "Borrower's SSN",
       "type": "ssn",
       "required": false
     },
     {
+      "min": 0,
+      "title": "SSN",
       "key": "ssn_required",
-      "type": "info",
-      "text": "If you agreed to Credit Authorization, your Social Security Number is required information"
+      "max": 0,
+      "description": "Borrower's SSN",
+      "type": "ssn",
+      "required": true
     },
     {
       "min": 0,
@@ -3732,6 +3899,16 @@
       "type": "state",
       "allowAllStates": true,
       "required": false
+    },
+    {
+      "min": 0,
+      "title": "State",
+      "key": "state_required",
+      "max": 0,
+      "description": "",
+      "type": "state",
+      "allowAllStates": true,
+      "required": true
     },
     {
       "placeholder": "suffix",
@@ -3833,9 +4010,20 @@
       "required": false
     },
     {
+      "title": "Have you used VA benefits before?",
+      "description": "Have you used VA benefits before?",
       "key": "va_benefits",
       "type": "boolean",
       "required": false
+    },
+    {
+      "header_text": "Don't worry, you don't need to count what's in your piggy bank. But we can make it easier by automatically checking your bank accounts for you. Plus it'll help us get you accurate mortgage options.",
+      "key": "verification_of_assets",
+      "type": "verification_of_assets",
+      "required": false,
+      "primary_button_label": "AUTOMATIC CHECK",
+      "secondary_button_label": "MANUALLY ENTER",
+      "footer_text": "By clicking the button above, you agree that our trusted partners have permission to share your account information in the loan application process. Your information is subject to the Terms of Use and Privacy Policy of your mortgage company."
     },
     {
       "min": 0,
@@ -3888,6 +4076,15 @@
       "description": "Borrower's Zipcode",
       "type": "zip",
       "required": false
+    },
+    {
+      "min": 0,
+      "title": "Zipcode",
+      "key": "zip_required",
+      "max": 0,
+      "description": "",
+      "type": "zip",
+      "required": true
     }
   ],
   "version": ""

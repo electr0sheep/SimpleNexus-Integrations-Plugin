@@ -23,9 +23,26 @@
         "state",
         "zip",
         "property_own",
-        "property_years"
+        "current_address_two_years"
       ],
       "instructions": "Please enter your current address"
+    },
+    {
+      "fields": [
+        "property_years"
+      ],
+      "instructions": "How long have you lived at your current address?"
+    },
+    {
+      "condition": "current_address_two_years",
+      "conditionValue": "0",
+      "fields": [
+        "prev_address",
+        "prev_city",
+        "prev_state",
+        "prev_zip"
+      ],
+      "instructions": "Please enter your previous address"
     },
     {
       "fields": [
@@ -40,25 +57,15 @@
     },
     {
       "fields": [
-        "credit_authorization"
-      ],
-      "instructions": "Borrower Credit Authorization"
-    },
-    {
-    "condition": "credit_authorization",
-    "conditionValue": "Yes",
-    "fields": [
-      "ssn_required"
-    ],
-    "instructions": "Please enter your social security number. This is secure & encrypted."
-    },
-    {
-      "condition": "credit_authorization",
-      "conditionValue": "No",
-      "fields": [
         "ssn"
       ],
       "instructions": "Please enter your social security number. This is secure & encrypted."
+    },
+    {
+      "fields": [
+        "credit_authorization"
+      ],
+      "instructions": "Borrower Credit Authorization"
     },
     {
       "fields": [
@@ -79,6 +86,7 @@
       "fields": [
         "purchase_price",
         "down_payment_pct",
+        "loan_amount",
         "loan_term"
       ],
       "instructions": "Please enter the loan amount requested"
@@ -87,6 +95,7 @@
       "condition": "loan_purpose",
       "conditionValue": "Refinance",
       "fields": [
+        "loan_amount",
         "loan_term"
       ],
       "instructions": "Please enter loan amount and term requested"
@@ -105,6 +114,7 @@
       "condition": "loan_purpose",
       "conditionValue": "Cash-Out Refinance",
       "fields": [
+        "loan_amount",
         "loan_term"
       ],
       "instructions": "Please enter loan amount and term requested"
@@ -133,6 +143,7 @@
     {
       "condition": "under_contract",
       "fields": [
+        "property_street",
         "property_city",
         "property_state",
         "property_zip"
@@ -143,6 +154,7 @@
       "condition": "loan_purpose",
       "conditionValue": "Refinance",
       "fields": [
+        "property_street",
         "property_city",
         "property_state",
         "property_zip"
@@ -153,6 +165,7 @@
       "condition": "loan_purpose",
       "conditionValue": "Cash-Out Refinance",
       "fields": [
+        "property_street",
         "property_city",
         "property_state",
         "property_zip"
@@ -194,13 +207,20 @@
       "instructions": "What was the purpose of your other property?"
     },
     {
+      "fields": [
+        "provide_demographics"
+      ],
+      "instructions": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below."
+    },
+    {
       "condition": "has_alimony",
       "fields": [
         "alimony_amount"
       ],
-      "instructions": "What is the amount of your alimony and/or child support?"
+      "instructions": "What is the amount of your alimony or child support?"
     },
     {
+      "condition": "provide_demographics",
       "fields": [
         "ethnicity",
         "race",
@@ -210,6 +230,14 @@
     },
     {
       "condition": "ethnicity",
+      "conditionValue": "Hispanic or Latino",
+      "fields": [
+        "ethnicity_latino"
+      ],
+      "instructions": "Please answer ethnicity question"
+    },
+    {
+      "condition": "ethnicity_latino",
       "conditionValue": "Other Hispanic or Latino",
       "fields": [
         "other_hispanic_or_latino_origin"
@@ -226,6 +254,14 @@
     },
     {
       "condition": "race",
+      "conditionValue": "Asian",
+      "fields": [
+        "race_asian"
+      ],
+      "instructions": "Please answer race question"
+    },
+    {
+      "condition": "race_asian",
       "conditionValue": "Other Asian",
       "fields": [
         "asian_origin_other"
@@ -234,6 +270,14 @@
     },
     {
       "condition": "race",
+      "conditionValue": "Native Hawaiian or Other Pacific Islander",
+      "fields": [
+        "pacific_islander"
+      ],
+      "instructions": "Please answer race question"
+    },
+    {
+      "condition": "pacific_islander",
       "conditionValue": "Other Pacific Islander",
       "fields": [
         "pacific_islander_other"
@@ -266,9 +310,27 @@
         "coborrower_state",
         "coborrower_zip",
         "coborrower_property_own",
-        "coborrower_property_years"
+        "coborrower_two_years_at_current_address"
       ],
       "instructions": "Please enter your Co-Borrower's current address"
+    },
+    {
+      "condition": "has_coborrower",
+      "fields": [
+        "coborrower_property_years"
+      ],
+      "instructions": "How long has your Co-Borrower lived at their current address"
+    },
+    {
+      "condition": "coborrower_two_years_at_current_address",
+      "conditionValue": "0",
+      "fields": [
+        "coborrower_prev_address",
+        "coborrower_prev_city",
+        "coborrower_prev_state",
+        "coborrower_prev_zip"
+      ],
+      "instructions": "How long did your Co-Borrower live at their previous address"
     },
     {
       "condition": "has_coborrower",
@@ -278,22 +340,12 @@
       "instructions": "Co-Borrower Credit Authorization"
     },
     {
-    "condition": "coborrower_credit_authorization",
-    "conditionValue": "Yes",
-    "fields": [
-      "coborrower_ssn_required",
-      "coborrower_dob"
-    ],
-    "instructions": "Please enter your social security number. This is secure & encrypted."
-    },
-    {
-      "condition": "coborrower_credit_authorization",
-      "conditionValue": "No",
+      "condition": "has_coborrower",
       "fields": [
         "coborrower_ssn",
         "coborrower_dob"
       ],
-      "instructions": "Please enter your social security number. This is secure & encrypted."
+      "instructions": "Please enter your Co-Borrower's social security number & date of birth."
     },
     {
       "condition": "has_coborrower",
@@ -336,14 +388,14 @@
       "instructions": "What was the purpose of your other property?"
     },
     {
-      "condition": "coborrower_has_alimony",
+      "condition": "has_coborrower",
       "fields": [
-        "coborrower_alimony_amount"
+        "coborrower_provide_demographics"
       ],
-      "instructions": "What is the amount of your alimony and/or child support?"
+      "instructions": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below."
     },
     {
-      "condition": "has_coborrower",
+      "condition": "coborrower_provide_demographics",
       "fields": [
         "coborrower_ethnicity",
         "coborrower_race",
@@ -353,6 +405,14 @@
     },
     {
       "condition": "coborrower_ethnicity",
+      "conditionValue": "Hispanic or Latino",
+      "fields": [
+        "coborrower_ethnicity_latino"
+      ],
+      "instructions": "Please answer ethnicity question"
+    },
+    {
+      "condition": "coborrower_ethnicity_latino",
       "conditionValue": "Other Hispanic or Latino",
       "fields": [
         "coborrower_other_hispanic_or_latino_origin"
@@ -369,6 +429,14 @@
     },
     {
       "condition": "coborrower_race",
+      "conditionValue": "Asian",
+      "fields": [
+        "coborrower_race_asian"
+      ],
+      "instructions": "Please answer race question"
+    },
+    {
+      "condition": "coborrower_race_asian",
       "conditionValue": "Other Asian",
       "fields": [
         "coborrower_asian_origin_other"
@@ -377,6 +445,14 @@
     },
     {
       "condition": "coborrower_race",
+      "conditionValue": "Native Hawaiian or Other Pacific Islander",
+      "fields": [
+        "coborrower_pacific_islander"
+      ],
+      "instructions": "Please answer race question"
+    },
+    {
+      "condition": "coborrower_pacific_islander",
       "conditionValue": "Other Pacific Islander",
       "fields": [
         "coborrower_pacific_islander_other"
@@ -397,10 +473,7 @@
       "instructions": "Borrower econsent"
     }
   ],
-  "values": {
-    "provide_demographics": "1",
-    "coborrower_provide_demographics": "1"
-  },
+  "values": {},
   "fields": [
     {
       "min": 0,
@@ -411,7 +484,6 @@
       "type": "single_choice",
       "required": false,
       "choices": [
-        "",
         "Purchase",
         "Refinance",
         "Cash-Out Refinance"
@@ -505,11 +577,56 @@
     },
     {
       "min": 0,
+      "title": "Have you been at your current address for at least 2 years?",
+      "key": "current_address_two_years",
+      "max": 0,
+      "description": "Have you been at your current address for at least 2 years?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Years at Current Address",
       "key": "property_years",
       "max": 0,
       "description": "Years at Current Address",
       "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Street Address",
+      "key": "prev_address",
+      "max": 0,
+      "description": "Street Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 1,
+      "title": "City",
+      "key": "prev_city",
+      "max": 22,
+      "description": "Borrower's City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "State",
+      "key": "prev_state",
+      "max": 0,
+      "description": "Borrower's State",
+      "type": "state",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Zipcode",
+      "key": "prev_zip",
+      "max": 0,
+      "description": "Borrower's Zipcode",
+      "type": "zip",
       "required": false
     },
     {
@@ -541,30 +658,12 @@
     },
     {
       "min": 0,
-      "title": "Home Phone",
+      "title": "Phone",
       "key": "borrower_home_phone",
       "max": 0,
-      "description": "Home Phone Number",
+      "description": "Phone Number",
       "type": "phone",
       "required": false
-    },
-    {
-      "min": 0,
-      "title": "SSN",
-      "key": "ssn_required",
-      "max": 0,
-      "description": "",
-      "type": "ssn",
-      "required": true
-    },
-    {
-      "min": 0,
-      "title": "SSN",
-      "key": "coborrower_ssn_required",
-      "max": 0,
-      "description": "",
-      "type": "ssn",
-      "required": true
     },
     {
       "min": 0,
@@ -596,17 +695,12 @@
     {
       "placeholder": "",
       "min": 0,
-      "title": "I authorize this Credit Check.",
-      "text": "During your mortgage loan application process, this institution performs a credit check that requires us to obtain and confirm information regarding your personal and financial background. This credit check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
+      "title": "I authorize this credit check.",
+      "text": "I/we authorize Alterra Group, LLC and/or it's DBA's Alterra Group, LLC, its DBA's Alterra Home Loans, Alterra Mortgage, LeverageRX Mortgage, Alterra Home Loans Legacy, to obtain a consume credit report. During your mortgage loan application process, this institution performs a credit check that requires us to obtain a consumer report and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, verifying your past and current and employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "credit_authorization",
       "description": "",
-      "choices": [
-        "",
-        "Yes",
-        "No"
-      ],
-      "required": true,
-      "type": "single_choice",
+      "required": false,
+      "type": "agreement",
       "max": 0
     },
     {
@@ -695,7 +789,6 @@
       "min": 0,
       "title": "Down Payment %",
       "choices": [
-        "",
         "0.0",
         "3.0",
         "3.5",
@@ -714,9 +807,17 @@
     },
     {
       "min": 0,
+      "title": "Requested Loan Amount",
+      "key": "loan_amount",
+      "max": 0,
+      "description": "Requested Amount of Loan",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Loan Term (Calculated in months, this is for 30, 15 and 10 years)",
       "choices": [
-        "",
         "360",
         "180",
         "120"
@@ -744,7 +845,6 @@
       "description": "Property Type",
       "type": "single_choice",
       "choices": [
-        "",
         "Single Family",
         "Condo",
         "Multi-Unit Property",
@@ -763,7 +863,6 @@
       "type": "single_choice",
       "required": false,
       "choices": [
-        "",
         "Primary Residence",
         "Secondary Residence",
         "Investment"
@@ -790,12 +889,21 @@
     },
     {
       "min": 0,
+      "title": "Property Street Address",
+      "key": "property_street",
+      "max": 0,
+      "description": "Property Street Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Property City",
       "key": "property_city",
       "max": 0,
       "description": "Property City",
       "type": "text",
-      "required": false
+      "required": true
     },
     {
       "min": 0,
@@ -814,6 +922,24 @@
       "description": "Property Zip",
       "type": "zip",
       "required": true
+    },
+    {
+      "min": 0,
+      "title": "Property Street Address",
+      "key": "property_street",
+      "max": 0,
+      "description": "Property Street Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Property Street Address",
+      "key": "property_street",
+      "max": 0,
+      "description": "Property Street Address",
+      "type": "text",
+      "required": false
     },
     {
       "min": 0,
@@ -968,7 +1094,6 @@
       "type": "single_choice",
       "required": false,
       "choices": [
-        "",
         "Primary Residence",
         "Second Home",
         "Investment Property"
@@ -983,7 +1108,6 @@
       "type": "single_choice",
       "required": false,
       "choices": [
-        "",
         "Sole Ownership",
         "Joint With Spouse",
         "Joint With Other Than Spouse"
@@ -991,110 +1115,154 @@
     },
     {
       "min": 0,
-      "title": "Alimony and/or Child Support Amount",
+      "title": "Provide demographic information?",
+      "key": "provide_demographics",
+      "max": 0,
+      "description": "Would you like to enter demographic information?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Alimony Amount",
       "key": "alimony_amount",
       "max": 0,
-      "description": "Alimony and/or Child Support Amount",
+      "description": "Alimony Amount",
       "type": "currency",
       "required": false
     },
     {
       "min": 0,
       "title": "Ethnicity",
+      "choices": [
+        "",
+        "Not Hispanic or Latino",
+        "Hispanic or Latino",
+        "Information not provided"
+      ],
       "key": "ethnicity",
       "max": 0,
-      "description": "Ethnicity",
-      "type": "multi_choice",
-      "choices": [
-        "Hispanic or Latino",
-        "Mexican",
-        "Puerto Rican",
-        "Cuban",
-        "Other Hispanic or Latino",
-        "Not Hispanic or Latino",
-        "I do not wish to provide this information",
-        "Not Applicable"
-      ],
+      "description": "Borrower Ethnicity",
+      "type": "single_choice",
       "required": false
     },
     {
-      "key": "race",
-      "title": "What is your race?",
-      "description": "What is your race?",
-      "type": "multi_choice",
+      "min": 0,
+      "title": "Race",
       "choices": [
+        "",
         "American Indian or Alaska Native",
         "Asian",
+        "Black or African American",
+        "Native Hawaiian or Other Pacific Islander",
+        "White",
+        "Information not provided"
+      ],
+      "key": "race",
+      "max": 0,
+      "description": "Borrower Race",
+      "type": "single_choice",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Gender",
+      "choices": [
+        "",
+        "Male",
+        "Female",
+        "I do not wish to provide this information"
+      ],
+      "key": "gender",
+      "max": 0,
+      "description": "Borrower Gender",
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Ethnicity Latino",
+      "key": "ethnicity_latino",
+      "max": 0,
+      "description": "Ethnicity Latino",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Mexican",
+        "Puerto Rican",
+        "Cuban",
+        "Other Hispanic or Latino"
+      ],
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Enter Hispanic or Latino Origin",
+      "key": "other_hispanic_or_latino_origin",
+      "max": 0,
+      "description": "Enter Hispanic or Latino Origin",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "American Indian or Alaska Native Origin",
+      "key": "race_american_indian_other",
+      "max": 0,
+      "description": "American Indian or Alaska Native Origin",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Asian Origin",
+      "choices": [
+        "",
         "Asian Indian",
         "Chinese",
         "Filipino",
         "Japanese",
         "Korean",
         "Vietnamese",
-        "Other Asian",
-        "Black or African American",
-        "Native Hawaiian or Other Pacific Islander",
+        "Other Asian"
+      ],
+      "key": "race_asian",
+      "max": 0,
+      "description": "Asian Origin",
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Asian Origin",
+      "key": "asian_origin_other",
+      "max": 0,
+      "description": "Asian Origin",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Pacific Islander Origin",
+      "choices": [
+        "",
         "Native Hawaiian",
         "Guamanian or Chamorro",
         "Samoan",
-        "Other Pacific Islander",
-        "White",
-        "I do not wish to provide this information",
-        "Not applicable"
+        "Other Pacific Islander"
       ],
-      "min_choices": 0,
-      "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your race"
-    },
-    {
-      "key": "gender",
-      "title": "What is your gender?",
-      "description": "What is your gender?",
-      "type": "multi_choice",
-      "choices": [
-        "Male",
-        "Female",
-        "I do not wish to provide this information"
-      ],
-      "min_choices": 0,
-      "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your gender"
-    },
-    {
-      "min": 0,
-      "title": "Please enter your Hispanic or Latino Origin",
-      "key": "other_hispanic_or_latino_origin",
+      "key": "pacific_islander",
       "max": 0,
-      "description": "For example: Argentinean, Colombian, Dominican, Nicaraguan, Salvadoran, Spaniard, and so on",
-      "type": "text",
-      "required": false
+      "description": "Pacific Islander Origin",
+      "type": "single_choice",
+      "required": true
     },
     {
       "min": 0,
-      "title": "Please enter the name of your tribe",
-      "key": "race_american_indian_other",
-      "max": 0,
-      "description": "Name of enrolled or principle tribe",
-      "type": "text",
-      "required": false
-    },
-    {
-      "min": 0,
-      "title": "Please enter your Asian Origin",
-      "key": "asian_origin_other",
-      "max": 0,
-      "description": "For example: Hmong, Laotian, Thai, Pakistani, Cambodian, and so on",
-      "type": "text",
-      "required": false
-    },
-    {
-      "min": 0,
-      "title": "Please enter your Pacific Islander Origin",
+      "title": "Pacific Islander Origin",
       "key": "pacific_islander_other",
       "max": 0,
-      "description": "For example: Fijian, Tongan, and so on",
+      "description": "Pacific Islander Origin",
       "type": "text",
       "required": false
     },
@@ -1208,6 +1376,15 @@
       "required": false
     },
     {
+      "min": "0",
+      "title": "Have you been in your current address for at least 2 years?",
+      "key": "coborrower_two_years_at_current_address",
+      "max": "0",
+      "description": "Have you been in your current address for at least 2 years?",
+      "type": "boolean",
+      "required": false
+    },
+    {
       "min": 0,
       "title": "Years at Current Address",
       "key": "coborrower_property_years",
@@ -1217,19 +1394,51 @@
       "required": false
     },
     {
+      "min": "0",
+      "title": "Street Address",
+      "key": "coborrower_prev_address",
+      "max": "0",
+      "description": "Co-Borrower's Previous Street Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "City",
+      "key": "coborrower_prev_city",
+      "max": "0",
+      "description": "Co-Borrower's Previous City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "State",
+      "key": "coborrower_prev_state",
+      "max": "0",
+      "description": "Co-Borrower's Previous State",
+      "allowAllStates": true,
+      "type": "state",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Zipcode",
+      "key": "coborrower_prev_zip",
+      "max": "0",
+      "description": "Co-Borrower's Previous Zipcode",
+      "type": "zip",
+      "required": false
+    },
+    {
       "placeholder": "",
       "min": 0,
       "title": "I authorize this Credit Check. *",
-      "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
+      "text": "I/we authorize Alterra Group, LLC and/or it's DBA's Alterra Group, LLC, its DBA's Alterra Home Loans, Alterra Mortgage, LeverageRX Mortgage, Alterra Home Loans Legacy, to obtain a consume credit report. During your mortgage loan application process, this institution performs a credit check that requires us to obtain a consumer report and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, verifying your past and current and employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "coborrower_credit_authorization",
       "description": "",
-      "choices": [
-        "",
-        "Yes",
-        "No"
-      ],
-      "required": true,
-      "type": "single_choice",
+      "required": false,
+      "type": "agreement",
       "max": 0
     },
     {
@@ -1440,7 +1649,6 @@
       "type": "single_choice",
       "required": false,
       "choices": [
-        "",
         "Primary Residence",
         "Second Home",
         "Investment Property"
@@ -1455,7 +1663,6 @@
       "type": "single_choice",
       "required": false,
       "choices": [
-        "",
         "Sole Ownership",
         "Joint With Spouse",
         "Joint With Other Than Spouse"
@@ -1463,110 +1670,145 @@
     },
     {
       "min": 0,
-      "title": "Alimony and/or Child Support Amount",
-      "key": "coborrower_alimony_amount",
+      "title": "Provide demographic information?",
+      "key": "coborrower_provide_demographics",
       "max": 0,
-      "description": "Alimony and/or Child Support Amount",
-      "type": "currency",
+      "description": "Would Co-Borrower like to provide demographic information?",
+      "type": "boolean",
       "required": false
     },
     {
       "min": 0,
-      "title": "Ethnicity",
+      "title": "Co-Borrower Ethnicity",
+      "choices": [
+        "",
+        "Not Hispanic or Latino",
+        "Hispanic or Latino",
+        "Information not provided"
+      ],
       "key": "coborrower_ethnicity",
       "max": 0,
-      "description": "Ethnicity",
-      "type": "multi_choice",
-      "choices": [
-        "Hispanic or Latino",
-        "Mexican",
-        "Puerto Rican",
-        "Cuban",
-        "Other Hispanic or Latino",
-        "Not Hispanic or Latino",
-        "I do not wish to provide this information",
-        "Not Applicable"
-      ],
+      "description": "Co-Borrower Ethnicity",
+      "type": "single_choice",
       "required": false
     },
     {
-      "key": "coborrower_race",
-      "title": "What is your race?",
-      "description": "What is your race?",
-      "type": "multi_choice",
+      "min": 0,
+      "title": "Co-Borrower Race",
       "choices": [
+        "",
         "American Indian or Alaska Native",
         "Asian",
+        "Black or African American",
+        "Native Hawaiian or Other Pacific Islander",
+        "White",
+        "Information not provided"
+      ],
+      "key": "coborrower_race",
+      "max": 0,
+      "description": "Co-Borrower Race",
+      "type": "single_choice",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Co-Borrower Gender",
+      "choices": [
+        "",
+        "Male",
+        "Female",
+        "I do not wish to provide this information"
+      ],
+      "key": "coborrower_gender",
+      "max": 0,
+      "description": "Co-Borrower Gender",
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Ethnicity Hispanic or Latino",
+      "key": "coborrower_ethnicity_latino",
+      "max": 0,
+      "description": "Ethnicity Hispanic or Latino",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Mexican",
+        "Puerto Rican",
+        "Cuban",
+        "Other Hispanic or Latino"
+      ],
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Enter Hispanic or Latino Origin",
+      "key": "coborrower_other_hispanic_or_latino_origin",
+      "max": 0,
+      "description": "Enter Hispanic or Latino Origin",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "American Indian or Alaska Native Origin",
+      "key": "coborrower_race_american_indian_other",
+      "max": 0,
+      "description": "American Indian or Alaska Native Origin",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Asian Origin",
+      "choices": [
+        "",
         "Asian Indian",
         "Chinese",
         "Filipino",
         "Japanese",
         "Korean",
         "Vietnamese",
-        "Other Asian",
-        "Black or African American",
-        "Native Hawaiian or Other Pacific Islander",
+        "Other Asian"
+      ],
+      "key": "coborrower_race_asian",
+      "max": 0,
+      "description": "Asian Origin",
+      "type": "single_choice",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "Asian Origin",
+      "key": "coborrower_asian_origin_other",
+      "max": 0,
+      "description": "Asian Origin",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Pacific Islander Origin",
+      "choices": [
+        "",
         "Native Hawaiian",
         "Guamanian or Chamorro",
         "Samoan",
-        "Other Pacific Islander",
-        "White",
-        "I do not wish to provide this information",
-        "Not applicable"
+        "Other Pacific Islander"
       ],
-      "min_choices": 0,
-      "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your race"
-    },
-    {
-      "key": "coborrower_gender",
-      "title": "What is your gender?",
-      "description": "What is your gender?",
-      "type": "multi_choice",
-      "choices": [
-        "Male",
-        "Female",
-        "I do not wish to provide this information"
-      ],
-      "min_choices": 0,
-      "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your gender"
-    },
-    {
-      "min": 0,
-      "title": "Please enter your Hispanic or Latino Origin",
-      "key": "coborrower_other_hispanic_or_latino_origin",
+      "key": "coborrower_pacific_islander",
       "max": 0,
-      "description": "For example: Argentinean, Colombian, Dominican, Nicaraguan, Salvadoran, Spaniard, and so on",
-      "type": "text",
-      "required": false
+      "description": "Pacific Islander Origin",
+      "type": "single_choice",
+      "required": true
     },
     {
       "min": 0,
-      "title": "Please enter the name of your tribe",
-      "key": "coborrower_race_american_indian_other",
-      "max": 0,
-      "description": "Name of enrolled or principle tribe",
-      "type": "text",
-      "required": false
-    },
-    {
-      "min": 0,
-      "title": "Please enter your Asian origin",
-      "key": "coborrower_asian_origin_other",
-      "max": 0,
-      "description": "For example: Hmong, Laotian, Thai, Pakistani, Cambodian, and so on",
-      "type": "text",
-      "required": false
-    },
-    {
-      "min": 0,
-      "title": "Please enter your Pacific Islander Origin",
+      "title": "Pacific Islander Origin",
       "key": "coborrower_pacific_islander_other",
       "max": 0,
-      "description": "For example: Fijian, Tongan, and so on",
+      "description": "Pacific Islander Origin",
       "type": "text",
       "required": false
     },
@@ -1574,7 +1816,7 @@
       "placeholder": "",
       "min": 0,
       "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
-      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain Your consent to receive certain Loan Documents from Us in electronic form rather than in paper form. With Your consent, You will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, We will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.</li><li>If You do not consent to receive these Loan Documents electronically, You will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, We will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, You can do so by clicking on the 'I do not agree' button, or by notifying Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After Your consent is given, You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, You must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, You will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.<br>You can contact Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul>",
+      "text": "<p>You may choose to receive documents electronically instead of in paper form by affirmatively consenting to the Electronic Disclosure and Electronic Signature Consent Agreement (\"Agreement\").  This Agreement applies to all documents and/or notices we provide to you in electronic form and includes disclosures, documents, forms, contracts, records, notices and any other information associated with a and/or related to your loan application and the lending transaction associated with your loan.</p><p>With Your consent, you will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><h2>YOUR CONSENT</h2><p><ul><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, we will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.  If You do not consent to receive these Loan Documents electronically, you will be provided with copies of the Loan Documents in paper form. Additionally, you will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul></p><h2>ACTIVE EMAIL ACCOUNT</h2><p><ul><li>You are required to maintain an active email account.  Please notify us if your email changes.</li></ul></p><h2>WITHDRAWAL OF CONSENT</h2><p><ul><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, we will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, you can do so by clicking on the 'I do not agree' button, or by notifying Us at:</li><li>Phone: [COMPANY_PHONE]</li><li>Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:</li><li>You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.  The disclosures previously provided to you and any electronic signatures you previously made shall reman valid and enforceable and are unaffected by the subsequent withdrawal of your consent.</li></ul></p><h2>OBTAINING PAPER COPIES</h2><p><ul><li>We recommend you print or save each electronic record for your files.  You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:</li><li>Phone: [COMPANY_PHONE]</li><li>Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:</li><li>You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul></p><h2>SYSTEM REQUIREMENTS</h2><p><ul><li>In order to receive eDisclosures, you must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, you will be able to do so without penalty.</li></ul></p><h2>HOW WE CAN REACH YOU</h2><p><ul><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.</li><li>You can contact Us at:</li><li>Phone: [COMPANY_PHONE]</li><li>Address: [COMPANY_ADDRESS]</li></ul></p><h2>INDEMNIFICATION</h2><p><ul><li>You agree to indemnify and hold harmless Alterra Group, LLC, its DBA's Alterra Home Loans, Alterra Mortgage, LeverageRX Mortgage, Alterra Home Loans Legacy or its subsidiaries, principals, agents, employees or assigns against all claims, demands, proceeding, suite and actions and all liabilities, losses, expenses and costs including attorneys' fees resulting from your failure to comply with the terms of this agreement. We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul></p><h2>CONSENT</h2><p><ul><li> \"I Agree\" to consent to do business electronically and to view Loan Documents electronically. I hereby agree and acknowledge the following:</li><li>You have read this Agreement and you understand and agree with its terms and conditions;</li><li>You confirm that your hardware and software meets the system requirements above and affirmatively acknowledge that you have the ability to access, download and print electronic records;</li><li>You confirm you have provided your current email address and will continue to provide a current email address where you may receive Disclosures electronically; and</li><li>You agree to the use of electronic signatures on the Disclosures as indicated above.</li></ul></p>",
       "key": "coborrower_econsent",
       "description": "",
       "required": false,
@@ -1585,7 +1827,7 @@
       "placeholder": "",
       "min": 0,
       "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
-      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain Your consent to receive certain Loan Documents from Us in electronic form rather than in paper form. With Your consent, You will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, We will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.</li><li>If You do not consent to receive these Loan Documents electronically, You will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, We will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, You can do so by clicking on the 'I do not agree' button, or by notifying Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After Your consent is given, You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, You must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, You will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.<br>You can contact Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul>",
+      "text": "<p><p>You may choose to receive documents electronically instead of in paper form by affirmatively consenting to the Electronic Disclosure and Electronic Signature Consent Agreement (\"Agreement\").  This Agreement applies to all documents and/or notices we provide to you in electronic form and includes disclosures, documents, forms, contracts, records, notices and any other information associated with a and/or related to your loan application and the lending transaction associated with your loan.</p><p>With Your consent, you will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><h2>YOUR CONSENT</h2><p><ul><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, we will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.  If You do not consent to receive these Loan Documents electronically, you will be provided with copies of the Loan Documents in paper form. Additionally, you will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul></p><h2>ACTIVE EMAIL ACCOUNT</h2><p><ul><li>You are required to maintain an active email account.  Please notify us if your email changes.</li></ul></p><h2>WITHDRAWAL OF CONSENT</h2><p><ul><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, we will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, you can do so by clicking on the 'I do not agree' button, or by notifying Us at:</li><li>Phone: [COMPANY_PHONE]</li><li>Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:</li><li>You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.  The disclosures previously provided to you and any electronic signatures you previously made shall reman valid and enforceable and are unaffected by the subsequent withdrawal of your consent.</li></ul></p><h2>OBTAINING PAPER COPIES</h2><p><ul><li>We recommend you print or save each electronic record for your files.  You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:</li><li>Phone: [COMPANY_PHONE]</li><li>Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:</li><li>You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul></p><h2>SYSTEM REQUIREMENTS</h2><p><ul><li>In order to receive eDisclosures, you must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, you will be able to do so without penalty.</li></ul></p><h2>HOW WE CAN REACH YOU</h2><p><ul><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.</li><li>You can contact Us at:</li><li>Phone: [COMPANY_PHONE]</li><li>Address: [COMPANY_ADDRESS]</li></ul></p><h2>INDEMNIFICATION</h2><p><ul><li>You agree to indemnify and hold harmless Alterra Group, LLC, its DBA's Alterra Home Loans, Alterra Mortgage, LeverageRX Mortgage, Alterra Home Loans Legacy or its subsidiaries, principals, agents, employees or assigns against all claims, demands, proceeding, suite and actions and all liabilities, losses, expenses and costs including attorneys' fees resulting from your failure to comply with the terms of this agreement. We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul></p><h2>CONSENT</h2><p><ul><li>\"I Agree\" to consent to do business electronically and to view Loan Documents electronically. I hereby agree and acknowledge the following:</li><li>You have read this Agreement and you understand and agree with its terms and conditions;</li><li>You confirm that your hardware and software meets the system requirements above and affirmatively acknowledge that you have the ability to access, download and print electronic records;</li><li>You confirm you have provided your current email address and will continue to provide a current email address where you may receive Disclosures electronically; and</li><li>You agree to the use of electronic signatures on the Disclosures as indicated above.</li></ul></p>",
       "key": "econsent",
       "description": "",
       "required": false,

@@ -84,8 +84,8 @@ class LendingQB < EncompassBrokerPuller
       values[key] = value.to_s.encode(:xml => :text)
     end
     
-    ssn = ( values["ssn"] || '' ).gsub( "-", "" )
-    coborrower_ssn = ( values["coborrower_ssn"] || '' ).gsub( "-", "" )
+    ssn = ( values["ssn"] || ' ' ).gsub( "-", "" )
+    coborrower_ssn = ( values["coborrower_ssn"] || ' ' ).gsub( "-", "" )
 
     loan_fields = []
 
@@ -105,7 +105,7 @@ class LendingQB < EncompassBrokerPuller
     else
       loan_fields << {:@id => "sEmployeeRealEstateAgentLogin", :@userType => "B", :content! => ""}
     end
-    loan_fields << {:@id => "sEmployeeLenderAcctExecLogin", :@userType => "B", :content! => ""}
+    loan_fields << {:@id => "sEmployeeLenderAccExecLogin", :@userType => "B", :content! => ""}
     loan_fields << {:@id => "sEmployeeLockDeskLogin", :@userType => "B", :content! => ""}
 
     # loan_fields << {:@id => "sLAmtLckd", :content! => "True"}
@@ -237,7 +237,20 @@ class LendingQB < EncompassBrokerPuller
         values['property_type'] = 12
       end
       loan_fields << {:@id => "sProdSpT", :content! => values['property_type']}
-      # loan_fields << {:@id => "sGseSpT", :content! => values['property_type']}
+    end
+    if values['subject_property_type'].present?
+      if values['subject_property_type'] == 'Single Family Residence' || values['subject_property_type'] == 'Detached'
+        values['subject_property_type'] = 4
+      elsif values['subject_property_type'] == 'Planned Unit Development' || values['subject_property_type'] == 'PUD'
+        values['subject_property_type'] = 12
+      elsif values['subject_property_type'] == 'Condo' || values['subject_property_type'] == 'Condominium'
+        values['subject_property_type'] = 2
+      elsif values['subject_property_type'] == 'Manufactured'
+        values['subject_property_type'] = 9
+      elsif values['subject_property_type'] == 'Modular'
+        values['subject_property_type'] = 11
+      end
+      loan_fields << {:@id => "sGseSpT", :content! => values['subject_property_type']}
     end
 
     borrower_fields = []

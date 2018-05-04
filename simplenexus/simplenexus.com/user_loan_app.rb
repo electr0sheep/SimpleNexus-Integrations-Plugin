@@ -1299,93 +1299,27 @@ class UserLoanApp < ActiveRecord::Base
 
     #ethnicity type
     if values[borrower+'ethnicity'].present?
-      if values[borrower+'ethnicity'] == "Hispanic or Latino"
-        ethnicity = "HispanicOrLatino"
-      elsif values[borrower+'ethnicity'] == "Not Hispanic or Latino"
-        ethnicity = "NotHispanicOrLatino"
-      elsif values[borrower+'ethnicity'] == "I do not wish to provide this information"
-        ethnicity = "InformationNotProvidedUnknown"
-      elsif values[borrower+'ethnicity'] == "Not Applicable"
-        ethnicity = "NotApplicable"
+      ethnicity_array = try_parse_array(values[borrower+'ethnicity'])
+      if ethnicity_array.present?
+        ethnicity_array.each do |ethnicity|
+          newlines << output_ethnicity(ethnicity, ssn, values, borrower)
+        end
       else
-        ethnicity = values[borrower+'ethnicity']
+        newlines << output_ethnicity(values[borrower+'ethnicity'], ssn, values, borrower)
       end
-      line = [ "ADS" ]
-      line << ( '%-35.35s' % "HMDAEthnicityType" )
-      line << ( '%-50.50s' % "#{ssn}:#{ethnicity}" )
-      newlines << line.join('')
-    else
-      ethnicity = nil
-    end
-
-    #ethnicity origin type
-    if ethnicity == "HispanicOrLatino" && values[borrower+'ethnicity_latino'].present?
-      origin = values[borrower+'ethnicity_latino'].gsub(/\s+/, "")
-      if origin == "Other Hispanic or Latino"
-        origin = "Other"
-      end
-      line = [ "ADS" ]
-      line << ( '%-35.35s' % "HMDAEthnicityOriginType" )
-      line << ( '%-50.50s' % "#{ssn}:#{origin}" )
-      newlines << line.join('')
-    else
-      origin = nil
-    end
-
-    #ethnicity origin type other description
-    #if they choose hispanic and then "other"
-    if origin == "Other"
-      line = [ "ADS" ]
-      line << ( '%-35.35s' % "HMDAEthnicityOriginTypeOtherDesc" )
-      line << ( '%-50.50s' % "#{values[borrower+'other_hispanic_or_latino_origin']}" )
-      newlines << line.join('')
-    end
-
-    #ethnicity refusal indicator
-    if ethnicity == "InformationNotProvidedUnknown"
-      line = [ "ADS" ]
-      line << ( '%-35.35s' % "HMDAEthnicityRefusalIndicator" )
-      line << ( '%-50.50s' % "#{ssn}:Y" )
-      newlines << line.join('')
     end
 
     #race type
     #regular race question
     if values[borrower+'race'].present?
-      if values[borrower+'race'] == "I do not wish to provide this information"
-        race = "InformationNotProvidedUnknown"
+      race_array = try_parse_array(values[borrower+'race'])
+      if race_array.present?
+        race_array.each do |race|
+          newlines << output_race(race, ssn, values, borrower)
+        end
       else
-        race = values[borrower+'race'].split(' ').map {|w| w.capitalize}.join
+        newlines << output_race(values[borrower+'race'], ssn, values, borrower)
       end
-      line = [ "ADS" ]
-      line << ( '%-35.35s' % "HMDARaceType" )
-      line << ( '%-50.50s' % "#{ssn}:1:#{race}" )
-      newlines << line.join('')
-    else
-      race = nil
-    end
-
-    #race refusal indicator
-    if race == "InformationNotProvidedUnknown"
-      line = [ "ADS" ]
-      line << ( '%-35.35s' % "HMDARaceRefusalIndicator" )
-      line << ( '%-50.50s' % "#{ssn}:Y" )
-      newlines << line.join('')
-    end
-
-    #race designation type
-    #if they say asian to regular race question
-    #OR if they say pacific islander to regular race question
-    if race == "Asian" && values[borrower+'race_asian'].present?
-      race_designation = values[borrower+'race_asian'].split(' ').map {|w| w.capitalize}.join
-    elsif race == "NativeHawaiianOrOtherPacificIslander"
-      race_designation = values[borrower+'pacific_islander'].split(' ').map {|w| w.capitalize}.join
-    end
-    if race_designation.present?
-      line = [ "ADS" ]
-      line << ( '%-35.35s' % "HMDARaceDesignationType" )
-      line << ( '%-50.50s' % "#{ssn}:1:#{race_designation}" )
-      newlines << line.join('')
     end
 
     #race designation other asian description
@@ -1440,6 +1374,84 @@ class UserLoanApp < ActiveRecord::Base
     end
 
     newlines
+  end
+
+  def output_ethnicity(e, ssn, values, borrower)
+    line = []
+    if e.downcase.include? "information"
+      ethnicity = "InformationNotProvidedByApplicantInMIT"
+    else
+      ethnicity = e.split(' ').map {|w| w.capitalize}.join
+    end
+    line << [ "ADS" ]
+    line << ( '%-35.35s' % "HMDAEthnicityType" )
+    line << ( '%-50.50s' % "#{ssn}:#{ethnicity}" )
+
+    #ethnicity origin type
+    if ethnicity == "HispanicOrLatino" && values[borrower+'ethnicity_latino'].present?
+      origin = values[borrower+'ethnicity_latino'].gsub(/\s+/, "")
+      if origin == "Other Hispanic or Latino"
+        origin = "Other"
+      end
+      line << [ "ADS" ]
+      line << ( '%-35.35s' % "HMDAEthnicityOriginType" )
+      line << ( '%-50.50s' % "#{ssn}:#{origin}" )
+    else
+      origin = nil
+    end
+
+    #ethnicity origin type other description
+    #if they choose hispanic and then "other"
+    if origin == "Other"
+      line << [ "ADS" ]
+      line << ( '%-35.35s' % "HMDAEthnicityOriginTypeOtherDesc" )
+      line << ( '%-50.50s' % "#{values[borrower+'other_hispanic_or_latino_origin']}" )
+    end
+
+    #ethnicity refusal indicator
+    if ethnicity == "InformationNotProvidedByApplicantInMIT"
+      line = [ "ADS" ]
+      line << ( '%-35.35s' % "HMDAEthnicityRefusalIndicator" )
+      line << ( '%-50.50s' % "#{ssn}:Y" )
+    end
+
+    line.join('')
+  end
+
+  def output_race(r, ssn, values, borrower)
+    line = []
+    if r.downcase.include? "information"
+      race = "InformationNotProvidedByApplicantInMIT"
+    else
+      race = r.split(' ').map {|w| w.capitalize}.join
+    end
+    line << [ "ADS" ]
+    line << ( '%-35.35s' % "HMDARaceType" )
+    line << ( '%-50.50s' % "#{ssn}:1:#{race}" )
+
+    #race refusal indicator
+    if race == "InformationNotProvidedByApplicantInMIT"
+      line << [ "ADS" ]
+      line << ( '%-35.35s' % "HMDARaceRefusalIndicator" )
+      line << ( '%-50.50s' % "#{ssn}:Y" )
+    end
+
+    #race designation type
+    #if they say asian to regular race question
+    #OR if they say pacific islander to regular race question
+
+    if race == "Asian" && values[borrower+'race_asian'].present?
+      race_designation = values[borrower+'race_asian'].split(' ').map {|w| w.capitalize}.join
+    elsif race == "NativeHawaiianOrOtherPacificIslander"
+      race_designation = values[borrower+'pacific_islander'].split(' ').map {|w| w.capitalize}.join
+    end
+    if race_designation.present?
+      line << [ "ADS" ]
+      line << ( '%-35.35s' % "HMDARaceDesignationType" )
+      line << ( '%-50.50s' % "#{ssn}:1:#{race_designation}" )
+    end
+
+    line.join('')
   end
 
   def to_import_json field_mappings:nil, company:nil
@@ -1562,7 +1574,7 @@ class UserLoanApp < ActiveRecord::Base
     response['borrower']['credit'] = {}
     response['borrower']['credit']['authorized'] = value_is_truthy(values['credit_authorization']) ? 1 : 0
     response['borrower']['credit']['auth_date'] = to_date_or_empty(self.submitted_at&.to_s)
-    response['borrower']['credit']['auth_method'] = value_is_truthy(values['credit_auth_method']) ? values['credit_auth_method'] : 'Internet'
+    response['borrower']['credit']['auth_method'] = values['credit_auth_method'] ? values['credit_auth_method'] : 'Internet'
     values['custom_4079'] = values['credit_auth_notes'] ? values['credit_auth_notes'] : ''
     response['borrower']['credit']['transunion'] = values['credit_transunion'] || values['min_req_fico'] || 0
     response['borrower']['credit']['equifax'] = values['credit_equifax'] || values['min_req_fico'] || 0
@@ -1582,6 +1594,56 @@ class UserLoanApp < ActiveRecord::Base
 
     if values['job_title']
       values['custom_FE0110'] = values['job_title']
+    end
+
+    if values['ssn_required']
+      values['custom_65'] = values['ssn']
+    end
+
+    if values['coborrower_ssn_required']
+      values['custom_97'] = values['coborrower_ssn']
+    end
+
+    if values['other_property_market_value']
+      values['custom_FM0119'] = values['other_property_market_value']
+    end
+
+    if values['other_property_market_value_2']
+      values['custom_FM0219'] = values['other_property_market_value_2']
+    end
+
+    if values['other_property_market_value_3']
+      values['custom_FM0319'] = values['other_property_market_value_3']
+    end
+
+    # i realized the values are the same as what we're doing the case on.. but I'm skeptical that what we got are the real values needed for Encompass
+    case values['type_of_service']
+      when 'Regular Military'
+        values['custom_VAVOB.X72'] = "Regular Military"
+      when 'Reserves'
+        values['custom_VAVOB.X72'] = "Reserves"
+      when 'National Guard'
+        values['custom_VAVOB.X72'] = "National Guard"
+    end
+    
+    case values['branch_of_service']
+      when 'Air Force'
+        values['custom_954'] = "AirForce"
+      when 'Coast Guard'
+        values['custom_954'] = "CoastGuard"
+      else
+        values['custom_954'] = values['branch_of_service']
+    end
+
+    if values['va_benefits']
+      values['custom_VASUMM.X49'] = boolean_to_y_n(values['va_benefits'])
+    end
+
+    if values['borrower_previous_employer_start_date']
+      values['custom_BE0211'] = values['borrower_previous_employer_start_date']
+    end
+        if values['borrower_employer_start_date']
+      values['custom_BE0111'] = values['borrower_employer_start_date']
     end
 
     if values['borrower_previous_employer_name']
@@ -1629,6 +1691,13 @@ class UserLoanApp < ActiveRecord::Base
     end
     if values['borrower_previous_employer_commissions']
       values['custom_BE0222'] = values['borrower_previous_employer_commissions']
+    end
+
+    if values['coborrower_previous_employer_start_date']
+      values['custom_CE0211'] = values['coborrower_previous_employer_start_date']
+    end
+        if values['coborrower_employer_start_date']
+      values['custom_CE0111'] = values['coborrower_employer_start_date']
     end
 
     if values['coborrower_previous_employer_name']
@@ -1776,7 +1845,7 @@ class UserLoanApp < ActiveRecord::Base
 
       # co-borrower credit
       response['co_borrower']['credit'] = {}
-      if (value_is_truthy(response['borrower']['credit']['authorized']) && values["has_coborrower"] && value_is_truthy(values["has_coborrower"]) && values['coborrower_credit_authorization'].blank?) || (values['coborrower_credit_authorization'] && value_is_truthy(values['coborrower_credit_authorization']))
+      if (value_is_truthy(response['borrower']['credit']['authorized']) && values["has_coborrower"] && value_is_truthy(values["has_coborrower"]) && values['coborrower_credit_authorization'].nil?) || (values['coborrower_credit_authorization'] && value_is_truthy(values['coborrower_credit_authorization']))
         response['co_borrower']['credit']['authorized'] = 1
         response['co_borrower']['credit']['auth_date'] = to_date_or_empty(self.submitted_at&.to_s)
         response['co_borrower']['credit']['auth_method'] = value_is_truthy(values['coborrower_credit_auth_method']) ? values['coborrower_credit_auth_method'] : 'Internet'
@@ -1954,6 +2023,14 @@ class UserLoanApp < ActiveRecord::Base
       if values['real_estate_own_3_zip'].present?
         values['custom_FM0308'] = values['real_estate_own_3_zip']
       end
+
+      if values['monthly_real_estate_tax'].present?
+        values['custom_1405'] = values['monthly_real_estate_tax']
+      end
+      if values['monthly_hazard_insurance_premium'].present?
+        values['custom_230'] = values['monthly_hazard_insurance_premium']
+      end
+
       if values['property_usage_1'].present?
          values['custom_FM0141'] = values['property_usage_1']
       end
@@ -1991,7 +2068,30 @@ class UserLoanApp < ActiveRecord::Base
         values['custom_FM0332'] = values['net_rental_income_3']
       end
 
-
+      if values['address_required'].present?
+        values['custom_FR0104'] = values['address_required']
+      end
+      if values['city_required'].present?
+        values['custom_FR0106'] = values['city_required']
+      end
+      if values['state_required'].present?
+        values['custom_FR0107'] = values['state_required']
+      end
+      if values['zip_required'].present?
+        values['custom_FR0108'] = values['zip_required']
+      end
+      if values['coborrower_address_required'].present?
+        values['custom_FR0404'] = values['coborrower_address_required']
+      end
+      if values['coborrower_city_required'].present?
+        values['custom_FR0406'] = values['coborrower_city_required']
+      end
+      if values['coborrower_state_required'].present?
+        values['custom_FR0407'] = values['coborrower_state_required']
+      end
+      if values['coborrower_zip_required'].present?
+        values['custom_FR0408'] = values['coborrower_zip_required']
+      end
 
       #New flow utilizing multichoice
       if has_hmda
@@ -2010,8 +2110,9 @@ class UserLoanApp < ActiveRecord::Base
           end
 
           if has_hmda_multichoice?
-            if values['coborrower_ethnicity'].present?
-              values['coborrower_ethnicity'].each do |ethnicity|
+            coborrower_ethnicity_array = try_parse_array(values['coborrower_ethnicity'])
+            if coborrower_ethnicity_array.present?
+              coborrower_ethnicity_array.each do |ethnicity|
               ethnicity = ethnicity.lstrip.gsub("-", "")
                 if ethnicity == 'Hispanic or Latino'
                   values['custom_4213'] = 'Y'
@@ -2068,8 +2169,9 @@ class UserLoanApp < ActiveRecord::Base
           end
 
           if has_hmda_multichoice?
-            if values['coborrower_race'].present?
-              values['coborrower_race'].each do |race|
+            coborrower_race_array = try_parse_array(values['coborrower_race'])
+            if coborrower_race_array.present?
+              coborrower_race_array.each do |race|
                 race = race.lstrip.gsub("-", "")
                 if race == 'American Indian or Alaska Native'
                   values['custom_1532'] = 'Y'
@@ -2549,8 +2651,9 @@ class UserLoanApp < ActiveRecord::Base
         end
 
         if has_hmda_multichoice?
-          if values['ethnicity'].present?
-            values['ethnicity'].each do |ethnicity|
+          ethnicity_array = try_parse_array(values['ethnicity'])
+          if ethnicity_array.present?
+            ethnicity_array.each do |ethnicity|
             ethnicity = ethnicity.lstrip.gsub("-", "")
               if ethnicity == 'Hispanic or Latino'
                  values['custom_4210'] = 'Y'
@@ -2605,8 +2708,9 @@ class UserLoanApp < ActiveRecord::Base
         end
 
         if has_hmda_multichoice?
-          if values['race'].present?
-            values['race'].each do |race|
+          race_array = try_parse_array(values['race'])
+          if race_array.present?
+            race_array.each do |race|
               race = race.lstrip.gsub("-", "")
               if race == "American Indian or Alaska Native"
                 values['custom_1524'] = "Y"
@@ -2728,8 +2832,9 @@ class UserLoanApp < ActiveRecord::Base
         end
 
         #borrower
-        if has_hmda_multichoice? && values['gender'].present? && values['gender'].kind_of?(Array)
-          values['gender'].each do |gender|
+        if has_hmda_multichoice? && try_parse_array(values['gender'])
+          gender_array = try_parse_array(values['gender'])
+          gender_array.each do |gender|
             case gender
             when 'Male'
               values['custom_4194'] = 'Y'
@@ -2767,8 +2872,9 @@ class UserLoanApp < ActiveRecord::Base
 
 
         #coborrower
-        if has_hmda_multichoice? && values['coborrower_gender'].present? && values['coborrower_gender'].kind_of?(Array)
-          values['coborrower_gender'].each do |gender|
+        if has_hmda_multichoice? && try_parse_array(values['coborrower_gender'])
+          coborrower_gender_array = try_parse_array(values['coborrower_gender'])
+          coborrower_gender_array.each do |gender|
             case gender
             when 'Male'
               values['custom_4198'] = 'Y'
@@ -3252,9 +3358,6 @@ class UserLoanApp < ActiveRecord::Base
     mailing_state = to_state_or_empty(values["mailing_state"])
     response['lstFields'] << {'FieldID': 'Bor1.MailingState', 'Value': mailing_state}
     response['lstFields'] << {'FieldID': 'Bor1.MailingZip', 'Value': values['mailing_zip'] || ''}
-    response['lstFields'] << {'FieldID': 'Bor1Res.NoYears', 'Value': values['property_years'] || ''}
-    response['lstFields'] << {'FieldID': 'Bor1Res.NoMonths', 'Value': values['property_months'] || ''}
-    response['lstFields'] << {'FieldID': 'Bor1Res.LivingStatus', 'Value': values['property_own'] && value_is_truthy(values['property_own']) ? 1 : 2}
 
     # # borrower eConsent
     # if values['econsent'].present?
@@ -3277,6 +3380,7 @@ class UserLoanApp < ActiveRecord::Base
 
     response['lstFields'] << {'FieldID': 'Bor1Emp.Zip', 'Value': values['employer_zip'] || ''}
     response['lstFields'] << {'FieldID': 'Bor1Emp.YearsOnJob', 'Value': to_int_or_empty(values['employer_years'])}
+    response['lstFields'] << {'FieldID': 'Bor1Emp.YearsInProf', 'Value': to_int_or_empty(values['line_of_work'])}
     # response['borrower']['company_info']['months'] = to_int_or_empty(values['employer_months'])
 
     # # borrower present address
@@ -3287,7 +3391,17 @@ class UserLoanApp < ActiveRecord::Base
     response['lstFields'] << {'FieldID': 'Bor1Res.Zip', 'Value': values['zip'] || ''}
     response['lstFields'] << {'FieldID': 'Bor1Res.NoYears', 'Value': values['property_years'] || ''}
     response['lstFields'] << {'FieldID': 'Bor1Res.NoMonths', 'Value': values['property_months'] || ''}
-    response['lstFields'] << {'FieldID': 'Bor1Res.LivingStatus', 'Value': values['property_own'] && value_is_truthy(values['property_own']) ? 1 : 2}
+    if values['property_own']
+      if values['property_own'] == 'Own'
+        response['lstFields'] << {'FieldID': 'Bor1Res.LivingStatus', 'Value': 1}
+      elsif values['property_own'] == 'Rent'
+        response['lstFields'] << {'FieldID': 'Bor1Res.LivingStatus', 'Value': 2}
+      elsif values['property_own'] == 'Living Rent Free'
+        response['lstFields'] << {'FieldID': 'Bor1Res.LivingStatus', 'Value': 3}
+      else
+        response['lstFields'] << {'FieldID': 'Bor1Res.LivingStatus', 'Value': 0}
+      end
+    end
 
     # # # borrower prev address
     # response['borrower']['prev_address'] = {}
@@ -3408,6 +3522,7 @@ class UserLoanApp < ActiveRecord::Base
       response['lstFields'] << {'FieldID': 'Bor2Emp.Zip', 'Value': values['coborrower_employer_zip'] || ''}
       response['lstFields'] << {'FieldID': 'Bor2Emp.YearsOnJob', 'Value': to_int_or_empty(values['coborrower_employer_years'])}
       #   response['co_borrower']['company_info']['months'] = to_int_or_empty(values['coborrower_employer_months'])
+      response['lstFields'] << {'FieldID': 'Bor2Emp.YearsInProf', 'Value': to_int_or_empty(values['coborrower_line_of_work'])}
 
       #   # co-borrower present address
       response['lstFields'] << {'FieldID': 'Bor2Res.Street', 'Value': values['coborrower_address'] || ''}
@@ -3417,7 +3532,17 @@ class UserLoanApp < ActiveRecord::Base
       response['lstFields'] << {'FieldID': 'Bor2Res.Zip', 'Value': values['coborrower_zip'] || ''}
       response['lstFields'] << {'FieldID': 'Bor2Res.NoYears', 'Value': values['coborrower_property_years'] || ''}
       response['lstFields'] << {'FieldID': 'Bor2Res.NoMonths', 'Value': values['coborrower_property_months'] || ''}
-      response['lstFields'] << {'FieldID': 'Bor2Res.LivingStatus', 'Value': values['coborrower_property_own'] && value_is_truthy(values['coborrower_property_own']) ? 1 : 2}
+      if values['coborrower_property_own']
+        if values['coborrower_property_own'] == 'Own'
+          response['lstFields'] << {'FieldID': 'Bor2Res.LivingStatus', 'Value': 1}
+        elsif values['coborrower_property_own'] == 'Rent'
+          response['lstFields'] << {'FieldID': 'Bor2Res.LivingStatus', 'Value': 2}
+        elsif values['coborrower_property_own'] == 'Living Rent Free'
+          response['lstFields'] << {'FieldID': 'Bor2Res.LivingStatus', 'Value': 3}
+        else
+          response['lstFields'] << {'FieldID': 'Bor2Res.LivingStatus', 'Value': 0}
+        end
+      end
 
       #   # co-borrower previous address
       #   response['co_borrower']['prev_address'] = {}
@@ -3430,10 +3555,10 @@ class UserLoanApp < ActiveRecord::Base
       #     ''
       #   end)
       #   response['co_borrower']['prev_address']['zip'] = values['coborrower_prev_zip'] || ''
-      #   response['co_borrower']['prev_address']['years'] = to_int_or_empty(values['coborrower_prev_property_years'])
-      #   response['co_borrower']['prev_address']['months'] = to_int_or_empty(values['coborrower_prev_property_months'])
-      #   response['co_borrower']['prev_address']['own_rent'] = values['coborrower_prev_property_own'] && value_is_truthy(values['coborrower_prev_property_own']) ? 'Own' : 'Rent'
-      #
+        # response['co_borrower']['prev_address']['years'] = to_int_or_empty(values['coborrower_prev_property_years'])
+        # response['co_borrower']['prev_address']['months'] = to_int_or_empty(values['coborrower_prev_property_months'])
+        # response['co_borrower']['prev_address']['own_rent'] = values['coborrower_prev_property_own'] && value_is_truthy(values['coborrower_prev_property_own']) ? 'Own' : 'Rent'
+
       #   # co-borrower credit
       if (value_is_truthy(values['credit_authorization']) && values['has_coborrower'] && value_is_truthy(values['has_coborrower']) && values['coborrower_credit_authorization'].blank?) || (values['coborrower_credit_authorization'] && value_is_truthy(values['coborrower_credit_authorization']))
         response['lstFields'] << {'FieldID': 'Bor2.OKToPullCredit', 'Value': value_is_truthy(values['credit_authorization']) ? 'Yes' : 'No'}
@@ -3457,6 +3582,10 @@ class UserLoanApp < ActiveRecord::Base
 
       end
 
+      if values['coborrower_job_title']
+        response['lstFields'] << {'FieldID': 'Bor2Emp.Position', 'Value': values['coborrower_job_title']}
+      end
+
       response['CoBorrIncome'] = {}
       if values['coborrower_monthly_income']
         response['CoBorrIncome']['Base'] = values['coborrower_monthly_income'] || 0
@@ -3470,6 +3599,9 @@ class UserLoanApp < ActiveRecord::Base
       if values['coborrower_other_income']
         response['CoBorrIncome']['Other'] = values['coborrower_other_income'] || 0
       end
+
+      response['lstFields'] << {'FieldID': 'Bor2.NoDeps', 'Value': values['coborrower_number_dependents'] || 0}
+      response['lstFields'] << {'FieldID': 'Bor2.DepsAges', 'Value': values['coborrower_dependents_age'] || 0}
 
       #   values['custom_4007'] = values['coborrower_suffix'] || ''
         if values.key?('coborrower_is_self_employed')
@@ -4051,7 +4183,7 @@ class UserLoanApp < ActiveRecord::Base
     response['lstFields'] << {'FieldID': 'Bor1.DepsAges', 'Value': values['dependents_age'] || 0}
 
     if values.key?('is_self_employed')
-      response['lstFields'] << {'FieldID': 'Employer.SelfEmp', 'Value': value_is_truthy(values['is_self_employed'])}
+      response['lstFields'] << {'FieldID': 'Bor1Emp.SelfEmp', 'Value': boolean_to_true_false(values['is_self_employed'])}
     end
     #
 
@@ -4789,7 +4921,7 @@ class UserLoanApp < ActiveRecord::Base
   def has_hmda_multichoice?
     json = JSON.parse( self.loan_app_json)
     json["fields"].each do |field|
-      if field["type"] == "multi_choice" && (field["key"] == "ethinicity" or field["key"] == "race" or field["key"] == "coborrower_ethnicity" or field["key"] == "coborrower_race")
+      if field["type"] == "multi_choice" && (field["key"] == "ethnicity" or field["key"] == "race" or field["key"] == "coborrower_ethnicity" or field["key"] == "coborrower_race")
         return true
       end
     end
@@ -4839,6 +4971,17 @@ class UserLoanApp < ActiveRecord::Base
 
   def loan_created?
     return phases_complete >= total_phases
+  end
+
+  def try_parse_array value
+    return nil unless value.present?
+    return value if value.is_a?(Array)
+    begin
+      array = JSON.parse(value)
+      return array if array.is_a?(Array)
+    rescue
+    end
+    nil
   end
 
 end

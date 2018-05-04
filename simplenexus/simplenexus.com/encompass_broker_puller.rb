@@ -114,22 +114,21 @@ class EncompassBrokerPuller
 
         end
 
-        rl = create_remote_loan(loan, rl, servicer, los)
+        rl = update_remote_loan(loan, rl, servicer, los)
 
         if loan['property'] && loan['property'].any?
-          rlp = create_remote_loan_prop(loan, rlp, rl)
+          rlp = update_remote_loan_prop(loan, rlp, rl)
         end
 
         # Only create a borrower if there's some data
         if loan['borrower'] && loan['borrower'].size > 0 && loan['borrower']['first_name'].present?
-          rlb = create_remote_loan_borr(loan, rlb, rl)
+          rlb = update_remote_loan_borr(loan, rlb, rl)
         end
 
         if loan['co_borrower'] && loan['co_borrower'].size > 0 && loan['co_borrower']['first_name'].present?
-          rlcb = create_remote_loan_co_borr(loan, rlcb, rl)
+          rlcb = update_remote_loan_co_borr(loan, rlcb, rl)
         else
           rl.remote_loan_co_borrower.destroy if rl.remote_loan_co_borrower
-          rl.loan.co_borrower.destroy if rl&.loan&.co_borrower
         end
 
         create_or_update_remote_alerts(loan, rl)
@@ -144,13 +143,13 @@ class EncompassBrokerPuller
         end
 
         seller_agent = create_or_update_remote_partner(loan, servicer, "seller_agent", rl)
-
+        
         # attempt to link up existing loans with the new remote loan. So if the user started the loan before we
         # had the data, we may find it here
         sac = au!=nil && au.servicer_activation_code
 
         if rl.loan.blank? && rl.remote_id.present?
-          # Rails.logger.info { "Unable to find loan for remote_loan #{rl.remote_id} based on remote_id, starting search based on loan_number" }
+          #Rails.logger.info { "Unable to find loan for remote_loan #{rl.remote_id} based on remote_id, starting search based on loan_number" }
           if servicer && rl.loan_number.present?
             found_loan = Loan.where(:loan_number => rl.loan_number, :servicer_profile => servicer).first
             Rails.logger.info { "Found loan from servicer. Loan: #{found_loan.id} -- Servicer: #{servicer.id} -- RemoteLoan Number: #{rl.loan_number}" } if found_loan.present?
@@ -167,52 +166,16 @@ class EncompassBrokerPuller
 
           rl.loan = (found_loan || created_loan)
 
-          if loan['los_client_version'].present?
-            rl.los_client_version = loan['los_client_version']
-          end
-
-          if loan['los_name'].present?
-            rl.los_name = loan['los_name']
-          end
-
-          # Determine whether a prequal can be issued on a loan. Currently only working for Nations Lending
-          if rl&.loan_los_id == 46 && (loan['prequal_allowed'].nil? || loan['prequal_allowed'].casecmp("x") != 0)
-            rl.prequal_allowed = false
-          elsif rl&.loan_los_id == 46 && loan['prequal_allowed'].present? && loan['prequal_allowed'].casecmp("x") == 0
-            rl.prequal_allowed = true
-          end
-
-          # Determine whether a preapproval can be issued on a loan. Currently only working for Nations Lending
-          if rl&.loan_los_id == 46 && (loan['preapproval_allowed'].nil? || loan['preapproval_allowed'].casecmp("x") != 0)
-            rl.preapproval_allowed = false
-          elsif rl&.loan_los_id == 46 && loan['preapproval_allowed'].present? && loan['preapproval_allowed'].casecmp("x") == 0
-            rl.preapproval_allowed = true
-          end
-
-          # Determine whether a preapproval can be issued on a loan. For Synergy One
-          if rl&.loan_los_id == 129
-            if loan['preapproval_allowed'].present? && loan['preapproval_allowed'].casecmp("Y") == 0
-              rl.preapproval_allowed = true
-            else
-              rl.preapproval_allowed = false
-            end
-          end
-
-          # mortgage express
-          # Determine whether a preapproval can be issued on a loan. Currently only working for Nations Lending
-          # if rl&.loan_los_id == 58 && (loan['preapproval_allowed'].nil? || loan['preapproval_allowed'].casecmp("x") != 0)
-          #   rl.preapproval_allowed = false
-          # elsif rl&.loan_los_id == 58 && loan['preapproval_allowed'].present? && loan['preapproval_allowed'].casecmp("x") == 0
-          #   rl.preapproval_allowed = true
-          # end
-
           rl.save!
           # since we just saved the object, force the read from the slave so we can guarantee we have the record
           ActiveRecordSlave.read_from_master do
             rl.reload
           end
+          # update milestones with the new found/created loan
           update_remote_milestones(rl) if do_milestone_update
+
         end
+
 
         if rl.loan.present?
           Rails.logger.info { "Updating remote_loan #{rl.id}'s loan (#{rl.loan.id}) to match new RemoteLoan information" }
@@ -314,6 +277,9 @@ class EncompassBrokerPuller
           rl.loan.additional_comments = rl.additional_comments
           rl.loan.expiration_date = rl.expiration_date
 
+          #checkpoint save - temp while I watch for some other errors
+          rl.save!
+
           rl.loan.borrower.first_name = rlb&.first_name
           rl.loan.borrower.last_name = rlb&.last_name
           rl.loan.borrower.home_phone = rlb&.cell_phone
@@ -365,7 +331,7 @@ class EncompassBrokerPuller
             end
 
             rl.loan.co_borrower = lcb
-            rl.loan.co_borrower.save
+            rl.loan.co_borrower.save!
           elsif rlcb && rl.loan.co_borrower #update the loan borrower info we just got from the LOS
             Rails.logger.info { "Co-borrower found for RemoteLoan #{rl.id} -- RemoteLoanBorrower: #{rlcb.id} -- CoBorrower: #{rl.loan.co_borrower.id}" }
             rl.loan.co_borrower.first_name = rlcb.first_name
@@ -418,14 +384,14 @@ class EncompassBrokerPuller
           if rl.loan.app_user && rl.servicer_profile && rl.loan.app_user.servicer_profile != rl.servicer_profile
             rl.loan.app_user.servicer_activation_code = rl.servicer_profile.default_code
             # is this save necessary?
-            rl.loan.app_user.save
+            rl.loan.app_user.save!
           end
 
           create_or_update_loan_partner(loan, rl.loan.servicer_profile, "buyer_agent", rl)
           create_or_update_loan_partner(loan, rl.loan.servicer_profile, "seller_agent", rl)
 
           rl.loan.save!
-          rl.save
+          rl.save!
           ActiveRecordSlave.read_from_master do
             rl.reload
           end
@@ -438,7 +404,7 @@ class EncompassBrokerPuller
               rl.loan.send_milestone_progress_pushes_if_needed( ms_response["ms_loan_definition"] )
             end
           end
-          Rails.logger.info "updated existing loan.id: #{rl.loan.id}; remote loan number: #{rl.remote_id}"
+          Rails.logger.info "updated existing loan.id: #{rl.loan.id}; remote loan id: #{rl.id}"
 
         elsif au.present? && au.servicer_profile == servicer && rl.loan.blank? && !rl.association_emailed && rl.active && servicer.present? && servicer.user.active?
           # create the existing_remote_loan and notify LO
@@ -585,7 +551,7 @@ class EncompassBrokerPuller
   end
 
 
-  def self.create_remote_loan(loan, rl, servicer, los)
+  def self.update_remote_loan(loan, rl, servicer, los)
     rl.loan_los = los
     rl.loan_number = loan['loan_id']
     rl.remote_id = loan['remote_id']
@@ -854,6 +820,45 @@ class EncompassBrokerPuller
     rl.remote_user_id = loan['los_user_id']
     rl.loan_processor_email = loan['loan_processor_email']
 
+    if loan['los_client_version'].present?
+      rl.los_client_version = loan['los_client_version']
+    end
+
+    if loan['los_name'].present?
+      rl.los_name = loan['los_name']
+    end
+
+    # Determine whether a prequal can be issued on a loan. Currently only working for Nations Lending
+    if rl&.loan_los_id == 46 && (loan['prequal_allowed'].nil? || loan['prequal_allowed'].casecmp("x") != 0)
+      rl.prequal_allowed = false
+    elsif rl&.loan_los_id == 46 && loan['prequal_allowed'].present? && loan['prequal_allowed'].casecmp("x") == 0
+      rl.prequal_allowed = true
+    end
+
+    # Determine whether a preapproval can be issued on a loan. Currently only working for Nations Lending
+    if rl&.loan_los_id == 46 && (loan['preapproval_allowed'].nil? || loan['preapproval_allowed'].casecmp("x") != 0)
+      rl.preapproval_allowed = false
+    elsif rl&.loan_los_id == 46 && loan['preapproval_allowed'].present? && loan['preapproval_allowed'].casecmp("x") == 0
+      rl.preapproval_allowed = true
+    end
+
+    # Determine whether a preapproval can be issued on a loan. For Synergy One
+    if rl&.loan_los_id == 129
+      if loan['preapproval_allowed'].present? && loan['preapproval_allowed'].casecmp("Y") == 0
+        rl.preapproval_allowed = true
+      else
+        rl.preapproval_allowed = false
+      end
+    end
+
+    # mortgage express
+    # Determine whether a preapproval can be issued on a loan. Currently only working for Nations Lending
+    # if rl&.loan_los_id == 58 && (loan['preapproval_allowed'].nil? || loan['preapproval_allowed'].casecmp("x") != 0)
+    #   rl.preapproval_allowed = false
+    # elsif rl&.loan_los_id == 58 && loan['preapproval_allowed'].present? && loan['preapproval_allowed'].casecmp("x") == 0
+    #   rl.preapproval_allowed = true
+    # end
+    
     rl.servicer_profile = servicer
 
     # there are some remote statuses that should make the loan inactive.
@@ -884,14 +889,14 @@ class EncompassBrokerPuller
       rl.display = rl.active
     end
 
-    rl.save
+    rl.save!
     ActiveRecordSlave.read_from_master do
       rl.reload
     end
 
   end
 
-  def self.create_remote_loan_borr(loan, rlb, rl)
+  def self.update_remote_loan_borr(loan, rlb, rl)
     #puts "creating_remote_loan_borr: #{loan['borrower']}\n#{rlb}\n#{rlb.first_name}"
     rlb.first_name = loan['borrower']['first_name']
     rlb.middle_name = loan['borrower']['middle_name']
@@ -904,7 +909,7 @@ class EncompassBrokerPuller
     rlb.email = loan['borrower']['email_address']
     rlb.credit_score = loan['borrower']['credit_score']
     rlb.econsent_status = loan['borrower']['econsent_status']
-    rlb.ssn = loan['borrower']['ssn']
+    rlb.ssn = loan['borrower']['ssn'] if loan['borrower']['ssn'].present?
 
     rlb.street1 = loan['borrower']['street1']
     rlb.street2 = loan['borrower']['street2']
@@ -998,12 +1003,12 @@ class EncompassBrokerPuller
         if loan_partner.partner.present? && remote_loan.loan.borrower.present? && remote_loan.loan.borrower.app_user.present? && partner_type == "buyer_agent"
           au = remote_loan.loan.borrower.app_user
           au.servicer_activation_code = loan_partner.partner.servicer_activation_code
-          au.save
+          au.save!
         end
         if loan_partner.partner.present? && remote_loan.loan.co_borrower.present? && remote_loan.loan.co_borrower.app_user.present? && partner_type == "buyer_agent"
           au = remote_loan.loan.co_borrower.app_user
           au.servicer_activation_code = loan_partner.partner.servicer_activation_code
-          au.save
+          au.save!
         end
       end
     end
@@ -1017,7 +1022,7 @@ class EncompassBrokerPuller
         alert.source      = a['source']
         alert.status      = a['status']
         alert.description = a['description']
-        alert.save
+        alert.save!
       end
     end
   end
@@ -1032,12 +1037,12 @@ class EncompassBrokerPuller
         event.associate_phone = e['associate_phone']
         event.associate_email = e['associate_email']
         event.associate_cell  = e['associate_cell']
-        event.save
+        event.save!
       end
     end
   end
 
-  def self.create_remote_loan_co_borr(loan, rlcb, rl)
+  def self.update_remote_loan_co_borr(loan, rlcb, rl)
     #puts "creating_remote_loan_co_borr: #{loan['co_borrower']}\n#{rlcb}\n"
     rlcb.first_name = loan['co_borrower']['first_name']
     rlcb.last_name = loan['co_borrower']['last_name']
@@ -1050,7 +1055,7 @@ class EncompassBrokerPuller
     rlcb.credit_ref_number = loan['co_borrower']['credit_ref_number']
     rlcb.self_employed = loan['co_borrower']['self_employed']
     rlcb.credit_auth = loan['co_borrower']['credit_auth']
-    rlcb.ssn = loan['co_borrower']['ssn']
+    rlcb.ssn = loan['co_borrower']['ssn'] if loan['co_borrower']['ssn'].present?
 
     rlcb.street1 = loan['co_borrower']['street1']
     rlcb.street2 = loan['co_borrower']['street2']
@@ -1074,7 +1079,7 @@ class EncompassBrokerPuller
     return rlcb
   end
 
-  def self.create_remote_loan_prop(loan, rlp, rl)
+  def self.update_remote_loan_prop(loan, rlp, rl)
     rlp.street = loan['property']['street']
     rlp.city = loan['property']['city']
     rlp.state = loan['property']['state']
@@ -1241,7 +1246,7 @@ class EncompassBrokerPuller
       response['borrower']['work_phone'] = loan_borrower['WorkPhone']
       response['borrower']['credit_ref_number'] = loan_borrower['FICO_ReportId'] if loan_borrower['FICO_ReportId']
       response['borrower']['credit_auth'] = loan_borrower['CreditAuthDate'].present?
-      response['borrower']['ssn'] = loan_borrower['SSN']
+      response['borrower']['ssn'] = loan_borrower['SSN'] if loan_borrower['SSN'].present?
       response['borrower']['dob'] = loan_borrower['DOB']
       response['borrower']['street1'] = loan_borrower['Address']
     end
@@ -1286,7 +1291,7 @@ class EncompassBrokerPuller
       response['co_borrower']['credit_score'] = loan_borrower['CreditScore']
       response['co_borrower']['credit_ref_number'] = loan_borrower['FICO_ReportId'] if loan_borrower['FICO_ReportId']
       response['co_borrower']['credit_auth'] = loan_borrower['CreditAuthDate'].present?
-      response['co_borrower']['ssn'] = loan_borrower['SSN']
+      response['co_borrower']['ssn'] = loan_borrower['SSN'] if loan_borrower['SSN'].present?
       response['co_borrower']['dob'] = loan_borrower['DOB']
       response['co_borrower']['street1'] = loan_borrower['Address']
 
