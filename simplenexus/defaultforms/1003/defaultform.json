@@ -36,7 +36,7 @@
         "borrower_cell_phone",
         "email"
       ],
-      "instructions": "Please enter your date of birth and contact information"
+      "instructions": "Please enter the following information"
     },
     {
       "fields": [
@@ -58,17 +58,37 @@
         "employer_city",
         "employer_state",
         "employer_zip",
-        "employer_years",
+        "two_years_at_current_employer",
         "monthly_income"
       ],
       "instructions": "Please enter details about your current employment and income"
+    },
+    {
+      "fields": [
+        "employer_years",
+        "employer_months"
+      ],
+      "instructions": "Please enter length of time at current employer"
+    },
+    {
+      "condition": "two_years_at_current_employer",
+      "conditionValue": "0",
+      "fields": [
+        "borrower_previous_employer_name",
+        "borrower_previous_employer_address",
+        "borrower_previous_employer_city",
+        "borrower_previous_employer_state",
+        "borrower_previous_employer_zip",
+        "borrower_previous_employer_years",
+        "borrower_previous_employer_months"
+      ],
+      "instructions": "Please enter details about your previous employment and income"
     },
     {
       "condition": "loan_purpose",
       "conditionValue": "Purchase",
       "fields": [
         "purchase_price",
-        "down_payment_pct",
         "loan_term"
       ],
       "instructions": "Please enter the loan amount requested"
@@ -114,7 +134,6 @@
       "conditionValue": "Purchase",
       "fields": [
         "under_contract",
-        "referral_name",
         "property_type",
         "type_of_property"
       ],
@@ -125,7 +144,8 @@
       "fields": [
         "property_city",
         "property_state",
-        "property_zip"
+        "property_zip",
+        "referral_name"
       ],
       "instructions": "Please enter the subject property information"
     },
@@ -155,7 +175,7 @@
         "savings_account",
         "assets_other"
       ],
-      "instructions": "Please enter your assets"
+      "instructions": "Please enter your financial assets"
     },
     {
       "fields": [
@@ -191,6 +211,13 @@
       "instructions": "What is the amount of your alimony and/or child support?"
     },
     {
+      "fields": [
+        "provide_demographics"
+      ],
+      "instructions": "Borrower demographic information"
+    },
+    {
+      "condition": "provide_demographics",
       "fields": [
         "ethnicity",
         "race",
@@ -242,11 +269,9 @@
         "coborrower_first_name",
         "coborrower_middle_name",
         "coborrower_last_name",
-        "coborrower_suffix",
-        "coborrower_cell_phone",
-        "coborrower_email"
+        "coborrower_suffix"
       ],
-      "instructions": "Please enter your Co-Borrower's information"
+      "instructions": "Please enter Co-Borrower's legal name"
     },
     {
       "condition": "has_coborrower",
@@ -258,7 +283,19 @@
         "coborrower_property_own",
         "coborrower_property_years"
       ],
-      "instructions": "Please enter your Co-Borrower's current address"
+      "instructions": "Please enter Co-Borrower's current address"
+    },
+    {
+      "condition": "has_coborrower",
+      "fields": [
+        "coborrower_dob",
+        "coborrower_is_firsttimer",
+        "coborrower_is_veteran",
+        "coborrower_home_phone",
+        "coborrower_cell_phone",
+        "coborrower_email"
+      ],
+      "instructions": "Please enter the following information for Co-Borrower"
     },
     {
       "condition": "has_coborrower",
@@ -270,10 +307,9 @@
     {
       "condition": "has_coborrower",
       "fields": [
-        "coborrower_ssn",
-        "coborrower_dob"
+        "coborrower_ssn"
       ],
-      "instructions": "Please enter your Co-Borrower's social security number & date of birth."
+      "instructions": "Please enter Co-Borrower's social security number & date of birth."
     },
     {
       "condition": "has_coborrower",
@@ -287,7 +323,7 @@
         "coborrower_employer_state",
         "coborrower_employer_zip"
       ],
-      "instructions": "Please enter details about the Co-Borrower's current employment"
+      "instructions": "Please enter details about Co-Borrower's current employment"
     },
     {
       "condition": "has_coborrower",
@@ -305,7 +341,7 @@
         "coborrower_is_primary_residence",
         "coborrower_has_ownership_interest"
       ],
-      "instructions": "Please answer the following declarations"
+      "instructions": "Please answer the following declarations for Co-Borrower"
     },
     {
       "condition": "coborrower_has_ownership_interest",
@@ -313,23 +349,29 @@
         "coborrower_previous_property_type_declaration",
         "coborrower_previous_property_title_declaration"
       ],
-      "instructions": "What was the purpose of your other property?"
+      "instructions": "What was the purpose of Co-Borrower's other property?"
     },
     {
       "condition": "coborrower_has_alimony",
       "fields": [
         "coborrower_alimony_amount"
       ],
-      "instructions": "What is the amount of your alimony and/or child support?"
+      "instructions": "What is the amount of Co-Borrower's alimony and/or child support?"
     },
     {
-      "condition": "has_coborrower",
+      "fields": [
+        "coborrower_provide_demographics"
+      ],
+      "instructions": "Co-Borrower demographic information"
+    },
+    {
+      "condition": "coborrower_provide_demographics",
       "fields": [
         "coborrower_ethnicity",
         "coborrower_race",
         "coborrower_gender"
       ],
-      "instructions": "Please answer demographic questions"
+      "instructions": "Please answer demographic questions for Co-Borrower"
     },
     {
       "condition": "coborrower_ethnicity",
@@ -368,19 +410,22 @@
       "fields": [
         "coborrower_econsent"
       ],
-      "instructions": "Co-Borrower econsent"
+      "instructions": "Co-Borrower eConsent"
     },
     {
       "fields": [
         "econsent"
       ],
-      "instructions": "Borrower econsent"
+      "instructions": "Borrower eConsent"
+    },
+    {
+      "fields": [
+        "ready_to_submit"
+      ],
+      "instructions": "Are you ready to submit the loan app"
     }
   ],
-  "values": {
-    "provide_demographics": "1",
-    "coborrower_provide_demographics": "1"
-  },
+  "values": {},
   "fields": [
     {
       "min": 0,
@@ -392,9 +437,10 @@
       "required": false,
       "choices": [
         "",
-        "Purchase",
         "Refinance",
-        "Cash-Out Refinance"
+        "Purchase",
+        "Cash-Out Refinance",
+        "No Cash-Out Refinance"
       ]
     },
     {
@@ -444,7 +490,7 @@
       "max": 0,
       "description": "Street Address",
       "type": "text",
-      "required": false
+      "required": true
     },
     {
       "min": 1,
@@ -453,7 +499,7 @@
       "max": 22,
       "description": "Borrower's City",
       "type": "text",
-      "required": false
+      "required": true
     },
     {
       "min": 0,
@@ -463,16 +509,16 @@
       "description": "Borrower's State",
       "type": "state",
       "allowAllStates": true,
-      "required": false
+      "required": true
     },
     {
       "min": 0,
-      "title": "Zipcode",
+      "title": "Zip Code",
       "key": "zip",
       "max": 0,
-      "description": "Borrower's Zipcode",
+      "description": "Borrower's Zip Code",
       "type": "zip",
-      "required": false
+      "required": true
     },
     {
       "min": 0,
@@ -622,12 +668,12 @@
       "required": false
     },
     {
-      "min": 0,
-      "title": "Years at Current Employment",
-      "key": "employer_years",
-      "max": 0,
-      "description": "Borrower's Years at Current Employment",
-      "type": "integer",
+      "min": "0",
+      "title": "Have you been with your current employer at least 2 years?",
+      "key": "two_years_at_current_employer",
+      "max": "0",
+      "description": "Have you been with your current employer at least 2 years?",
+      "type": "boolean",
       "required": false
     },
     {
@@ -641,32 +687,93 @@
     },
     {
       "min": 0,
+      "title": "Years at Current Employment",
+      "key": "employer_years",
+      "max": 0,
+      "description": "Borrower's Years at Current Employment",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Months at current employment?",
+      "key": "employer_months",
+      "max": 0,
+      "description": "Months at current employment?",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Employer Name",
+      "key": "borrower_previous_employer_name",
+      "max": "0",
+      "description": "Borrower's Previous Employer Name",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Employer Address",
+      "key": "borrower_previous_employer_address",
+      "max": "0",
+      "description": "Borrower's Previous Employer Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Employer City",
+      "key": "borrower_previous_employer_city",
+      "max": "0",
+      "description": "Borrower's Previous Employer City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Employer State",
+      "key": "borrower_previous_employer_state",
+      "max": "0",
+      "description": "Borrower's Previous Employer State",
+      "type": "state",
+      "allowAllStates": true,
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Employer Zip",
+      "key": "borrower_previous_employer_zip",
+      "max": "0",
+      "description": "Borrower's Previous Employer Zip",
+      "type": "zip",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Years at Previous Employer",
+      "key": "borrower_previous_employer_years",
+      "max": "0",
+      "description": "Borrower's Years at Previous Employer",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Months at Previous Employer",
+      "key": "borrower_previous_employer_months",
+      "max": 0,
+      "description": "Borrower's Months at Previous Employer",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Home Purchase Price",
       "key": "purchase_price",
       "max": 0,
       "description": "Home Purchase Price",
       "type": "currency",
-      "required": false
-    },
-    {
-      "min": 0,
-      "title": "Down Payment %",
-      "choices": [
-        "",
-        "0.0",
-        "3.0",
-        "3.5",
-        "5.0",
-        "10.0",
-        "20.0",
-        "30.0",
-        "40.0",
-        "50.0"
-      ],
-      "key": "down_payment_pct",
-      "max": 0,
-      "description": "Down Payment %",
-      "type": "single_choice",
       "required": false
     },
     {
@@ -713,10 +820,10 @@
     },
     {
       "min": 0,
-      "title": "Property Type",
+      "title": "Occupancy Type",
       "key": "type_of_property",
       "max": 0,
-      "description": "Type of Property",
+      "description": "Occupancy Property",
       "type": "single_choice",
       "required": false,
       "choices": [
@@ -734,16 +841,6 @@
       "description": "Are you currently under contract?",
       "type": "boolean",
       "required": false
-    },
-    {
-      "placeholder": "Realtor Name",
-      "min": 0,
-      "title": "Realtor Name",
-      "key": "referral_name",
-      "description": "If you are working with a Realtor, please provide their name",
-      "required": false,
-      "type": "text",
-      "max": 100
     },
     {
       "min": 0,
@@ -771,6 +868,16 @@
       "description": "Property Zip",
       "type": "zip",
       "required": true
+    },
+    {
+      "placeholder": "Realtor Name",
+      "min": 0,
+      "title": "Realtor Name",
+      "key": "referral_name",
+      "description": "If you are working with a Realtor, please provide their name",
+      "required": false,
+      "type": "text",
+      "max": 100
     },
     {
       "min": 0,
@@ -957,6 +1064,16 @@
     },
     {
       "min": 0,
+      "title": "Provide demographic information?",
+      "text": "Need to enter this",
+      "key": "provide_demographics",
+      "max": 0,
+      "description": "Would you like to enter demographic information?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Ethnicity",
       "key": "ethnicity",
       "max": 0,
@@ -1102,30 +1219,12 @@
     },
     {
       "min": 0,
-      "title": "Coborrower Cell Phone",
-      "key": "coborrower_cell_phone",
-      "max": 17,
-      "description": "Cell Phone Number",
-      "type": "phone",
-      "required": false
-    },
-    {
-      "min": 0,
-      "title": "Email",
-      "key": "coborrower_email",
-      "max": 0,
-      "description": "Email",
-      "type": "email",
-      "required": false
-    },
-    {
-      "min": 0,
       "title": "Street Address",
       "key": "coborrower_address",
       "max": 0,
       "description": "Co-Borrower's Street Address",
       "type": "text",
-      "required": false
+      "required": true
     },
     {
       "min": 0,
@@ -1134,7 +1233,7 @@
       "max": 0,
       "description": "Co-Borrower's City",
       "type": "text",
-      "required": false
+      "required": true
     },
     {
       "min": 0,
@@ -1144,16 +1243,16 @@
       "description": "Co-Borrower's State",
       "allowAllStates": true,
       "type": "state",
-      "required": false
+      "required": true
     },
     {
       "min": 0,
-      "title": "Zipcode",
+      "title": "Zip Code",
       "key": "coborrower_zip",
       "max": 0,
-      "description": "Co-Borrower's Zipcode",
+      "description": "Co-Borrower's Zip Code",
       "type": "zip",
-      "required": false
+      "required": true
     },
     {
       "min": 0,
@@ -1174,9 +1273,63 @@
       "required": false
     },
     {
+      "min": 1900,
+      "title": "Date of Birth",
+      "key": "coborrower_dob",
+      "max": 2015,
+      "description": "Co-Borrower Date of Birth",
+      "type": "date",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "First-time homebuyer?",
+      "key": "coborrower_is_firsttimer",
+      "max": 0,
+      "description": "Is Co-Borrower a first-time homebuyer?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Served in the military?",
+      "key": "coborrower_is_veteran",
+      "max": 0,
+      "description": "Has Co-Borrower served in the military?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Home Phone",
+      "key": "coborrower_home_phone",
+      "max": "17",
+      "description": "Coborrower Home Phone",
+      "type": "phone",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Cell-Phone",
+      "key": "coborrower_cell_phone",
+      "max": 17,
+      "description": "Cell-Phone Number",
+      "type": "phone",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Email",
+      "key": "coborrower_email",
+      "max": 0,
+      "description": "Email",
+      "type": "email",
+      "required": false
+    },
+    {
       "placeholder": "",
       "min": 0,
-      "title": "I authorize this Credit Check. *",
+      "title": "I authorize this Credit Check.",
       "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "coborrower_credit_authorization",
       "description": "",
@@ -1191,15 +1344,6 @@
       "max": 0,
       "description": "Co-Borrower's SSN",
       "type": "ssn",
-      "required": false
-    },
-    {
-      "min": 1900,
-      "title": "Date of Birth",
-      "key": "coborrower_dob",
-      "max": 2015,
-      "description": "Co-Borrower Date of Birth",
-      "type": "date",
       "required": false
     },
     {
@@ -1424,6 +1568,15 @@
     },
     {
       "min": 0,
+      "title": "Provide demographic information?",
+      "key": "coborrower_provide_demographics",
+      "max": 0,
+      "description": "Would Co-Borrower like to provide demographic information?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Ethnicity",
       "key": "coborrower_ethnicity",
       "max": 0,
@@ -1526,7 +1679,7 @@
       "placeholder": "",
       "min": 0,
       "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
-      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain Your consent to receive certain Loan Documents from Us in electronic form rather than in paper form. With Your consent, You will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, We will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.</li><li>If You do not consent to receive these Loan Documents electronically, You will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, We will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, You can do so by clicking on the 'I do not agree' button, or by notifying Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After Your consent is given, You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, You must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, You will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.<br>You can contact Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul>",
+      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain your consent to receive certain Loan Documents from us in electronic form rather than in paper form. With your consent, you will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before we can engage in this transaction electronically, it is important that you understand your rights and responsibilities. Please read the following and affirm your consent to conduct business with us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'you' and 'your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'we', 'our' and 'us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom you are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which you are applying. If you provide your consent by clicking the 'I agree' button at the bottom of the page, we will conduct this transaction electronically, instead of providing you with the Loan Documents in paper form.</li><li>If a document related to your loan is not available in electronic form, a paper copy will be provided to you free of charge.</li><li>Conducting this transaction electronically is an option. If you choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to you.</li><li>If you do not consent to receive these Loan Documents electronically, you will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw your consent at any time. By declining or revoking your consent to receive eDisclosures, we will provide you with the Loan Documents in paper form.</li><li>If you originally consent to receive eDisclosures, but later decide to withdraw your consent, you can do so by clicking on the 'I do not agree' button, or by notifying us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you originally consent to receive eDisclosures, but later withdraw your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After your consent is given, you may request from us paper copies of your Loan Documents. Please send this request to us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, you must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of your eDisclosures for your records.</li><li>If the software or hardware requirements change in the future, and you are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to you once you notify us that you are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify you before such requirements change. If you choose to withdraw your consent upon notification of the change, you will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify us if there is a change in your email address or in other information needed to contact you electronically.<br>You can contact us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event your email address on file is invalid; your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in your computer, browser, Internet service and/or software; or for other reasons beyond our control.</li></ul>",
       "key": "coborrower_econsent",
       "description": "",
       "required": false,
@@ -1537,12 +1690,21 @@
       "placeholder": "",
       "min": 0,
       "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
-      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain Your consent to receive certain Loan Documents from Us in electronic form rather than in paper form. With Your consent, You will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, We will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.</li><li>If You do not consent to receive these Loan Documents electronically, You will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, We will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, You can do so by clicking on the 'I do not agree' button, or by notifying Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After Your consent is given, You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, You must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, You will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.<br>You can contact Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul>",
+      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain your consent to receive certain Loan Documents from us in electronic form rather than in paper form. With your consent, you will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before we can engage in this transaction electronically, it is important that you understand your rights and responsibilities. Please read the following and affirm your consent to conduct business with us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'you' and 'your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'we', 'our' and 'us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom you are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which you are applying. If you provide your consent by clicking the 'I agree' button at the bottom of the page, we will conduct this transaction electronically, instead of providing you with the Loan Documents in paper form.</li><li>If a document related to your loan is not available in electronic form, a paper copy will be provided to you free of charge.</li><li>Conducting this transaction electronically is an option. If you choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to you.</li><li>If you do not consent to receive these Loan Documents electronically, you will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw your consent at any time. By declining or revoking your consent to receive eDisclosures, we will provide you with the Loan Documents in paper form.</li><li>If you originally consent to receive eDisclosures, but later decide to withdraw your consent, you can do so by clicking on the 'I do not agree' button, or by notifying us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you originally consent to receive eDisclosures, but later withdraw your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After your consent is given, you may request from us paper copies of your Loan Documents. Please send this request to us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, you must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of your eDisclosures for your records.</li><li>If the software or hardware requirements change in the future, and you are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to you once you notify us that you are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify you before such requirements change. If you choose to withdraw your consent upon notification of the change, you will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify us if there is a change in your email address or in other information needed to contact you electronically.<br>You can contact us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event your email address on file is invalid; your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in your computer, browser, Internet service and/or software; or for other reasons beyond our control.</li></ul>",
       "key": "econsent",
       "description": "",
       "required": false,
       "type": "agreement",
       "max": 0
+    },
+    {
+      "min": 0,
+      "title": "I am ready to submit the loan app",
+      "key": "ready_to_submit",
+      "max": 0,
+      "description": "I am ready to submit the loan app",
+      "required": true,
+      "type": "agreement"
     }
   ],
   "version": "1.0"
