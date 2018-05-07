@@ -23,9 +23,29 @@
         "state",
         "zip",
         "property_own",
-        "property_years"
+        "two_years_at_current_address"
       ],
       "instructions": "Please enter your current address"
+    },
+    {
+      "fields": [
+        "property_years",
+        "property_months"
+      ],
+      "instructions": "Please enter the length of time at current address"
+    },
+    {
+      "condition": "two_years_at_current_address",
+      "conditionValue": "0",
+      "fields": [
+        "prev_address",
+        "prev_city",
+        "prev_state",
+        "prev_zip",
+        "prev_property_years",
+        "prev_property_months"
+      ],
+      "instructions": "Please enter details about your previous address"
     },
     {
       "fields": [
@@ -45,12 +65,12 @@
       "instructions": "Borrower Credit Authorization"
     },
     {
-    "condition": "credit_authorization",
-    "conditionValue": "1",
-    "fields": [
-      "ssn_required"
-    ],
-    "instructions": "Please enter your social security number. This is secure & encrypted."
+      "condition": "credit_authorization",
+      "conditionValue": "1",
+      "fields": [
+        "ssn_required"
+      ],
+      "instructions": "Please enter your social security number. This is secure & encrypted."
     },
     {
       "condition": "credit_authorization",
@@ -291,9 +311,30 @@
         "coborrower_state",
         "coborrower_zip",
         "coborrower_property_own",
-        "coborrower_property_years"
+        "coborrower_two_years_at_current_address"
       ],
       "instructions": "Please enter Co-Borrower's current address"
+    },
+    {
+      "condition": "has_coborrower",
+      "fields": [
+        "coborrower_property_years",
+        "coborrower_property_months"
+      ],
+      "instructions": "Please enter the length of time at Co-Borrower's current address"
+    },
+    {
+      "condition": "coborrower_two_years_at_current_address",
+      "conditionValue": "0",
+      "fields": [
+        "coborrower_prev_address",
+        "coborrower_prev_city",
+        "coborrower_prev_state",
+        "coborrower_prev_zip",
+        "coborrower_prev_property_years",
+        "coborrower_prev_property_months"
+      ],
+      "instructions": "Please enter details about Co-Borrower's previous address"
     },
     {
       "condition": "has_coborrower",
@@ -315,12 +356,12 @@
       "instructions": "Co-Borrower Credit Authorization"
     },
     {
-    "condition": "coborrower_credit_authorization",
-    "conditionValue": "1",
-    "fields": [
-      "coborrower_ssn_required"
-    ],
-    "instructions": "Please enter Co-Borrower's social security number."
+      "condition": "coborrower_credit_authorization",
+      "conditionValue": "1",
+      "fields": [
+        "coborrower_ssn_required"
+      ],
+      "instructions": "Please enter Co-Borrower's social security number."
     },
     {
       "condition": "coborrower_credit_authorization",
@@ -335,14 +376,35 @@
       "fields": [
         "coborrower_is_self_employed",
         "coborrower_employer_name",
-        "coborrower_employer_years",
-        "coborrower_monthly_income",
         "coborrower_employer_address",
         "coborrower_employer_city",
         "coborrower_employer_state",
-        "coborrower_employer_zip"
+        "coborrower_employer_zip",
+        "coborrower_two_years_at_current_employer",
+        "coborrower_monthly_income"
       ],
       "instructions": "Please enter details about Co-Borrower's current employment"
+    },
+    {
+      "condition": "has_coborrower",
+      "fields": [
+        "coborrower_employer_years",
+        "coborrower_employer_months"
+      ],
+      "instructions": "Please enter length of time at Co-Borrower's current employer"
+    },
+    {
+      "condition": "coborrower_two_years_at_current_employer",
+      "fields": [
+        "coborrower_previous_employer_name",
+        "coborrower_previous_employer_address",
+        "coborrower_previous_employer_city",
+        "coborrower_previous_employer_state",
+        "coborrower_previous_employer_zip",
+        "coborrower_previous_employer_years",
+        "coborrower_previous_employer_months"
+      ],
+      "instructions": "Please enter details about Co-Borrower's previous employment and income"
     },
     {
       "condition": "has_coborrower",
@@ -456,8 +518,8 @@
       "required": false,
       "choices": [
         "",
-        "Refinance",
         "Purchase",
+        "Refinance",
         "Cash-Out Refinance",
         "No Cash-Out Refinance"
       ]
@@ -507,7 +569,7 @@
       "title": "Street Address",
       "key": "address",
       "max": 0,
-      "description": "Street Address",
+      "description": "Borrower Street Address",
       "type": "text",
       "required": true
     },
@@ -516,7 +578,7 @@
       "title": "City",
       "key": "city",
       "max": 22,
-      "description": "Borrower's City",
+      "description": "Borrower City",
       "type": "text",
       "required": true
     },
@@ -525,7 +587,7 @@
       "title": "State",
       "key": "state",
       "max": 0,
-      "description": "Borrower's State",
+      "description": "Borrower State",
       "type": "state",
       "allowAllStates": true,
       "required": true
@@ -535,7 +597,7 @@
       "title": "Zip Code",
       "key": "zip",
       "max": 0,
-      "description": "Borrower's Zip Code",
+      "description": "Borrower Zip Code",
       "type": "zip",
       "required": true
     },
@@ -544,7 +606,16 @@
       "title": "Do you currently own?",
       "key": "property_own",
       "max": 0,
-      "description": "Do you currently own?",
+      "description": "Does Borrower currently own?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Have you been at your current address for at least 2 years?",
+      "key": "two_years_at_current_address",
+      "max": 0,
+      "description": "Has Borrower been at their current address for at least 2 years?",
       "type": "boolean",
       "required": false
     },
@@ -553,7 +624,70 @@
       "title": "Years at Current Address",
       "key": "property_years",
       "max": 0,
-      "description": "Years at Current Address",
+      "description": "Borrower Years at Current Address",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Months at Current Address",
+      "key": "property_months",
+      "max": 0,
+      "description": "Borrower's Months at Current Address",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Street Address",
+      "key": "prev_address",
+      "max": 0,
+      "description": "Street Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 1,
+      "title": "City",
+      "key": "prev_city",
+      "max": 22,
+      "description": "Borrower's City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "State",
+      "key": "prev_state",
+      "max": 0,
+      "description": "Borrower's State",
+      "type": "state",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Zipcode",
+      "key": "prev_zip",
+      "max": 0,
+      "description": "Borrower's Zipcode",
+      "type": "zip",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Years at Previous Address",
+      "key": "prev_property_years",
+      "max": 0,
+      "description": "Years at Previous Address",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Months at Previous Address",
+      "key": "prev_property_months",
+      "max": 0,
+      "description": "Months at Previous Address",
       "type": "integer",
       "required": false
     },
@@ -562,7 +696,7 @@
       "title": "Date of Birth",
       "key": "dob",
       "max": 2015,
-      "description": "Date of Birth",
+      "description": "Borrower Date of Birth",
       "type": "date",
       "required": false
     },
@@ -571,7 +705,7 @@
       "title": "First-time homebuyer?",
       "key": "is_firsttimer",
       "max": 0,
-      "description": "Are you a first-time homebuyer?",
+      "description": "Is Borrower a first-time homebuyer?",
       "type": "boolean",
       "required": false
     },
@@ -580,7 +714,7 @@
       "title": "Served in the military?",
       "key": "is_veteran",
       "max": 0,
-      "description": "Have you served in the military?",
+      "description": "Has Borrower served in the military?",
       "type": "boolean",
       "required": false
     },
@@ -589,34 +723,16 @@
       "title": "Home Phone",
       "key": "borrower_home_phone",
       "max": 0,
-      "description": "Home Phone Number",
+      "description": "Borrower Home Phone Number",
       "type": "phone",
       "required": false
     },
     {
       "min": 0,
-      "title": "SSN",
-      "key": "ssn_required",
-      "max": 0,
-      "description": "",
-      "type": "ssn",
-      "required": true
-    },
-    {
-      "min": 0,
-      "title": "SSN",
-      "key": "coborrower_ssn_required",
-      "max": 0,
-      "description": "",
-      "type": "ssn",
-      "required": true
-    },
-    {
-      "min": 0,
-      "title": "Cell Phone",
+      "title": "Cell-Phone",
       "key": "borrower_cell_phone",
       "max": 17,
-      "description": "Cell Phone Number",
+      "description": "Borrower Cell-Phone Number",
       "type": "phone",
       "required": false
     },
@@ -630,31 +746,40 @@
       "required": false
     },
     {
-      "min": 0,
-      "title": "SSN",
-      "key": "ssn",
-      "max": 0,
-      "description": "Borrower's SSN",
-      "type": "ssn",
-      "required": false
-    },
-    {
       "placeholder": "",
       "min": 0,
       "title": "I authorize this Credit Check.",
       "text": "During your mortgage loan application process, this institution performs a credit check that requires us to obtain and confirm information regarding your personal and financial background. This credit check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "credit_authorization",
-      "description": "",
+      "description": "Borrower Credit Authorization",
       "required": true,
       "type": "boolean",
       "max": 0
     },
     {
       "min": 0,
+      "title": "SSN",
+      "key": "ssn_required",
+      "max": 0,
+      "description": "Borrower SSN",
+      "type": "ssn",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "SSN",
+      "key": "ssn",
+      "max": 0,
+      "description": "Borrower SSN",
+      "type": "ssn",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Are you self-employed?",
       "key": "is_self_employed",
       "max": 0,
-      "description": "Are you self-employed?",
+      "description": "Is Borrower self-employed?",
       "type": "boolean",
       "required": false
     },
@@ -663,7 +788,7 @@
       "title": "Employer Name",
       "key": "employer_name",
       "max": 22,
-      "description": "Borrower's Employer Name",
+      "description": "Borrower Employer Name",
       "type": "text",
       "required": false
     },
@@ -672,7 +797,7 @@
       "title": "Employer Address",
       "key": "employer_address",
       "max": 0,
-      "description": "Borrower's Employer Address",
+      "description": "Borrower Employer Address",
       "type": "text",
       "required": false
     },
@@ -681,7 +806,7 @@
       "title": "Employer City",
       "key": "employer_city",
       "max": 0,
-      "description": "Borrower's Employer City",
+      "description": "Borrower Employer City",
       "type": "text",
       "required": false
     },
@@ -690,7 +815,7 @@
       "title": "Employer State",
       "key": "employer_state",
       "max": 0,
-      "description": "Borrower's Employer State",
+      "description": "Borrower Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
@@ -700,7 +825,7 @@
       "title": "Employer Zip",
       "key": "employer_zip",
       "max": 0,
-      "description": "Borrower's Employer Zip",
+      "description": "Borrower Employer Zip",
       "type": "zip",
       "required": false
     },
@@ -709,7 +834,7 @@
       "title": "Have you been with your current employer at least 2 years?",
       "key": "two_years_at_current_employer",
       "max": "0",
-      "description": "Have you been with your current employer at least 2 years?",
+      "description": "Has Borrower been with their current employer at least 2 years?",
       "type": "boolean",
       "required": false
     },
@@ -718,7 +843,7 @@
       "title": "Monthly Gross Income",
       "key": "monthly_income",
       "max": 0,
-      "description": "Borrower's Monthly Gross Income",
+      "description": "Borrower Monthly Gross Income",
       "type": "currency",
       "required": false
     },
@@ -727,62 +852,62 @@
       "title": "Years at Current Employment",
       "key": "employer_years",
       "max": 0,
-      "description": "Borrower's Years at Current Employment",
+      "description": "Borrower Years at Current Employment",
       "type": "integer",
       "required": false
     },
     {
       "min": 0,
-      "title": "Months at current employment?",
+      "title": "Months at Current Employment?",
       "key": "employer_months",
       "max": 0,
-      "description": "Months at current employment?",
+      "description": "Borrower Months at Current Employment",
       "type": "integer",
       "required": false
     },
     {
       "min": "0",
-      "title": "Employer Name",
+      "title": "Previous Employer Name",
       "key": "borrower_previous_employer_name",
       "max": "0",
-      "description": "Borrower's Previous Employer Name",
+      "description": "Borrower Previous Employer Name",
       "type": "text",
       "required": false
     },
     {
       "min": "0",
-      "title": "Employer Address",
+      "title": "Previous Employer Address",
       "key": "borrower_previous_employer_address",
       "max": "0",
-      "description": "Borrower's Previous Employer Address",
+      "description": "Borrower Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
       "min": "0",
-      "title": "Employer City",
+      "title": "Previous Employer City",
       "key": "borrower_previous_employer_city",
       "max": "0",
-      "description": "Borrower's Previous Employer City",
+      "description": "Borrower Previous Employer City",
       "type": "text",
       "required": false
     },
     {
       "min": "0",
-      "title": "Employer State",
+      "title": "Previous Employer State",
       "key": "borrower_previous_employer_state",
       "max": "0",
-      "description": "Borrower's Previous Employer State",
+      "description": "Borrower Previous Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
       "min": "0",
-      "title": "Employer Zip",
+      "title": "Previous Employer Zip",
       "key": "borrower_previous_employer_zip",
       "max": "0",
-      "description": "Borrower's Previous Employer Zip",
+      "description": "Borrower Previous Employer Zip",
       "type": "zip",
       "required": false
     },
@@ -791,7 +916,7 @@
       "title": "Years at Previous Employer",
       "key": "borrower_previous_employer_years",
       "max": "0",
-      "description": "Borrower's Years at Previous Employer",
+      "description": "Borrower Years at Previous Employer",
       "type": "integer",
       "required": false
     },
@@ -800,7 +925,7 @@
       "title": "Months at Previous Employer",
       "key": "borrower_previous_employer_months",
       "max": 0,
-      "description": "Borrower's Months at Previous Employer",
+      "description": "Borrower Months at Previous Employer",
       "type": "integer",
       "required": false
     },
@@ -918,28 +1043,28 @@
     },
     {
       "min": 0,
-      "title": "Checking Account Balance",
+      "title": "Checking Account",
       "key": "checking_account",
       "max": 0,
-      "description": "Checking Account",
+      "description": "Checking Account Balance",
       "type": "currency",
       "required": false
     },
     {
       "min": 0,
-      "title": "Savings Account Balance",
+      "title": "Savings Account",
       "key": "savings_account",
       "max": 0,
-      "description": "Savings Account",
+      "description": "Savings Account Balance",
       "type": "currency",
       "required": false
     },
     {
       "min": 0,
-      "title": "Other Assets Balance",
+      "title": "Other Assets",
       "key": "assets_other",
       "max": 0,
-      "description": "Other Assets",
+      "description": "Other Assets Balance",
       "type": "currency",
       "required": false
     },
@@ -1102,7 +1227,7 @@
     {
       "min": 0,
       "title": "Provide demographic information?",
-      "text": "Need to enter this",
+      "text": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below.",
       "key": "provide_demographics",
       "max": 0,
       "description": "Would you like to enter demographic information?",
@@ -1150,8 +1275,7 @@
         "Samoan",
         "Other Pacific Islander",
         "White",
-        "I do not wish to provide this information",
-        "Not applicable"
+        "I do not wish to provide this information"
       ],
       "min_choices": 0,
       "max_choices": 17,
@@ -1259,7 +1383,7 @@
       "title": "Street Address",
       "key": "coborrower_address",
       "max": 0,
-      "description": "Co-Borrower's Street Address",
+      "description": "Co-Borrower Street Address",
       "type": "text",
       "required": true
     },
@@ -1268,7 +1392,7 @@
       "title": "City",
       "key": "coborrower_city",
       "max": 0,
-      "description": "Co-Borrower's City",
+      "description": "Co-Borrower City",
       "type": "text",
       "required": true
     },
@@ -1277,7 +1401,7 @@
       "title": "State",
       "key": "coborrower_state",
       "max": 0,
-      "description": "Co-Borrower's State",
+      "description": "Co-Borrower State",
       "allowAllStates": true,
       "type": "state",
       "required": true
@@ -1287,7 +1411,7 @@
       "title": "Zip Code",
       "key": "coborrower_zip",
       "max": 0,
-      "description": "Co-Borrower's Zip Code",
+      "description": "Co-Borrower Zip Code",
       "type": "zip",
       "required": true
     },
@@ -1301,11 +1425,84 @@
       "required": false
     },
     {
+      "min": "0",
+      "title": "Have you been at your current address for at least 2 years?",
+      "key": "coborrower_two_years_at_current_address",
+      "max": "0",
+      "description": "Has Co-Borrower been at their current address for at least 2 years?",
+      "type": "boolean",
+      "required": false
+    },
+    {
       "min": 0,
       "title": "Years at Current Address",
       "key": "coborrower_property_years",
       "max": 0,
       "description": "Co-Borrower Years at Current Address",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Months at Current Address",
+      "key": "coborrower_property_months",
+      "max": 0,
+      "description": "Coborrower Months at Current Address",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Street Address",
+      "key": "coborrower_prev_address",
+      "max": "0",
+      "description": "Co-Borrower Previous Street Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "City",
+      "key": "coborrower_prev_city",
+      "max": "0",
+      "description": "Co-Borrower Previous City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "State",
+      "key": "coborrower_prev_state",
+      "max": "0",
+      "description": "Co-Borrower Previous State",
+      "allowAllStates": true,
+      "type": "state",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Zipcode",
+      "key": "coborrower_prev_zip",
+      "max": "0",
+      "description": "Co-Borrower Previous Zipcode",
+      "type": "zip",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Years at Previous Address",
+      "key": "coborrower_prev_property_years",
+      "max": 0,
+      "description": "Years at Previous Address",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Months at Previous Address",
+      "key": "coborrower_prev_property_months",
+      "max": 0,
+      "description": "Months at Previous Address",
       "type": "integer",
       "required": false
     },
@@ -1341,7 +1538,7 @@
       "title": "Home Phone",
       "key": "coborrower_home_phone",
       "max": "17",
-      "description": "Coborrower Home Phone",
+      "description": "Co-Borrower Home Phone Number",
       "type": "phone",
       "required": false
     },
@@ -1350,7 +1547,7 @@
       "title": "Cell-Phone",
       "key": "coborrower_cell_phone",
       "max": 17,
-      "description": "Cell-Phone Number",
+      "description": "Co-Borrower Cell-Phone Number",
       "type": "phone",
       "required": false
     },
@@ -1359,7 +1556,7 @@
       "title": "Email",
       "key": "coborrower_email",
       "max": 0,
-      "description": "Email",
+      "description": "Co-Borrower Email",
       "type": "email",
       "required": false
     },
@@ -1369,7 +1566,7 @@
       "title": "I authorize this Credit Check.",
       "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "coborrower_credit_authorization",
-      "description": "",
+      "description": "Co-Borrower Credit Authorization",
       "required": true,
       "type": "boolean",
       "max": 0
@@ -1377,9 +1574,18 @@
     {
       "min": 0,
       "title": "SSN",
+      "key": "coborrower_ssn_required",
+      "max": 0,
+      "description": "Co-Borrower SSN",
+      "type": "ssn",
+      "required": true
+    },
+    {
+      "min": 0,
+      "title": "SSN",
       "key": "coborrower_ssn",
       "max": 0,
-      "description": "Co-Borrower's SSN",
+      "description": "Co-Borrower SSN",
       "type": "ssn",
       "required": false
     },
@@ -1397,17 +1603,54 @@
       "title": "Employer Name",
       "key": "coborrower_employer_name",
       "max": 0,
-      "description": "Co-Borrower's Employer Name",
+      "description": "Co-Borrower Employer Name",
       "type": "text",
       "required": false
     },
     {
       "min": 0,
-      "title": "Years at Current Employment",
-      "key": "coborrower_employer_years",
+      "title": "Employer Address",
+      "key": "coborrower_employer_address",
       "max": 0,
-      "description": "Co-Borrower's Years at Current Employment",
-      "type": "integer",
+      "description": "Co-Borrower Employer Address",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Employer City",
+      "key": "coborrower_employer_city",
+      "max": 0,
+      "description": "Co-Borrower Employer City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Employer State",
+      "key": "coborrower_employer_state",
+      "max": 0,
+      "description": "Co-Borrower Employer State",
+      "type": "state",
+      "allowAllStates": true,
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Employer Zip",
+      "key": "coborrower_employer_zip",
+      "max": 0,
+      "description": "Co-Borrower Employer Zip",
+      "type": "zip",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Have you been with your current employer at least 2 years?",
+      "key": "coborrower_two_years_at_current_employer",
+      "max": "0",
+      "description": "Have you been with your current employer at least 2 years?",
+      "type": "boolean",
       "required": false
     },
     {
@@ -1421,39 +1664,84 @@
     },
     {
       "min": 0,
+      "title": "Years at Current Employment",
+      "key": "coborrower_employer_years",
+      "max": 0,
+      "description": "Co-Borrower's Years at Current Employment",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Months at Employment:",
+      "key": "coborrower_employer_months",
+      "max": 0,
+      "description": "Months at Employment",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Employer Name",
+      "key": "coborrower_previous_employer_name",
+      "max": "0",
+      "description": "Co-Borrower's Previous Employer Name",
+      "type": "text",
+      "required": false
+    },
+    {
+      "min": "0",
       "title": "Employer Address",
-      "key": "coborrower_employer_address",
-      "max": 0,
-      "description": "Co-Borrower's Employer Address",
+      "key": "coborrower_previous_employer_address",
+      "max": "0",
+      "description": "Co-Borrower's Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
+      "min": "0",
       "title": "Employer City",
-      "key": "coborrower_employer_city",
-      "max": 0,
-      "description": "Co-Borrower's Employer City",
+      "key": "coborrower_previous_employer_city",
+      "max": "0",
+      "description": "Co-Borrower's Previous Employer City",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
+      "min": "0",
       "title": "Employer State",
-      "key": "coborrower_employer_state",
-      "max": 0,
-      "description": "Co-Borrower's Employer State",
+      "key": "coborrower_previous_employer_state",
+      "max": "0",
+      "description": "Co-Borrower's Previous Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
-      "min": 0,
+      "min": "0",
       "title": "Employer Zip",
-      "key": "coborrower_employer_zip",
-      "max": 0,
-      "description": "Co-Borrower's Employer Zip",
+      "key": "coborrower_previous_employer_zip",
+      "max": "0",
+      "description": "Co-Borrower's Previous Employer Zip",
       "type": "zip",
+      "required": false
+    },
+    {
+      "min": "0",
+      "title": "Years at Previous Employer",
+      "key": "coborrower_previous_employer_years",
+      "max": "0",
+      "description": "Borrower's Years at Previous Employer",
+      "type": "integer",
+      "required": false
+    },
+    {
+      "min": 0,
+      "title": "Months at Previous Employer",
+      "key": "coborrower_previous_employer_months",
+      "max": 0,
+      "description": "Months at Previous Employer",
+      "type": "integer",
       "required": false
     },
     {
@@ -1653,8 +1941,7 @@
         "Samoan",
         "Other Pacific Islander",
         "White",
-        "I do not wish to provide this information",
-        "Not applicable"
+        "I do not wish to provide this information"
       ],
       "min_choices": 0,
       "max_choices": 17,
