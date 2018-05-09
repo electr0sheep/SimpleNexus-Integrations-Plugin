@@ -106,6 +106,7 @@
         "coborrower_line_of_work",
         "coborrower_mailing_address",
         "coborrower_mailing_city",
+        "coborrower_mailing_different_than_current",
         "coborrower_mailing_same_as_current",
         "coborrower_mailing_state",
         "coborrower_mailing_zip",
@@ -265,6 +266,7 @@
         "loan_type",
         "mailing_address",
         "mailing_city",
+        "mailing_different_than_current",
         "mailing_same_as_current",
         "mailing_state",
         "mailing_zip",
@@ -620,7 +622,7 @@
       "min": 0,
       "title": "Months at Previous Employer",
       "key": "borrower_previous_employer_months",
-      "max": 0,
+      "max": 11,
       "description": "Borrower's Months at Previous Employer",
       "type": "integer",
       "required": false
@@ -770,7 +772,7 @@
       "max": 0,
       "description": "Co-Borrower's Street Address",
       "type": "text",
-      "required": false
+      "required": true
     },
     {
       "min": 0,
@@ -880,7 +882,7 @@
       "max": 0,
       "description": "Co-Borrower's City",
       "type": "text",
-      "required": false
+      "required": true
     },
     {
       "min": 0,
@@ -989,7 +991,7 @@
       "min": 0,
       "title": "Months at Employment:",
       "key": "coborrower_employer_months",
-      "max": 0,
+      "max": 11,
       "description": "Months at Employment",
       "type": "integer",
       "required": false
@@ -1061,8 +1063,7 @@
         "Cuban",
         "Other Hispanic or Latino",
         "Not Hispanic or Latino",
-        "I do not wish to provide this information",
-        "Not Applicable"
+        "I do not wish to provide this information"
       ],
       "required": false
     },
@@ -1357,6 +1358,15 @@
     },
     {
       "min": 0,
+      "title": "Is your mailing address different than your current address?",
+      "key": "coborrower_mailing_different_than_current",
+      "max": 0,
+      "description": "Is your mailing address different your current address?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Co-Borrower's mailing address is the same as their current address.",
       "key": "coborrower_mailing_same_as_current",
       "max": 0,
@@ -1566,7 +1576,7 @@
       "min": 0,
       "title": "Months at previous address",
       "key": "coborrower_prev_property_months",
-      "max": 0,
+      "max": 11,
       "description": "Months at previous address",
       "type": "integer",
       "required": false
@@ -1639,7 +1649,7 @@
       "min": 0,
       "title": "Months at Previous Employer",
       "key": "coborrower_previous_employer_months",
-      "max": 0,
+      "max": 11,
       "description": "Months at Previous Employer",
       "type": "integer",
       "required": false
@@ -1767,7 +1777,7 @@
       "min": 0,
       "title": "Months at Current Address",
       "key": "coborrower_property_months",
-      "max": 0,
+      "max": 11,
       "description": "Coborrower's Months at Current Address",
       "type": "integer",
       "required": false
@@ -1794,6 +1804,7 @@
       "min": 0,
       "title": "Provide demographic information?",
       "key": "coborrower_provide_demographics",
+      "text": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below.",
       "max": 0,
       "description": "Would Co-Borrower like to provide demographic information?",
       "type": "boolean",
@@ -1830,8 +1841,7 @@
         "Samoan",
         "Other Pacific Islander",
         "White",
-        "I do not wish to provide this information",
-        "Not applicable"
+        "I do not wish to provide this information"
       ],
       "min_choices": 0,
       "max_choices": 17,
@@ -2390,7 +2400,7 @@
       "min": 0,
       "title": "Months at current employment?",
       "key": "employer_months",
-      "max": 0,
+      "max": 11,
       "description": "Months at current employment?",
       "type": "integer",
       "required": false
@@ -2471,8 +2481,7 @@
         "Cuban",
         "Other Hispanic or Latino",
         "Not Hispanic or Latino",
-        "I do not wish to provide this information",
-        "Not Applicable"
+        "I do not wish to provide this information"
       ],
       "required": false
     },
@@ -2958,6 +2967,15 @@
     },
     {
       "min": 0,
+      "title": "Is your mailing address different than your current address?",
+      "key": "mailing_different_than_current",
+      "max": 0,
+      "description": "Is your mailing address different your current address?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "min": 0,
       "title": "Mailing address the same as your current address?",
       "key": "mailing_same_as_current",
       "max": 0,
@@ -3325,7 +3343,7 @@
       "min": 0,
       "title": "Months at previous address",
       "key": "prev_property_months",
-      "max": 0,
+      "max": 11,
       "description": "Months at previous address",
       "type": "integer",
       "required": false
@@ -3462,7 +3480,7 @@
       "min": 0,
       "title": "Months at Current Address",
       "key": "property_months",
-      "max": 0,
+      "max": 11,
       "description": "Borrower's Months at Current Address",
       "type": "integer",
       "required": false
@@ -3555,6 +3573,7 @@
     {
       "min": 0,
       "title": "Provide demographic information?",
+      "text": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below.",
       "key": "provide_demographics",
       "max": 0,
       "description": "Would you like to enter demographic information?",
@@ -3618,8 +3637,7 @@
         "Samoan",
         "Other Pacific Islander",
         "White",
-        "I do not wish to provide this information",
-        "Not applicable"
+        "I do not wish to provide this information"
       ],
       "min_choices": 0,
       "max_choices": 17,
