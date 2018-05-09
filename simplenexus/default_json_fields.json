@@ -38,6 +38,7 @@
         "borrower_previous_line_of_work_years",
         "borrower_previous_self_employed",
         "borrower_work_phone",
+        "borrowers_certification",
         "branch_of_service",
         "checking_account",
         "city",
@@ -186,6 +187,7 @@
         "coborrower_work_phone",
         "coborrower_zip",
         "coborrower_zip_required",
+        "coborrowers_certification",
         "commission",
         "commissions",
         "contacts_agent_cell",
@@ -320,15 +322,19 @@
         "proof_of_income",
         "property_address",
         "property_city",
+        "property_city_required",
         "property_months",
         "property_number_of_units",
         "property_own",
         "property_state",
+        "property_state_required",
         "property_street",
+        "property_street_required",
         "property_type",
         "property_year_built",
         "property_years",
         "property_zip",
+        "property_zip_required",
         "provide_demographics",
         "provide_demographics_disclaimer",
         "purchase_price",
@@ -471,6 +477,7 @@
       "description": "Type of Asset",
       "type": "single_choice",
       "choices": [
+        "",
         "Auto",
         "Bonds",
         "Checking",
@@ -717,9 +724,18 @@
       "required": false
     },
     {
+      "title": "I agree to the above authorization",
+      "description": "I agree to the above authorization",
+      "key": "borrowers_certification",
+      "text": "<b>Certification</b><br><br>The undersigned certify the following:<ol style=\"list-style-position: inside;\"><li>I/We have applied for a mortgage loan from [COMPANY_NAME] (\"Lender\"). In applying for the loan, I/we completed a loan application containing various information on the purpose of the loan, the amount and source of the down payment, employment and income information, and assets and liabilities. I/We certify that all of the information is true and complete. I/We made no misrepresentations in the loan application or other documents, nor did I/we omit any pertinent information.</li><li>I/We understand and agree that Lender reserves the right to change the mortgage loan review process to a full documentation program. This may include verifying the information provided on the application with the employer and/or the Financial institution.</li><li>I/We fully understand that it is a Federal crime punishable by fine or imprisonment, or both, to knowingly make any false statements when applying for this mortgage, as applicable under the provisions of Title 18, United States Code, Section 1014.</li></ol><br><b>Authorization to Release Information</b><br><br>To Whom It May Concern:<ol style=\"list-style-position: inside;\"><li>I/We have applied for a mortgage loan from Lender. As part of the application process, Lender and the mortgage guaranty insurer (if any) may verify information contained in my/our loan application and in other docuuments required in connection with the loan, either before the loan is closed or as part of its quality control program.</li><li>I/We authorize you to provide to Lender and to any investor to whom Lender may sell my mortgage, and to the mortgage guaranty insurer (if any), any and all information and documentation that they request. Such information includes but is not limited to, employment history and income; bank, money market, and similar account balances; credity history; and copies of income tax returns.</li><li>Lender or any investor that purchases the mortgage or the mortgage guaranty insurer (if any) may address this authorization to any party named in the loan application.</li><li>A copy of this authorization may be accepted as an original.</li><li>Your prompt reply to Lender, the investor that purchased the mortgage, or the mortgage guaranty insurer (if any) is appreciated.</li></ol>",
+      "type": "agreement",
+      "required": true
+    },
+    {
       "key": "branch_of_service",
       "type": "single_choice",
       "choices": [
+        "",
         "Air Force",
         "Army",
         "Coast Guard",
@@ -1397,6 +1413,7 @@
       "min": 0,
       "title": "Co-borrower Marital Status",
       "choices": [
+        "",
         "Married",
         "Unmarried",
         "Separated"
@@ -1507,6 +1524,7 @@
       "min": 0,
       "title": "Pacific Islander Origin",
       "choices": [
+        "",
         "Native Hawaiian",
         "Guamanian or Chamorro",
         "Samoan",
@@ -1736,6 +1754,7 @@
       "type": "single_choice",
       "required": false,
       "choices": [
+        "",
         "Sole Ownership",
         "Joint With Spouse",
         "Joint With Other Than Spouse"
@@ -1750,6 +1769,7 @@
       "type": "single_choice",
       "required": false,
       "choices": [
+        "",
         "Primary Residence",
         "Second Home",
         "Investment Property"
@@ -1860,6 +1880,7 @@
       "min": 0,
       "title": "Asian Origin",
       "choices": [
+        "",
         "Asian Indian",
         "Chinese",
         "Filipino",
@@ -1991,6 +2012,7 @@
       "type": "single_choice",
       "required": true,
       "choices": [
+        "",
         "Primary Residence",
         "Secondary Residence",
         "Investment",
@@ -2006,6 +2028,7 @@
       "type": "single_choice",
       "required": true,
       "choices": [
+        "",
         "Primary Residence",
         "Secondary Residence",
         "Investment",
@@ -2021,6 +2044,7 @@
       "type": "single_choice",
       "required": true,
       "choices": [
+        "",
         "Primary Residence",
         "Secondary Residence",
         "Investment",
@@ -2135,6 +2159,14 @@
       "max": 0,
       "description": "Co-Borrower's Zipcode",
       "type": "zip",
+      "required": true
+    },
+    {
+      "title": "I agree to the above authorization",
+      "description": "I agree to the above authorization",
+      "key": "coborrowers_certification",
+      "text": "<b>Certification</b><br><br>The undersigned certify the following:<ol style=\"list-style-position: inside;\"><li>I/We have applied for a mortgage loan from [COMPANY_NAME] (\"Lender\"). In applying for the loan, I/we completed a loan application containing various information on the purpose of the loan, the amount and source of the down payment, employment and income information, and assets and liabilities. I/We certify that all of the information is true and complete. I/We made no misrepresentations in the loan application or other documents, nor did I/we omit any pertinent information.</li><li>I/We understand and agree that Lender reserves the right to change the mortgage loan review process to a full documentation program. This may include verifying the information provided on the application with the employer and/or the Financial institution.</li><li>I/We fully understand that it is a Federal crime punishable by fine or imprisonment, or both, to knowingly make any false statements when applying for this mortgage, as applicable under the provisions of Title 18, United States Code, Section 1014.</li></ol><br><b>Authorization to Release Information</b><br><br>To Whom It May Concern:<ol style=\"list-style-position: inside;\"><li>I/We have applied for a mortgage loan from Lender. As part of the application process, Lender and the mortgage guaranty insurer (if any) may verify information contained in my/our loan application and in other docuuments required in connection with the loan, either before the loan is closed or as part of its quality control program.</li><li>I/We authorize you to provide to Lender and to any investor to whom Lender may sell my mortgage, and to the mortgage guaranty insurer (if any), any and all information and documentation that they request. Such information includes but is not limited to, employment history and income; bank, money market, and similar account balances; credity history; and copies of income tax returns.</li><li>Lender or any investor that purchases the mortgage or the mortgage guaranty insurer (if any) may address this authorization to any party named in the loan application.</li><li>A copy of this authorization may be accepted as an original.</li><li>Your prompt reply to Lender, the investor that purchased the mortgage, or the mortgage guaranty insurer (if any) is appreciated.</li></ol>",
+      "type": "agreement",
       "required": true
     },
     {
@@ -2304,6 +2336,7 @@
       "min": 0,
       "title": "Down Payment %",
       "choices": [
+        "",
         "0.0",
         "3.0",
         "3.5",
@@ -2493,6 +2526,7 @@
       "description": "Ethnicity Latino",
       "type": "single_choice",
       "choices": [
+        "",
         "Mexican",
         "Puerto Rican",
         "Cuban",
@@ -2912,6 +2946,7 @@
       "type": "single_choice",
       "required": false,
       "choices": [
+        "",
         "Purchase",
         "Refinance",
         "Cash-Out Refinance"
@@ -2921,6 +2956,7 @@
       "min": 0,
       "title": "Loan Term (Calculated in months, this is for 30, 15 and 10 years)",
       "choices": [
+        "",
         "360",
         "180",
         "120"
@@ -3005,6 +3041,7 @@
       "min": 0,
       "title": "Marital Status",
       "choices": [
+        "",
         "Married",
         "Unmarried",
         "Separated"
@@ -3064,6 +3101,7 @@
       "type": "single_choice",
       "required": false,
       "choices": [
+        "",
         "Rent",
         "Own"
       ]
@@ -3164,6 +3202,7 @@
       "description": "Occupancy Type",
       "type": "single_choice",
       "choices": [
+        "",
         "Owner Occupied",
         "Non-Owner Occupied"
       ],
@@ -3256,6 +3295,7 @@
       "min": 0,
       "title": "Pacific Islander Origin",
       "choices": [
+        "",
         "Native Hawaiian",
         "Guamanian or Chamorro",
         "Samoan",
@@ -3411,6 +3451,7 @@
       "type": "single_choice",
       "required": false,
       "choices": [
+        "",
         "Sole Ownership",
         "Joint With Spouse",
         "Joint With Other Than Spouse"
@@ -3425,6 +3466,7 @@
       "type": "single_choice",
       "required": false,
       "choices": [
+        "",
         "Primary Residence",
         "Second Home",
         "Investment Property"
@@ -3478,6 +3520,15 @@
     },
     {
       "min": 0,
+      "title": "Property City",
+      "key": "property_city_required",
+      "max": 0,
+      "description": "Property City",
+      "type": "text",
+      "required": true
+    },
+    {
+      "min": 0,
       "title": "Months at Current Address",
       "key": "property_months",
       "max": 11,
@@ -3493,6 +3544,7 @@
       "description": "Number of units",
       "type": "single_choice",
       "choices": [
+        "",
         "2",
         "3",
         "4"
@@ -3519,6 +3571,15 @@
     },
     {
       "min": 0,
+      "title": "Property State",
+      "key": "property_state_required",
+      "max": 0,
+      "description": "Property State",
+      "type": "state",
+      "required": true
+    },
+    {
+      "min": 0,
       "title": "Property Street Address",
       "key": "property_street",
       "max": 0,
@@ -3528,12 +3589,22 @@
     },
     {
       "min": 0,
+      "title": "Property Street Address",
+      "key": "property_street_required",
+      "max": 0,
+      "description": "Property Street Address",
+      "type": "text",
+      "required": true
+    },
+    {
+      "min": 0,
       "title": "Property Type",
       "key": "property_type",
       "max": 0,
       "description": "Property Type",
       "type": "single_choice",
       "choices": [
+        "",
         "Single Family",
         "Condo",
         "Multi-Unit Property",
@@ -3569,6 +3640,15 @@
       "description": "Property Zip",
       "type": "zip",
       "required": false
+    },
+    {
+      "min": 0,
+      "title": "Property Zip",
+      "key": "property_zip_required",
+      "max": 0,
+      "description": "Property Zip",
+      "type": "zip",
+      "required": true
     },
     {
       "min": 0,
@@ -3656,6 +3736,7 @@
       "min": 0,
       "title": "Asian Origin",
       "choices": [
+        "",
         "Asian Indian",
         "Chinese",
         "Filipino",
@@ -3805,6 +3886,7 @@
       "type": "single_choice",
       "required": true,
       "choices": [
+        "",
         "Primary Residence",
         "Secondary Residence",
         "Investment",
@@ -3820,6 +3902,7 @@
       "type": "single_choice",
       "required": true,
       "choices": [
+        "",
         "Primary Residence",
         "Secondary Residence",
         "Investment",
@@ -3835,6 +3918,7 @@
       "type": "single_choice",
       "required": true,
       "choices": [
+        "",
         "Primary Residence",
         "Secondary Residence",
         "Investment",
@@ -3989,6 +4073,7 @@
       "type": "single_choice",
       "required": false,
       "choices": [
+        "",
         "Primary Residence",
         "Secondary Residence",
         "Investment"
@@ -4003,6 +4088,7 @@
       "type": "single_choice",
       "required": false,
       "choices": [
+        "",
         "Hourly",
         "Salary",
         "Commission"
@@ -4012,6 +4098,7 @@
       "key": "type_of_service",
       "type": "single_choice",
       "choices": [
+        "",
         "Regular Military",
         "Reserves",
         "National Guard"
