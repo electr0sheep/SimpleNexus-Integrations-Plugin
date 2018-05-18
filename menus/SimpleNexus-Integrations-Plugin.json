@@ -16,7 +16,16 @@
           "submenu": [
             {
               "label": "1003",
-              "command": "SimpleNexus-Integrations-Plugin:generate1003Json"
+              "submenu": [
+                {
+                  "label": "Single Phase 1003",
+                  "command": "SimpleNexus-Integrations-Plugin:generateSinglePhase1003Json"
+                },
+                {
+                  "label": "Multi Phase 1003",
+                  "command": "SimpleNexus-Integrations-Plugin:generateMultiPhase1003Json"
+                }
+              ]
             },
             {
               "label": "PreQual",
