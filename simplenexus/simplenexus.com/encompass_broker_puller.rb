@@ -148,6 +148,8 @@ class EncompassBrokerPuller
         # had the data, we may find it here
         sac = au!=nil && au.servicer_activation_code
 
+        need_push_message = false
+
         if rl.loan.blank? && rl.remote_id.present?
           #Rails.logger.info { "Unable to find loan for remote_loan #{rl.remote_id} based on remote_id, starting search based on loan_number" }
           if servicer && rl.loan_number.present?
@@ -172,7 +174,7 @@ class EncompassBrokerPuller
             rl.reload
           end
           # update milestones with the new found/created loan
-          update_remote_milestones(rl) if do_milestone_update
+          # moved down below
 
         end
 
@@ -292,7 +294,14 @@ class EncompassBrokerPuller
           rl.loan.borrower.credit_auth = rlb&.credit_auth
           rl.loan.borrower.self_employed = rlb&.self_employed
           rl.loan.borrower.dob = rlb&.dob
-          rl.loan.borrower.ssn = rlb&.ssn
+
+          # 5/2018 don't mind us if we get a cipher error. I believe we used to save blank SSNs from older encompass plugins and
+          # now when we attempt to read the values, we get a Cipher error
+          begin
+            rl.loan.borrower.ssn = rlb&.ssn
+          rescue OpenSSL::Cipher::CipherError => ex
+            Rails.logger.error ex
+          end
 
           rl.loan.borrower.street1 = rlb&.street1
           rl.loan.borrower.street2 = rlb&.street2
@@ -396,15 +405,8 @@ class EncompassBrokerPuller
             rl.reload
           end
 
-          if do_milestone_update
-            ms_response = update_remote_milestones(rl)
-
-            # MILESTONE PUSHES
-            if ms_response["ms_loan_definition"].present?
-              rl.loan.send_milestone_progress_pushes_if_needed( ms_response["ms_loan_definition"] )
-            end
-          end
-          Rails.logger.info "updated existing loan.id: #{rl.loan.id}; remote loan id: #{rl.id}"
+          # update milestones moved to end
+          Rails.logger.info "updated existing loan.id: #{rl.loan&.id}; remote loan id: #{rl.id}"
 
         elsif au.present? && au.servicer_profile == servicer && rl.loan.blank? && !rl.association_emailed && rl.active && servicer.present? && servicer.user.active?
           # create the existing_remote_loan and notify LO
@@ -413,7 +415,7 @@ class EncompassBrokerPuller
           if au && servicer && servicer.company && servicer.company.auto_connect_app_user_to_loans?
             Rails.logger.info "automatically connecting app user #{au.email} to remote loan id #{rl.remote_id}"
             loan_record = Loan.create_loan_from_remote(rl, servicer, au)
-            ms_response = update_remote_milestones(rl) if do_milestone_update
+            # update milestones moved to end
             Rails.logger.info "connected app user #{au.email} with new loan #{loan_record.id} from remote loan id #{rl.remote_id}"
             ConnectLoanToAppUserJob.perform_later(:remote_id => rl.remote_id,
                                                   :loan_number => rl.loan_number,
@@ -427,14 +429,16 @@ class EncompassBrokerPuller
                                                   :los_user_work_phone => "#{loan['borrower']['work_phone']}",
                                                   :los_user_email_address => "#{loan['borrower']['email_address']}")
 
-            if do_milestone_update && rl.active && servicer.company.allow_loan_auto_connect_notifications?
-              PushMessageRecord.notify(au.device_id, servicer, "Your loan has been connected to your app.", ms_response["milestone_action"], ms_response["milestone_name"], true, (au && au.user ? "user_#{au.user.id}" : nil) )
+            # push message record moved to end
+            if rl.active && servicer.company.allow_loan_auto_connect_notifications?
+              need_push_message = true
             end
             rl.association_emailed = true
             rl.save!
             ActiveRecordSlave.read_from_master do
               rl.reload
             end
+
           elsif servicer.default_loan_milestones.any?{|dlm| dlm.name == rl.status || dlm.remote_name == rl.status} && servicer.company && servicer.company.allow_loan_auto_connect_notifications?
             # only proceed if the imported loan milestone matches what we've stored.
             ::LosLoanAssociationJob.perform_later(:remote_id => rl.remote_id,
@@ -470,6 +474,19 @@ class EncompassBrokerPuller
                                                    :los_user_cell => "#{loan['borrower']['cell_phone']}",
                                                    :los_user_work => "#{loan['borrower']['work_phone']}",
                                                    :los_user_email_address => "#{loan['borrower']['email_address']}")
+        end
+
+        if do_milestone_update
+          ms_response = update_remote_milestones(rl)
+
+          # MILESTONE PUSHES
+          if ms_response["ms_loan_definition"].present? && rl.loan.present?
+            rl.loan.send_milestone_progress_pushes_if_needed( ms_response["ms_loan_definition"] )
+          end
+
+          if need_push_message
+            PushMessageRecord.notify(au.device_id, servicer, "Your loan has been connected to your app.", ms_response["milestone_action"], ms_response["milestone_name"], true, (au && au.user ? "user_#{au.user.id}" : nil) )
+          end
         end
 
         updated_loans << rl
@@ -1271,13 +1288,6 @@ class EncompassBrokerPuller
     else
       #response['borrower']['credit_score'] = ""
     end
-    # TODO when encompass sends SSN, update this
-    # response['borrower']['ssn'] = loan_borrower['SSN']
-    # response['borrower']['street1'] = loan_borrower['Street1']
-    # response['borrower']['street2'] = loan_borrower['Street2']
-    # response['borrower']['city'] = loan_borrower['City']
-    # response['borrower']['state'] = loan_borrower['State']
-    # response['borrower']['zip'] = loan_borrower['Zip']
 
     response['co_borrower'] = {}
     if loan['CoBorrower'] && loan['CoBorrower']['FirstName'].present? && loan['CoBorrower']['LastName'].present?
@@ -1313,13 +1323,6 @@ class EncompassBrokerPuller
       else
         #response['co_borrower']['credit_score'] = ""
       end
-      # TODO when encompass sends SSN, update this
-      # response['co_borrower']['ssn'] = loan_borrower['SSN']
-      # response['co_borrower']['street1'] = loan_borrower['Street1']
-      # response['co_borrower']['street2'] = loan_borrower['Street2']
-      # response['co_borrower']['city'] = loan_borrower['City']
-      # response['co_borrower']['state'] = loan_borrower['State']
-      # response['co_borrower']['zip'] = loan_borrower['Zip']
     end
 
     loan_property = loan['Property']
@@ -1603,7 +1606,7 @@ class EncompassBrokerPuller
     response['borrower']['cell_phone'] = loan_borrower['cell_phone']
     response['borrower']['work_phone'] = loan_borrower['work_phone']
     response['borrower']['credit_score'] = loan_borrower['credit_score']
-    response['borrower']['ssn'] = loan_borrower['ssn']
+    response['borrower']['ssn'] = loan_borrower['ssn'] if loan_borrower['ssn'].present?
 
     if loan_borrower['present_address']
       response['borrower']['street1'] = loan_borrower['present_address']['street']
@@ -1640,8 +1643,10 @@ class EncompassBrokerPuller
 
     loan_borrower = loan['co_borrower']
     response['co_borrower'] = {}
-    # encompass is sending throubh blank coborrower information... when there isn't really a coborrower. So lets say that we at least need a name to continue
-    if loan_borrower && !loan['co_borrower']['first_name'].blank? && !loan['co_borrower']['last_name'].blank?
+    # encompass is sending through blank coborrower information... when there isn't really a coborrower. So lets say that we at least need a name to continue
+    # 5/2018 - there is a bug in the calyx integration where calyx is sending over coborrower information that matches the borrower. So we're going
+    # to prevent that as well
+    if loan_borrower && !loan['co_borrower']['first_name'].blank? && !loan['co_borrower']['last_name'].blank? && !coborrower_matches_borrower(loan['borrower'], loan['co_borrower'])
       response['co_borrower']['app_user_id'] = loan_borrower['app_user_id'] ? loan_borrower['app_user_id'] : loan['app_user_id']
       response['co_borrower']['first_name'] = loan_borrower['first_name']
       response['co_borrower']['last_name'] = loan_borrower['last_name']
@@ -1653,7 +1658,7 @@ class EncompassBrokerPuller
       response['co_borrower']['cell_phone'] = loan_borrower['cell_phone']
       response['co_borrower']['work_phone'] = loan_borrower['work_phone']
       response['co_borrower']['credit_score'] = loan_borrower['credit_score']
-      response['co_borrower']['ssn'] = loan_borrower['ssn']
+      response['co_borrower']['ssn'] = loan_borrower['ssn'] if loan_borrower['ssn'].present?
       if loan_borrower['present_address']
         response['co_borrower']['street1'] = loan_borrower['present_address']['street']
         response['co_borrower']['city'] = loan_borrower['present_address']['city']
@@ -2085,7 +2090,7 @@ class EncompassBrokerPuller
     response['borrower']['cell_phone'] = loan_borrower['cell_phone']
     response['borrower']['work_phone'] = loan_borrower['work_phone']
     response['borrower']['credit_score'] = loan_borrower['credit_score']
-    response['borrower']['ssn'] = loan_borrower['ssn']
+    response['borrower']['ssn'] = loan_borrower['ssn'] if loan_borrower['ssn'].present?
     response['borrower']['street1'] = loan_borrower['present_street1']
     response['borrower']['street2'] = loan_borrower['present_street2']
     response['borrower']['city'] = loan_borrower['present_city']
@@ -2099,7 +2104,7 @@ class EncompassBrokerPuller
     loan_borrower = loan['co_borrower']
     response['co_borrower'] = {}
     # encompass is sending throubh blank coborrower information... when there isn't really a coborrower. So lets say that we at least need a name to continue
-    if loan_borrower && !loan['co_borrower']['first_name'].blank? && !loan['co_borrower']['last_name'].blank?
+    if loan_borrower && !loan['co_borrower']['first_name'].blank? && !loan['co_borrower']['last_name'].blank? && !coborrower_matches_borrower(loan_borrower, loan['co_borrower'])
       response['co_borrower']['app_user_id'] = loan_borrower['app_user_id'] ? loan_borrower['app_user_id'] : loan['app_user_id']
       response['co_borrower']['first_name'] = loan_borrower['first_name']
       response['co_borrower']['last_name'] = loan_borrower['last_name']
@@ -2108,7 +2113,7 @@ class EncompassBrokerPuller
       response['co_borrower']['cell_phone'] = loan_borrower['cell_phone']
       response['co_borrower']['work_phone'] = loan_borrower['work_phone']
       response['co_borrower']['credit_score'] = loan_borrower['credit_score']
-      response['co_borrower']['ssn'] = loan_borrower['ssn']
+      response['co_borrower']['ssn'] = loan_borrower['ssn'] if loan_borrower['ssn'].present?
       response['co_borrower']['street1'] = loan_borrower['present_street1']
       response['co_borrower']['street2'] = loan_borrower['present_street2']
       response['co_borrower']['city'] = loan_borrower['present_city']
@@ -2326,6 +2331,14 @@ class EncompassBrokerPuller
     end
 
     response
+  end
+
+  def self.coborrower_matches_borrower(borrower, coborrower)
+    if ((borrower['first_name'] == coborrower['first_name']) && (borrower['last_name'] == coborrower['last_name']) &&
+      (borrower['email'] == coborrower['email']) && (borrower['phone'] == coborrower['phonse']) && (borrower['ssn'] == coborrower['ssn']))
+      return true
+    end
+    return false
   end
 
   def self.get_date_with_time(unparsed_datetime)

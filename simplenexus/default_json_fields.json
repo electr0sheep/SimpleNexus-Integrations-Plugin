@@ -3,6 +3,8 @@
   "structure": [
     {
       "fields": [
+        "account_institution_name",
+        "account_2_institution_name",
         "additional_conditions",
         "additional_info",
         "address",
@@ -16,8 +18,11 @@
         "assets1",
         "assets2",
         "assets_gift_funds",
+        "assets_gift_funds_2",
         "assets_other",
+        "assets_other_2",
         "assets_retirement",
+        "assets_retirement_2",
         "authorization_to_share_information",
         "bank_name",
         "bonuses",
@@ -25,6 +30,7 @@
         "borrower_cell_phone",
         "borrower_home_phone",
         "borrower_is_employed",
+        "borrower_previous_employer_monthly_income",
         "borrower_previous_employer_address",
         "borrower_previous_employer_city",
         "borrower_previous_employer_months",
@@ -191,7 +197,7 @@
         "coborrowers_certification",
         "commission",
         "commissions",
-        "construction_cost",
+        "cost_of_construction",
         "contacts_agent_cell",
         "contacts_agent_company",
         "contacts_agent_email",
@@ -201,7 +207,18 @@
         "credit_auth_method",
         "credit_authorization",
         "current_address_two_years",
+        "current_expense_hazard_ins",
+        "current_expense_tax",
         "dependents_age",
+        "detailed_other_income_1_amount",
+        "detailed_other_income_1_applicant",
+        "detailed_other_income_1_description",
+        "detailed_other_income_2_amount",
+        "detailed_other_income_2_applicant",
+        "detailed_other_income_2_description",
+        "detailed_other_income_3_amount",
+        "detailed_other_income_3_applicant",
+        "detailed_other_income_3_description",
         "dob",
         "down_payment",
         "down_payment_amount",
@@ -239,6 +256,7 @@
         "has_mailing_address",
         "has_obligations",
         "has_obligations_explanation",
+        "has_other_income",
         "has_outstanding_judgements",
         "has_outstanding_judgements_explanation",
         "has_ownership_interest",
@@ -297,6 +315,7 @@
         "occupancy_type",
         "other_hispanic_or_latino_origin",
         "other_income",
+        "other_income_source",
         "other_property_is_current_residence",
         "other_property_market_value",
         "other_property_market_value_2",
@@ -327,6 +346,7 @@
         "privacy_agreement",
         "privacy_policy_disclaimer",
         "proof_of_income",
+        "property_appraised_value",
         "property_address",
         "property_city",
         "property_city_required",
@@ -353,7 +373,14 @@
         "ready_to_submit_phase_one",
         "real_estate_own_1_address",
         "real_estate_own_1_city",
+        "real_estate_own_1_home_insurance",
+        "real_estate_own_1_market_value",
+        "real_estate_own_1_occupancy",
+        "real_estate_own_1_property_tax",
         "real_estate_own_1_state",
+        "real_estate_own_1_status",
+        "real_estate_own_1_title",
+        "real_estate_own_1_type",
         "real_estate_own_1_zip",
         "real_estate_own_2_address",
         "real_estate_own_2_city",
@@ -369,6 +396,7 @@
         "referral_name",
         "rent_expense",
         "savings_account",
+        "savings_account_2",
         "school_completed",
         "school_years",
         "servicer_credit_authorization",
@@ -397,6 +425,18 @@
   ],
   "values": [],
   "fields": [
+    {
+      "title": "Financial Institution Name",
+      "key": "account_institution_name",
+      "type": "text",
+      "required": false
+    },
+    {
+      "title": "Financial Institution Name",
+      "key": "account_2_institution_name",
+      "type": "text",
+      "required": false
+    },
     {
       "key": "additional_conditions",
       "type": "text",
@@ -501,6 +541,12 @@
       "required": false
     },
     {
+      "title": "Amount of Gift Funds",
+      "key": "assets_gift_funds_2",
+      "type": "currency",
+      "required": false
+    },
+    {
       "title": "Other Assets Balance",
       "key": "assets_other",
       "description": "Other Assets",
@@ -508,8 +554,21 @@
       "required": false
     },
     {
+      "title": "Other Assets Balance",
+      "key": "assets_other_2",
+      "description": "Other Assets",
+      "type": "currency",
+      "required": false
+    },
+    {
       "title": "Retirement Account Balance",
       "key": "assets_retirement",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Retirement Account Balance",
+      "key": "assets_retirement_2",
       "type": "currency",
       "required": false
     },
@@ -571,19 +630,22 @@
       "required": false
     },
     {
-      "min": "0",
+      "title": "Monthly Gross Income",
+      "key": "borrower_previous_employer_monthly_income",
+      "description": "Borrower's Previous Monthly Gross Income",
+      "type": "currency",
+      "required": false
+    },
+    {
       "title": "Employer Address",
       "key": "borrower_previous_employer_address",
-      "max": "0",
       "description": "Borrower's Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer City",
       "key": "borrower_previous_employer_city",
-      "max": "0",
       "description": "Borrower's Previous Employer City",
       "type": "text",
       "required": false
@@ -598,10 +660,8 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer Name",
       "key": "borrower_previous_employer_name",
-      "max": "0",
       "description": "Borrower's Previous Employer Name",
       "type": "text",
       "required": false
@@ -629,29 +689,23 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer State",
       "key": "borrower_previous_employer_state",
-      "max": "0",
       "description": "Borrower's Previous Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
-      "min": "0",
       "title": "Years at Previous Employer",
       "key": "borrower_previous_employer_years",
-      "max": "0",
       "description": "Borrower's Years at Previous Employer",
       "type": "integer",
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer Zip",
       "key": "borrower_previous_employer_zip",
-      "max": "0",
       "description": "Borrower's Previous Employer Zip",
       "type": "zip",
       "required": false
@@ -1173,10 +1227,8 @@
       "required": true
     },
     {
-      "min": "0",
       "title": "Years in the industry",
       "key": "coborrower_line_of_work",
-      "max": "0",
       "type": "integer",
       "required": false
     },
@@ -1259,10 +1311,8 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Number of Dependents",
       "key": "coborrower_number_dependents",
-      "max": "0",
       "type": "integer",
       "required": false
     },
@@ -1296,26 +1346,20 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Do you own other real estate that will not be sold at/prior to this transaction?",
       "key": "coborrower_own_other_real_estate",
-      "max": "0",
       "type": "boolean",
       "required": false
     },
     {
-      "min": "0",
       "title": "Do you own other real estate that will not be sold at/prior to this transaction?",
       "key": "coborrower_own_other_real_estate_2",
-      "max": "0",
       "type": "boolean",
       "required": false
     },
     {
-      "min": "0",
       "title": "Do you own other real estate that will not be sold at/prior to this transaction?",
       "key": "coborrower_own_other_real_estate_3",
-      "max": "0",
       "type": "boolean",
       "required": false
     },
@@ -1359,26 +1403,22 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Street Address",
       "key": "coborrower_prev_address",
-      "max": "0",
       "description": "Co-Borrower's Previous Street Address",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "City",
       "key": "coborrower_prev_city",
-      "max": "0",
       "description": "Co-Borrower's Previous City",
       "type": "text",
       "required": false
     },
     {
       "min": 0,
-      "title": "Months at previous address",
+      "title": "Months at Previous Address",
       "key": "coborrower_prev_property_months",
       "max": 11,
       "type": "integer",
@@ -1397,38 +1437,30 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "State",
       "key": "coborrower_prev_state",
-      "max": "0",
       "description": "Co-Borrower's Previous State",
       "allowAllStates": true,
       "type": "state",
       "required": false
     },
     {
-      "min": "0",
       "title": "Zip Code",
       "key": "coborrower_prev_zip",
-      "max": "0",
       "description": "Co-Borrower's Previous Zip Code",
       "type": "zip",
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer Address",
       "key": "coborrower_previous_employer_address",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer City",
       "key": "coborrower_previous_employer_city",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer City",
       "type": "text",
       "required": false
@@ -1450,10 +1482,8 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer Name",
       "key": "coborrower_previous_employer_name",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer Name",
       "type": "text",
       "required": false
@@ -1483,29 +1513,23 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer State",
       "key": "coborrower_previous_employer_state",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
-      "min": "0",
       "title": "Years at Previous Employer",
       "key": "coborrower_previous_employer_years",
-      "max": "0",
       "description": "Borrower's Years at Previous Employer",
       "type": "integer",
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer Zip",
       "key": "coborrower_previous_employer_zip",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer Zip",
       "type": "zip",
       "required": false
@@ -1640,26 +1664,20 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Street Address",
       "key": "coborrower_real_estate_own_1_address",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "City",
       "key": "coborrower_real_estate_own_1_city",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "State",
       "key": "coborrower_real_estate_own_1_state",
-      "max": "0",
       "type": "state",
       "required": false
     },
@@ -1670,26 +1688,20 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Street Address",
       "key": "coborrower_real_estate_own_2_address",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "City",
       "key": "coborrower_real_estate_own_2_city",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "State",
       "key": "coborrower_real_estate_own_2_state",
-      "max": "0",
       "type": "state",
       "required": false
     },
@@ -1700,26 +1712,20 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Street Address",
       "key": "coborrower_real_estate_own_3_address",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "City",
       "key": "coborrower_real_estate_own_3_city",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "State",
       "key": "coborrower_real_estate_own_3_state",
-      "max": "0",
       "type": "state",
       "required": false
     },
@@ -1844,18 +1850,14 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Have you been in your current address for at least 2 years?",
       "key": "coborrower_two_years_at_current_address",
-      "max": "0",
       "type": "boolean",
       "required": false
     },
     {
-      "min": "0",
       "title": "Have you been with your current employer at least 2 years?",
       "key": "coborrower_two_years_at_current_employer",
-      "max": "0",
       "type": "boolean",
       "required": false
     },
@@ -1905,7 +1907,7 @@
     {
       "title": "Cost of Construction",
       "description": "",
-      "key": "construction_cost",
+      "key": "cost_of_construction",
       "type": "currency",
       "required": false
     },
@@ -1976,9 +1978,198 @@
       "required": false
     },
     {
+      "title": "Home Owners Insurance Monthly Payment",
+      "key": "current_expense_hazard_ins",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Property Tax",
+      "key": "current_expense_tax",
+      "type": "currency",
+      "required": false
+    },
+    {
       "title": "Ages of Dependents (List age of each dependent not listed by co-borrower, seperated by commas. Example for three children: 5, 8, 12)",
       "key": "dependents_age",
       "type": "text",
+      "required": false
+    },
+    {
+      "title": "Other Income Amount",
+      "key": "detailed_other_income_1_amount",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Other Income Applicant",
+      "key": "detailed_other_income_1_applicant",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Borrower",
+        "Coborrower"
+      ],
+      "required": false
+    },
+    {
+      "title": "Other Income Description",
+      "key": "detailed_other_income_1_description",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Accessory Unit Income",
+        "Alimony/Child Support",
+        "Automobile/Expense Account",
+        "Capital Gains",
+        "Employment Related Assets",
+        "FNM Boarder Income",
+        "FNM Government Mortgage Credit Certificate",
+        "Foreign Income",
+        "Foster Care",
+        "Housing Choice Voucher Program (Section 8)",
+        "Military Base Pay",
+        "Military Clothes Allowance",
+        "Military Combat Pay",
+        "Military Flight Pay",
+        "Military Hazard Pay",
+        "Military Overseas Pay",
+        "Military Prop Pay",
+        "Military Quarters Allowance",
+        "Military Rations Allowance",
+        "Military Variable Housing Allowance",
+        "Non-borrower Household Income",
+        "Notes Receivable/Installment",
+        "Other Types Of Income",
+        "Pension/Retirement Income",
+        "Real Estate/Mortgage Differential",
+        "Royalty Payment",
+        "Seasonal Income",
+        "Social Security/Disability Income",
+        "Temporary Leave",
+        "Tip Income",
+        "Trust Income",
+        "Unemployment/Public Assistance",
+        "VA Benefits NonEducational"
+      ],
+      "required": false
+    },
+    {
+      "title": "Other Income Amount",
+      "key": "detailed_other_income_2_amount",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Other Income Applicant",
+      "key": "detailed_other_income_2_applicant",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Borrower",
+        "Coborrower"
+      ],
+      "required": false
+    },
+    {
+      "title": "Other Income Description",
+      "key": "detailed_other_income_2_description",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Accessory Unit Income",
+        "Alimony/Child Support",
+        "Automobile/Expense Account",
+        "Capital Gains",
+        "Employment Related Assets",
+        "FNM Boarder Income",
+        "FNM Government Mortgage Credit Certificate",
+        "Foreign Income",
+        "Foster Care",
+        "Housing Choice Voucher Program (Section 8)",
+        "Military Base Pay",
+        "Military Clothes Allowance",
+        "Military Combat Pay",
+        "Military Flight Pay",
+        "Military Hazard Pay",
+        "Military Overseas Pay",
+        "Military Prop Pay",
+        "Military Quarters Allowance",
+        "Military Rations Allowance",
+        "Military Variable Housing Allowance",
+        "Non-borrower Household Income",
+        "Notes Receivable/Installment",
+        "Other Types Of Income",
+        "Pension/Retirement Income",
+        "Real Estate/Mortgage Differential",
+        "Royalty Payment",
+        "Seasonal Income",
+        "Social Security/Disability Income",
+        "Temporary Leave",
+        "Tip Income",
+        "Trust Income",
+        "Unemployment/Public Assistance",
+        "VA Benefits NonEducational"
+      ],
+      "required": false
+    },
+    {
+      "title": "Other Income Amount",
+      "key": "detailed_other_income_3_amount",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Other Income Applicant",
+      "key": "detailed_other_income_3_applicant",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Borrower",
+        "Coborrower"
+      ],
+      "required": false
+    },
+    {
+      "title": "Other Income Description",
+      "key": "detailed_other_income_3_description",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Accessory Unit Income",
+        "Alimony/Child Support",
+        "Automobile/Expense Account",
+        "Capital Gains",
+        "Employment Related Assets",
+        "FNM Boarder Income",
+        "FNM Government Mortgage Credit Certificate",
+        "Foreign Income",
+        "Foster Care",
+        "Housing Choice Voucher Program (Section 8)",
+        "Military Base Pay",
+        "Military Clothes Allowance",
+        "Military Combat Pay",
+        "Military Flight Pay",
+        "Military Hazard Pay",
+        "Military Overseas Pay",
+        "Military Prop Pay",
+        "Military Quarters Allowance",
+        "Military Rations Allowance",
+        "Military Variable Housing Allowance",
+        "Non-borrower Household Income",
+        "Notes Receivable/Installment",
+        "Other Types Of Income",
+        "Pension/Retirement Income",
+        "Real Estate/Mortgage Differential",
+        "Royalty Payment",
+        "Seasonal Income",
+        "Social Security/Disability Income",
+        "Temporary Leave",
+        "Tip Income",
+        "Trust Income",
+        "Unemployment/Public Assistance",
+        "VA Benefits NonEducational"
+      ],
       "required": false
     },
     {
@@ -2306,6 +2497,12 @@
       "required": false
     },
     {
+      "title": "Do you receive any other income?",
+      "key": "has_other_income",
+      "type": "boolean",
+      "required": false
+    },
+    {
       "title": "Outstanding Judgements",
       "key": "has_outstanding_judgements",
       "description": "Any outstanding judgements against you?",
@@ -2489,10 +2686,8 @@
       "max": 40
     },
     {
-      "min": "0",
       "title": "Years in the industry",
       "key": "line_of_work",
-      "max": "0",
       "type": "integer",
       "required": false
     },
@@ -2750,6 +2945,34 @@
       "required": false
     },
     {
+      "title": "Other Income Source",
+      "key": "other_income_source",
+      "description": "Borrower's other income",
+      "type": "single_choice",
+      "choices": [
+        "Pension/Retirement Income",
+        "Social Security",
+        "VA Benefits",
+        "Alimony/Child Support",
+        "Disability",
+        "Dividend/Interest",
+        "Capital Gains",
+        "Trust",
+        "Military Base Pay",
+        "Military Rations Allowance",
+        "Military Fight Pay",
+        "Military Hazard Pay",
+        "Military Clothes Allowance",
+        "Military Quarters Allowance",
+        "Military Prop Pay",
+        "Military Overseas Pay",
+        "Military Combat Pay",
+        "Military Variable Housing",
+        "Other"
+      ],
+      "required": false
+    },
+    {
       "title": "Is current residence?",
       "key": "other_property_is_current_residence",
       "description": "Is this your current residence?",
@@ -2780,26 +3003,20 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Do you own other real estate that will not be sold at/prior to this transaction?",
       "key": "own_other_real_estate",
-      "max": "0",
       "type": "boolean",
       "required": false
     },
     {
-      "min": "0",
       "title": "Do you own other real estate that will not be sold at/prior to this transaction?",
       "key": "own_other_real_estate_2",
-      "max": "0",
       "type": "boolean",
       "required": false
     },
     {
-      "min": "0",
       "title": "Do you own other real estate that will not be sold at/prior to this transaction?",
       "key": "own_other_real_estate_3",
-      "max": "0",
       "type": "boolean",
       "required": false
     },
@@ -2877,7 +3094,7 @@
     },
     {
       "min": 0,
-      "title": "Months at previous address",
+      "title": "Months at Previous Address",
       "key": "prev_property_months",
       "max": 11,
       "type": "integer",
@@ -2971,6 +3188,12 @@
       "key": "proof_of_income",
       "type": "boolean",
       "required": true
+    },
+    {
+      "title": "Appraised Property Value",
+      "key": "property_appraised_value",
+      "type": "currency",
+      "required": false
     },
     {
       "title": "Property Address",
@@ -3181,27 +3404,85 @@
       "type": "agreement"
     },
     {
-      "min": "0",
       "title": "Street Address",
       "key": "real_estate_own_1_address",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "City",
       "key": "real_estate_own_1_city",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
+      "title": "Home Owners Insurance Monthly Payment",
+      "key": "real_estate_own_1_home_insurance",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Estimated Value",
+      "key": "real_estate_own_1_market_value",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Occupancy Type",
+      "key": "real_estate_own_1_occupancy",
+      "type": "single_choice",
+      "choices": [
+        "Primary Residence",
+        "Secondary Residence",
+        "Investment"
+      ],
+      "required": false
+    },
+    {
+      "title": "Property Tax",
+      "key": "real_estate_own_1_property_tax",
+      "type": "currency",
+      "required": false
+    },
+    {
       "title": "State",
       "key": "real_estate_own_1_state",
-      "max": "0",
       "type": "state",
+      "allowAllStates": true,
+      "required": false
+    },
+    {
+      "title": "Status",
+      "key": "real_estate_own_1_status",
+      "type": "single_choice",
+      "choices": [
+        "Residence",
+        "Rental",
+        "Sold",
+        "Pending Sale"
+      ],
+      "required": false
+    },
+    {
+      "title": "How is the title held?",
+      "key": "real_estate_own_1_title",
+      "type": "single_choice",
+      "choices": [
+        "Sole",
+        "Joint"
+      ],
+      "required": false
+    },
+    {
+      "title": "Type",
+      "key": "real_estate_own_1_type",
+      "type": "single_choice",
+      "choices": [
+        "Condo",
+        "Single Family",
+        "Multi Family",
+        "Town Home"
+      ],
       "required": false
     },
     {
@@ -3211,26 +3492,20 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Street Address",
       "key": "real_estate_own_2_address",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "City",
       "key": "real_estate_own_2_city",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "State",
       "key": "real_estate_own_2_state",
-      "max": "0",
       "type": "state",
       "required": false
     },
@@ -3241,26 +3516,20 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Street Address",
       "key": "real_estate_own_3_address",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "City",
       "key": "real_estate_own_3_city",
-      "max": "0",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "State",
       "key": "real_estate_own_3_state",
-      "max": "0",
       "type": "state",
       "required": false
     },
@@ -3332,6 +3601,13 @@
     {
       "title": "Savings Account Balance",
       "key": "savings_account",
+      "description": "Savings Account",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Savings Account Balance",
+      "key": "savings_account_2",
       "description": "Savings Account",
       "type": "currency",
       "required": false
@@ -3440,10 +3716,8 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Have you been with your current employer at least 2 years?",
       "key": "two_years_at_current_employer",
-      "max": "0",
       "type": "boolean",
       "required": false
     },

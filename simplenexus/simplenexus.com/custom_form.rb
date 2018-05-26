@@ -6,7 +6,7 @@ class CustomForm < ActiveRecord::Base
   # == Extensions ===========================================================
 
   # == Relationships ========================================================
-  belongs_to :owner, polymorphic: true
+  belongs_to :owner, polymorphic: true, required: false
 
   # == Validations ==========================================================
 
@@ -81,7 +81,11 @@ class CustomForm < ActiveRecord::Base
   end
 
   def self.populate_from_user form_def_raw, user
-    form_def = JSON.parse( form_def_raw )
+    if form_def_raw.is_a? String
+      form_def = JSON.parse( form_def_raw )
+    else
+      form_def = form_def_raw
+    end
 
     if user.servicer_profile.present?
       if form_def["structure"][0].is_a?(Array)
@@ -95,16 +99,36 @@ class CustomForm < ActiveRecord::Base
       else
         form_def["structure"] = form_def["structure"].select{|s| ( s["roles"].blank? || s["roles"].include?( "servicer" ) ) }
       end
+
+      form_def["fields"].each do |field|  
+        if field["editable_roles"].is_a? Array
+          if field["editable_roles"].include? "servicer"
+            field["editable"] = true
+          else
+            field["editable"] = false
+          end
+        end
+      end
     elsif user.app_user.present?
       form_def["structure"] = form_def["structure"].select{|s| ( s["roles"].blank? || s["roles"].include?( "borrower" ) ) }
       if user.app_user
-        set_value form_def, 'email', user.app_user.email
-        set_value form_def, 'borrower_cell_phone', user.app_user.unformatted_phone
+        set_value_if_not_defined form_def, 'email', user.app_user.email
+        set_value_if_not_defined form_def, 'borrower_cell_phone', user.app_user.unformatted_phone
       end
-      set_value form_def, 'first_name', user.name
-      set_value form_def, 'last_name', user.last_name
-      set_value form_def, 'borrower_first_name', user.name
-      set_value form_def, 'borrower_last_name', user.last_name
+      set_value_if_not_defined form_def, 'first_name', user.name
+      set_value_if_not_defined form_def, 'last_name', user.last_name
+      set_value_if_not_defined form_def, 'borrower_first_name', user.name
+      set_value_if_not_defined form_def, 'borrower_last_name', user.last_name
+
+      form_def["fields"].each do |field|  
+        if field["editable_roles"].is_a? Array
+          if field["editable_roles"].include? "borrower"
+            field["editable"] = true
+          else
+            field["editable"] = false
+          end
+        end
+      end
     end
 
     return form_def
@@ -267,6 +291,10 @@ class CustomForm < ActiveRecord::Base
   	if arg2 > 0 && arg1 > 0
   		(arg1/arg2 * 100).round(2)
   	end
+  end
+
+  def self.set_value_if_not_defined form_def, key, value
+    form_def["values"][key] = value if value && !form_def['values'].key?(key)
   end
 
   def self.set_value form_def, key, value

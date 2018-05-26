@@ -775,10 +775,8 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Have you been with your current employer at least 2 years?",
       "key": "two_years_at_current_employer",
-      "max": "0",
       "description": "Has Borrower been with their current employer at least 2 years?",
       "type": "boolean",
       "required": false
@@ -811,56 +809,44 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Previous Employer Name",
       "key": "borrower_previous_employer_name",
-      "max": "0",
       "description": "Borrower Previous Employer Name",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "Previous Employer Address",
       "key": "borrower_previous_employer_address",
-      "max": "0",
       "description": "Borrower Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "Previous Employer City",
       "key": "borrower_previous_employer_city",
-      "max": "0",
       "description": "Borrower Previous Employer City",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "Previous Employer State",
       "key": "borrower_previous_employer_state",
-      "max": "0",
       "description": "Borrower Previous Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
-      "min": "0",
       "title": "Previous Employer Zip",
       "key": "borrower_previous_employer_zip",
-      "max": "0",
       "description": "Borrower Previous Employer Zip",
       "type": "zip",
       "required": false
     },
     {
-      "min": "0",
       "title": "Years at Previous Employer",
       "key": "borrower_previous_employer_years",
-      "max": "0",
       "description": "Borrower Years at Previous Employer",
       "type": "integer",
       "required": false
@@ -879,7 +865,6 @@
       "title": "Home Purchase Price",
       "key": "purchase_price",
       "max": 0,
-      "description": "Home Purchase Price",
       "type": "currency",
       "required": false
     },
@@ -903,7 +888,6 @@
       "title": "Are you currently under contract?",
       "key": "under_contract",
       "max": 0,
-      "description": "Are you currently under contract?",
       "type": "boolean",
       "required": false
     },
@@ -912,7 +896,6 @@
       "title": "Property Type",
       "key": "property_type",
       "max": 0,
-      "description": "Property Type",
       "type": "single_choice",
       "choices": [
         "",
@@ -945,7 +928,6 @@
       "title": "Property City",
       "key": "property_city",
       "max": 0,
-      "description": "Property City",
       "type": "text",
       "required": false
     },
@@ -954,7 +936,6 @@
       "title": "Property State",
       "key": "property_state",
       "max": 0,
-      "description": "Property State",
       "type": "state",
       "required": true
     },
@@ -963,7 +944,6 @@
       "title": "Property Zip",
       "key": "property_zip",
       "max": 0,
-      "description": "Property Zip",
       "type": "zip",
       "required": false
     },
@@ -1036,7 +1016,6 @@
       "title": "Have you had a foreclosure within the past 7 years?",
       "key": "has_foreclosure",
       "max": 0,
-      "description": "Have you had a foreclosure within the past 7 years?",
       "type": "boolean",
       "required": false
     },
@@ -1045,7 +1024,6 @@
       "title": "Are you a party to a lawsuit?",
       "key": "party_to_lawsuit",
       "max": 0,
-      "description": "Are you a party to a lawsuit?",
       "type": "boolean",
       "required": false
     },
@@ -1063,7 +1041,6 @@
       "title": "Are you delinquent on any federal or state debt?",
       "key": "has_delinquent_debt",
       "max": 0,
-      "description": "Are you delinquent on any federal or state debt?",
       "type": "boolean",
       "required": false
     },
@@ -1072,7 +1049,6 @@
       "title": "Do you pay alimony, child support, or separate maintenance?",
       "key": "has_alimony",
       "max": 0,
-      "description": "Do you pay alimony, child support, or separate maintenance?",
       "type": "boolean",
       "required": false
     },
@@ -1081,7 +1057,6 @@
       "title": "Have you co-signed on a loan?",
       "key": "is_comaker_or_endorser",
       "max": 0,
-      "description": "Have you co-signed on a loan?",
       "type": "boolean",
       "required": false
     },
@@ -1090,7 +1065,6 @@
       "title": "Are you a U.S. Citizen?",
       "key": "is_us_citizen",
       "max": 0,
-      "description": "Are you a U.S. Citizen?",
       "type": "boolean",
       "required": false
     },
@@ -1099,7 +1073,6 @@
       "title": "Are you a permanent resident alien?",
       "key": "is_permanent_resident",
       "max": 0,
-      "description": "Are you a permanent resident alien?",
       "type": "boolean",
       "required": false
     },
@@ -1108,7 +1081,6 @@
       "title": "Will this property be your primary residence?",
       "key": "is_primary_residence",
       "max": 0,
-      "description": "Will this property be your primary residence?",
       "type": "boolean",
       "required": false
     },
@@ -1135,7 +1107,6 @@
       "title": "What is/was your previous property used for?",
       "key": "previous_property_type_declaration",
       "max": 0,
-      "description": "What is/was your previous property used for?",
       "type": "single_choice",
       "required": false,
       "choices": [
@@ -1150,7 +1121,6 @@
       "title": "How is/was the title held?",
       "key": "previous_property_title_declaration",
       "max": 0,
-      "description": "How is/was the title held?",
       "type": "single_choice",
       "required": false,
       "choices": [
@@ -1184,7 +1154,6 @@
       "title": "Ethnicity",
       "key": "ethnicity",
       "max": 0,
-      "description": "Ethnicity",
       "type": "multi_choice",
       "choices": [
         "Hispanic or Latino",
@@ -1200,7 +1169,6 @@
     {
       "key": "race",
       "title": "What is your race?",
-      "description": "What is your race?",
       "type": "multi_choice",
       "choices": [
         "American Indian or Alaska Native",
@@ -1229,7 +1197,6 @@
     {
       "key": "gender",
       "title": "What is your gender?",
-      "description": "What is your gender?",
       "type": "multi_choice",
       "choices": [
         "Male",
@@ -1364,15 +1331,12 @@
       "title": "Does the Co-Borrower currently own?",
       "key": "coborrower_property_own",
       "max": 0,
-      "description": "Does the Co-Borrower currently own?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": "0",
       "title": "Has the Co-Borrower been at their current address for at least 2 years?",
       "key": "coborrower_two_years_at_current_address",
-      "max": "0",
       "description": "Has Co-Borrower been at their current address for at least 2 years?",
       "type": "boolean",
       "required": false
@@ -1396,38 +1360,30 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Street Address",
       "key": "coborrower_prev_address",
-      "max": "0",
       "description": "Co-Borrower Previous Street Address",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "City",
       "key": "coborrower_prev_city",
-      "max": "0",
       "description": "Co-Borrower Previous City",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "State",
       "key": "coborrower_prev_state",
-      "max": "0",
       "description": "Co-Borrower Previous State",
       "allowAllStates": true,
       "type": "state",
       "required": false
     },
     {
-      "min": "0",
       "title": "Zip Code",
       "key": "coborrower_prev_zip",
-      "max": "0",
       "description": "Co-Borrower Previous Zip Code",
       "type": "zip",
       "required": false
@@ -1527,7 +1483,6 @@
       "title": "Is the Co-Borrower self-employed?",
       "key": "coborrower_is_self_employed",
       "max": 0,
-      "description": "Is the Co-Borrower self-employed?",
       "type": "boolean",
       "required": false
     },
@@ -1578,11 +1533,8 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Has the Co-Borrower been with their current employer at least 2 years?",
       "key": "coborrower_two_years_at_current_employer",
-      "max": "0",
-      "description": "Has the Co-Borrower been with their current employer at least 2 years?",
       "type": "boolean",
       "required": false
     },
@@ -1614,56 +1566,44 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer Name",
       "key": "coborrower_previous_employer_name",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer Name",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer Address",
       "key": "coborrower_previous_employer_address",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer City",
       "key": "coborrower_previous_employer_city",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer City",
       "type": "text",
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer State",
       "key": "coborrower_previous_employer_state",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
-      "min": "0",
       "title": "Employer Zip",
       "key": "coborrower_previous_employer_zip",
-      "max": "0",
       "description": "Co-Borrower's Previous Employer Zip",
       "type": "zip",
       "required": false
     },
     {
-      "min": "0",
       "title": "Years at Previous Employer",
       "key": "coborrower_previous_employer_years",
-      "max": "0",
       "description": "Borrower's Years at Previous Employer",
       "type": "integer",
       "required": false
@@ -1673,7 +1613,6 @@
       "title": "Months at Previous Employer",
       "key": "coborrower_previous_employer_months",
       "max": 0,
-      "description": "Months at Previous Employer",
       "type": "integer",
       "required": false
     },
@@ -1682,7 +1621,6 @@
       "title": "Does Co-Borrower have any outstanding judgements against them?",
       "key": "coborrower_has_outstanding_judgements",
       "max": 0,
-      "description": "Does Co-Borrower have any outstanding judgements against them?",
       "type": "boolean",
       "required": false
     },
@@ -1709,7 +1647,6 @@
       "title": "Is Co-Borrower party to a lawsuit?",
       "key": "coborrower_party_to_lawsuit",
       "max": 0,
-      "description": "Is Co-Borrower party to a lawsuit?",
       "type": "boolean",
       "required": false
     },
@@ -1727,7 +1664,6 @@
       "title": "Is Co-Borrower delinquent on any federal or state debt?",
       "key": "coborrower_has_delinquent_debt",
       "max": 0,
-      "description": "Is Co-Borrower delinquent on any federal or state debt?",
       "type": "boolean",
       "required": false
     },
@@ -1736,7 +1672,6 @@
       "title": "Does Co-Borrower pay alimony, child support, or separate maintenance?",
       "key": "coborrower_has_alimony",
       "max": 0,
-      "description": "Does Co-Borrower pay alimony, child support, or separate maintenance?",
       "type": "boolean",
       "required": false
     },
@@ -1745,7 +1680,6 @@
       "title": "Has Co-Borrower co-signed on a loan?",
       "key": "coborrower_is_comaker_or_endorser",
       "max": 0,
-      "description": "Has Co-Borrower co-signed on a loan?",
       "type": "boolean",
       "required": false
     },
@@ -1754,7 +1688,6 @@
       "title": "Is Co-Borrower a U.S. Citizen?",
       "key": "coborrower_is_us_citizen",
       "max": 0,
-      "description": "Is Co-Borrower a U.S. Citizen?",
       "type": "boolean",
       "required": false
     },
@@ -1763,7 +1696,6 @@
       "title": "Is Co-Borrower a permanent resident alien?",
       "key": "coborrower_is_permanent_resident",
       "max": 0,
-      "description": "Is Co-Borrower a permanent resident alien?",
       "type": "boolean",
       "required": false
     },
@@ -1772,7 +1704,6 @@
       "title": "Will this property be Co-Borrower's primary residence?",
       "key": "coborrower_is_primary_residence",
       "max": 0,
-      "description": "Will this property be Co-Borrower's primary residence?",
       "type": "boolean",
       "required": false
     },
@@ -1781,7 +1712,6 @@
       "title": "Has Co-Borrower had ownership in a property in the past 3 years?",
       "key": "coborrower_has_ownership_interest",
       "max": 0,
-      "description": "Has Co-Borrower had ownership in a property in the past 3 years?",
       "type": "boolean",
       "required": false
     },
@@ -1790,7 +1720,6 @@
       "title": "What is/was Co-Borrower's previous property used for?",
       "key": "coborrower_previous_property_type_declaration",
       "max": 0,
-      "description": "What is/was Co-Borrower's previous property used for?",
       "type": "single_choice",
       "required": false,
       "choices": [
@@ -1805,7 +1734,6 @@
       "title": "How is/was coborrower's title held?",
       "key": "coborrower_previous_property_title_declaration",
       "max": 0,
-      "description": "How is/was coborrower's title held?",
       "type": "single_choice",
       "required": false,
       "choices": [
@@ -1820,7 +1748,6 @@
       "title": "Alimony and/or Child Support Amount",
       "key": "coborrower_alimony_amount",
       "max": 0,
-      "description": "Alimony and/or Child Support Amount",
       "type": "currency",
       "required": false
     },
@@ -1839,7 +1766,6 @@
       "title": "Ethnicity",
       "key": "coborrower_ethnicity",
       "max": 0,
-      "description": "Ethnicity",
       "type": "multi_choice",
       "choices": [
         "Hispanic or Latino",
@@ -1855,7 +1781,6 @@
     {
       "key": "coborrower_race",
       "title": "What is your race?",
-      "description": "What is your race?",
       "type": "multi_choice",
       "choices": [
         "American Indian or Alaska Native",
@@ -1884,7 +1809,6 @@
     {
       "key": "coborrower_gender",
       "title": "What is your gender?",
-      "description": "What is your gender?",
       "type": "multi_choice",
       "choices": [
         "Male",
@@ -1959,7 +1883,6 @@
       "title": "I am ready to submit the loan app",
       "key": "ready_to_submit",
       "max": 0,
-      "description": "I am ready to submit the loan app",
       "required": true,
       "type": "agreement"
     }

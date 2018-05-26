@@ -19,13 +19,14 @@ class UserLoanApp < ActiveRecord::Base
 
   # Servicer Submitted Loan App, to be assigned an app user later
   belongs_to :servicer_profile, required: false
-  belongs_to :owner_loan, polymorphic: true
+  belongs_to :owner_loan, polymorphic: true, required: false
 
   has_many :credit_reports, -> { order 'created_at desc' }, as: :owner, dependent: :destroy
   has_many :loan_docs, as: :owner
   has_many :user_loan_app_logs
   has_many :los_import_credit_reports, -> {where "in_los = 0 AND image IS NOT NULL AND (score_transunion IS NOT NULL OR score_equifax IS NOT NULL or score_experian IS NOT NULL)"}, as: :owner, :class_name => 'CreditReport'
 
+  has_one :referral, as: :owner, :dependent => :destroy
   # == Validations ==========================================================
 
   # == Scopes ===============================================================
@@ -44,11 +45,11 @@ class UserLoanApp < ActiveRecord::Base
 
   # == Class Methods ========================================================
   def self.obfuscated_fields
-  	return ["ssn","coborrower_ssn"]
+    return ["ssn","coborrower_ssn"]
   end
 
   def self.obfuscate(string)
-	  string.gsub(/\d(?=....)/, 'X')
+    string.gsub(/\d(?=....)/, 'X')
   end
 
   def self.get_right_structure json_string, phase=0
@@ -209,16 +210,16 @@ class UserLoanApp < ActiveRecord::Base
   end
 
   def obfuscated_loan_app_json
-  	if self.loan_app_json.present?
-	  	parsed_loan_app = JSON.parse( self.loan_app_json )
-	  	if parsed_loan_app["values"].present?
-	  		UserLoanApp.obfuscated_fields.each do |field|
-	  			if parsed_loan_app["values"][field].present?
-	  				parsed_loan_app["values"][field] = UserLoanApp.obfuscate(parsed_loan_app["values"][field])
-	  			end
-	  		end
-	  	end
-	  	parsed_loan_app.to_json
+    if self.loan_app_json.present?
+      parsed_loan_app = JSON.parse( self.loan_app_json )
+      if parsed_loan_app["values"].present?
+        UserLoanApp.obfuscated_fields.each do |field|
+          if parsed_loan_app["values"][field].present?
+            parsed_loan_app["values"][field] = UserLoanApp.obfuscate(parsed_loan_app["values"][field])
+          end
+        end
+      end
+      parsed_loan_app.to_json
     end
   end
 
@@ -228,24 +229,24 @@ class UserLoanApp < ActiveRecord::Base
   end
 
   def de_obfuscate_loan_app_json json, previous=self.loan_app_json
-  	if json.present? && previous.present?
-  		new_parsed_loan_app = JSON.parse( json )
-	  	current_parsed_loan_app = JSON.parse( previous )
+    if json.present? && previous.present?
+      new_parsed_loan_app = JSON.parse( json )
+      current_parsed_loan_app = JSON.parse( previous )
 
-	  	if new_parsed_loan_app["values"].present? && current_parsed_loan_app["values"].present?
-	  		UserLoanApp.obfuscated_fields.each do |field|
-	  			if new_parsed_loan_app["values"][field].present? &&
-	  				current_parsed_loan_app["values"][field].present? &&
-	  				(new_parsed_loan_app["values"][field].include? 'X')
+      if new_parsed_loan_app["values"].present? && current_parsed_loan_app["values"].present?
+        UserLoanApp.obfuscated_fields.each do |field|
+          if new_parsed_loan_app["values"][field].present? &&
+            current_parsed_loan_app["values"][field].present? &&
+            (new_parsed_loan_app["values"][field].include? 'X')
 
-	  				new_parsed_loan_app["values"][field] = current_parsed_loan_app["values"][field]
-	  			end
-	  		end
-	  		json = new_parsed_loan_app.to_json
-	  	end
-  	end
+            new_parsed_loan_app["values"][field] = current_parsed_loan_app["values"][field]
+          end
+        end
+        json = new_parsed_loan_app.to_json
+      end
+    end
 
-  	json
+    json
   end
 
   def loan_app_fields
@@ -297,13 +298,13 @@ class UserLoanApp < ActiveRecord::Base
   end
 
   def effective_name
-  	if self.app_user and self.app_user.user
-  		self.app_user.user.full_name
-  	elsif self.name
-  		self.name
+    if self.app_user and self.app_user.user
+      self.app_user.user.full_name
+    elsif self.name
+      self.name
     elsif borrower_name
       self.borrower_name
-  	end
+    end
   end
 
   def find_source
@@ -316,6 +317,23 @@ class UserLoanApp < ActiveRecord::Base
       "SimpleNexus Web"
     end
   end
+
+  def allow_voa_order?
+    if self&.app_user&.verification_orders&.size.to_i == 0 && self.servicer_profile.has_voa? && self.servicer_profile.company.present?
+      integration = self.servicer_profile.effective_integration_api( 'verification' )
+      if !integration
+        return false
+      end
+      return true
+    end
+    return false
+  end
+
+  def has_voa_order?
+    return self&.app_user&.verification_orders&.size.to_i > 0
+  end
+
+  alias_method :has_voa_order, :has_voa_order?
 
   def to_fannie_mae_1003
     lo                 = servicer_profile
@@ -376,10 +394,16 @@ class UserLoanApp < ActiveRecord::Base
     # property information
     line = [ "02A" ]
     # line = [ "02A                                                                                                   F1" ]
-    line << ( '%-50.50s' % ( values["property_street"] || '' ) )
-    line << ( '%-35.35s' % ( values["property_city"] || '' ) )
-    line << ( values["property_state"].present? ? (values["property_state"].split(" - ").last.upcase) : "  " )
-    line << ( '%-5.5s' % ( values["property_zip"] || '' ) )
+    line << ( '%-50.50s' % ( values["property_street"] || values["property_street_required"] || '' ) )
+    line << ( '%-35.35s' % ( values["property_city"] || values["property_city_required"] || '' ) )
+    if values["property_state"].present?
+      line << values["property_state"].split(" - ").last.upcase
+    elsif values["property_state_required"].present?
+      line << values["property_state_required"].split(" - ").last.upcase
+    else
+      line << "  "
+    end
+    line << ( '%-5.5s' % ( values["property_zip"] || values["property_zip_required"] || '' ) )
     line << " "*4 # +4
     if values["property_number_of_units"].present?
       line << ( '%03d' % to_int_or_empty(values["property_number_of_units"]) ) # number of units
@@ -387,7 +411,8 @@ class UserLoanApp < ActiveRecord::Base
       line << "001"
     end
     line << "F1"
-    line << ( " "*84 )
+    line << ( " "*80 )
+    line << ( '%-4s' % (values["property_year_built"] || " " )) # year built
     lines << line.join('')
 
     # purpose of loan
@@ -406,35 +431,43 @@ class UserLoanApp < ActiveRecord::Base
     lines << line.join('')
 
     # construction or refinance data
-    if values['loan_purpose'].present? && values['loan_purpose == "Refinance']
+    if values["loan_purpose"] == "Refinance" or values["loan_purpose"] == "Construction"
       line = [ "02D" ]
-      line << " "*4  # year (lot) acquired
-      line << " "*15  # original cost
-      line << " "*15  # amount of existing liens
-      line << " "*15  # present value of lot
-      line << " "*15  # cost of improvements
-      line << " "*15  # amount of existing liens
-      if values['purpose_of_refinance'].present?
-        case values['purpose_of_refinance']
-          when 'Cash-out/Consolidation'
-            line << "11"
-          when 'Cash-Out/Home Improvement'
-            line << "04"
-          when 'Cash-Out/Other'
-            line << "01"
-          when 'No Cash-Out Rate/Term'
-            line << "F1"
-          when 'Limited Cash-Out'
-            line << "13"
-          else
-            line << " "*2
+      line << to_date_or_empty(values["lot_acquisition_date"],"%Y%m%d") # year (lot) acquired
+      line << ( '%15.2f' % (fix_num( values[ "purchase_price" ] ).to_f || " ")) # original cost
+
+      # amount of existing liens
+      line << " "*15
+
+      if values['loan_purpose'] == "Construction"
+        line << ( '%15.2f' % (fix_num(values['present_lot_value']).to_f || " ")) # present value of lot
+        line << ( '%15.2f' % (fix_num(values['cost_of_construction']).to_f || " "))  # cost of improvements
+        line << " "*2 # purpose of refinance, n/a here
+      elsif values['loan_purpose'] == "Refinance" || values['purpose_of_refinance'].present?
+        line << ( '%15.2f' % (fix_num( values[ "estimated_property_value" ] ).to_f || " ")) # present value ("estimated property value") of lot
+        line << " "*15  # cost of improvements
+        if values['purpose_of_refinance'].present?
+          case values['purpose_of_refinance']
+            when 'Cash-out/Consolidation'
+              line << "11"
+            when 'Cash-Out/Home Improvement'
+              line << "04"
+            when 'Cash-Out/Other'
+              line << "01"
+            when 'No Cash-Out Rate/Term'
+              line << "F1"
+            when 'Limited Cash-Out'
+              line << "13"
+            else
+              line << " "*2
+          end
         end
-      else
-        line << " "*2
       end
+
       line << " "*80  # describe improvements
       line << " "*1  # improvements: Y = Made, N = To be made, U = Unknown
       line << " "*15  # cost of improvements
+
       lines << line.join('')
     end
 
@@ -679,84 +712,22 @@ class UserLoanApp < ActiveRecord::Base
 
     # applicant's current employer
     if values["employer_name"].present?
-      line = ["04A"]
-      line << ( '%-9.9s' % ssn ) # ssn
-      line << ( '%-35.35s' % ( values["employer_name"] || '' ) )
-      line << ( '%-35.35s' % ( values["employer_address"] || '' ) )
-      line << ( '%-35.35s' % ( values["employer_city"] || '' ) )
-      if values["employer_state"].present?
-        line << to_state_or_empty(values["employer_state"])
-      else
-        line << " "*2
-      end
-      line << ( '%-5.5s' % ( values["employer_zip"] || '' ) )
-      line << " "*4 # plus 4
-      line << ( boolean_to_y_n(values["is_self_employed"]) ) # self-employed
-      if values["employer_years"].present?
-        line << ( '%02d' % to_int_or_empty(values["employer_years"]) )
-      else
-        line << " "*2 # years on job
-      end
-      if values["employer_months"].present?
-        line << ( '%02d' % to_int_or_empty(values["employer_months"]) )
-      else
-        line << " "*2 # months on job
-      end
-      if values["line_of_work"].present?
-        line << ( '%02d' % to_int_or_empty(values["line_of_work"]) )
-      else
-        line << " "*2 # years working in this field
-      end
-      line << ( '%-25.25s' % ( values["job_title"] || '' ) )
-      if values["employer_phone"].present?
-        line << ( '%-10.10s' % values["employer_phone"] )
-      elsif values["work_phone"].present?
-        line << ( '%-10.10s' % values["work_phone"] )
-      else
-        line << " "*10 # business phone
-      end
-      lines << line.join('')
+      lines << employment_fields(values,ssn,"",true)
     end
 
-    # applicant's current employer
+    # co-applicant's current employer
     if values["coborrower_employer_name"].present?
-      line = ["04A"]
-      line << ( '%-9.9s' % coborrower_ssn ) # ssn
-      line << ( '%-35.35s' % ( values["coborrower_employer_name"] || '' ) )
-      line << ( '%-35.35s' % ( values["coborrower_employer_address"] || '' ) )
-      line << ( '%-35.35s' % ( values["coborrower_employer_city"] || '' ) )
-      if values["coborrower_employer_state"].present?
-        line << to_state_or_empty(values["coborrower_employer_state"])
-      else
-        line << " "*2
-      end
-      line << ( '%-5.5s' % ( values["coborrower_employer_zip"] || '' ) )
-      line << " "*4 # plus 4
-      line << ( boolean_to_y_n(values["coborrower_is_self_employed"]) ) # self-employed
-      if values["coborrower_employer_years"].present?
-        line << ( '%02d' % to_int_or_empty(values["coborrower_employer_years"]) )
-      else
-        line << " "*2 # years on job
-      end
-      if values["coborrower_employer_months"].present?
-        line << ( '%02d' % to_int_or_empty(values["coborrower_employer_months"]) )
-      else
-        line << " "*2 # months on job
-      end
-      if values["coborrower_line_of_work"].present?
-        line << ( '%02d' % to_int_or_empty(values["coborrower_line_of_work"]) )
-      else
-        line << " "*2 # years working in this field
-      end
-      line << ( '%-25.25s' % ( values["job_title"] || '' ) )
-      if values["coborrower_employer_phone"].present?
-        line << ( '%-10.10s' % values["coborrower_employer_phone"] )
-      elsif values["coborrower_work_phone"].present?
-        line << ( '%-10.10s' % values["coborrower_work_phone"] )
-      else
-        line << " "*10 # business phone
-      end
-      lines << line.join('')
+      lines << employment_fields(values,ssn,"coborrower_",true)
+    end
+
+    # applicant's previous employer
+    if values["borrower_previous_employer_name"].present?
+      lines << employment_fields(values,ssn,"borrower_previous_",false)
+    end
+
+    # co-applicant's previous employer
+    if values["coborrower_previous_employer_name"].present?
+      lines << employment_fields(values,ssn,"coborrower_previous_",false)
     end
 
     # # housing expense
@@ -1143,8 +1114,6 @@ class UserLoanApp < ActiveRecord::Base
     line << " "*2 # owner of existing mortgage
     if values['estimated_property_value'].present?
       epv = values['estimated_property_value']
-    elsif values['property_est_value'].present?
-      epv = values['property_est_value']
     else
       epv = nil
     end
@@ -1196,7 +1165,7 @@ class UserLoanApp < ActiveRecord::Base
 
     # loan characteristics for eligibility
     line = [ "LNC" ]
-    line << "F" # lien type code 1 - first, 2 - second, F - Other
+    line << "1" # lien type code 1 - first, 2 - second, F - Other
     line << " "*1 # loan documentation type
     if values['property_type'].present?
       case values['property_type']
@@ -1269,6 +1238,64 @@ class UserLoanApp < ActiveRecord::Base
     lines.join("\r\n") + "\r\n"
   end
 
+  def employment_fields(values,ssn,prefix,current_employer)
+    # prefix allows us to use this for both borrower or co-borrower
+    line = current_employer ? ["04A"] : ["04B"]
+    line << ( '%-9.9s' % ssn ) # ssn
+    line << ( '%-35.35s' % ( values[prefix+"employer_name"] || '' ) )
+    line << ( '%-35.35s' % ( values[prefix+"employer_address"] || '' ) )
+    line << ( '%-35.35s' % ( values[prefix+"employer_city"] || '' ) )
+    if values[prefix+"employer_state"].present?
+      line << to_state_or_empty(values[prefix+"employer_state"])
+    else
+      line << " "*2
+    end
+    line << ( '%-5.5s' % ( values[prefix+"employer_zip"] || '' ) )
+    line << " "*4 # plus 4
+    line << ( boolean_to_y_n(values[prefix+"is_self_employed"]) ) # self-employed
+
+    if current_employer
+      if values[prefix+"employer_years"].present?
+        line << ( '%02d' % to_int_or_empty(values[prefix+"employer_years"]) )
+      else
+        line << " "*2 # years on job
+      end
+      if values[prefix+"employer_months"].present?
+        line << ( '%02d' % to_int_or_empty(values[prefix+"employer_months"]) )
+      else
+        line << " "*2 # months on job
+      end
+      if values[prefix+"line_of_work"].present?
+        line << ( '%02d' % to_int_or_empty(values[prefix+"line_of_work"]) )
+      else
+        line << " "*2 # years working in this field
+      end
+    else
+      line << "N" # previous employment (Y = current); either way, this field only gets exported in 04B
+      if values[prefix+"employer_start_date"].present?
+        line << to_date_or_empty(values[prefix+"employer_start_date"],"%Y%m%d")
+      else
+        line << " "*8 # employment start date
+      end
+      if values[prefix+"employer_end_date"].present?
+        line << to_date_or_empty(values[prefix+"employer_end_date"],"%Y%m%d")
+      else
+        line << " "*8 # employment end date
+      end
+      line << " "*15 # monthly income
+    end
+
+    line << ( '%-25.25s' % ( values[prefix+"job_title"] || '' ) )
+    if values[prefix+"employer_phone"].present?
+      line << ( '%-10.10s' % values[prefix+"employer_phone"] )
+    elsif values[prefix+"work_phone"].present?
+      line << ( '%-10.10s' % values[prefix+"work_phone"] )
+    else
+      line << " "*10 # business phone
+    end
+    line.join('')
+  end
+
   def hmda_fields(values,ssn,borrower)
     newlines = []
 
@@ -1302,10 +1329,10 @@ class UserLoanApp < ActiveRecord::Base
       ethnicity_array = try_parse_array(values[borrower+'ethnicity'])
       if ethnicity_array.present?
         ethnicity_array.each do |ethnicity|
-          newlines << output_ethnicity(ethnicity, ssn, values, borrower)
+          newlines += output_ethnicity(ethnicity, ssn, values, borrower)
         end
       else
-        newlines << output_ethnicity(values[borrower+'ethnicity'], ssn, values, borrower)
+        newlines += output_ethnicity(values[borrower+'ethnicity'], ssn, values, borrower)
       end
     end
 
@@ -1315,10 +1342,10 @@ class UserLoanApp < ActiveRecord::Base
       race_array = try_parse_array(values[borrower+'race'])
       if race_array.present?
         race_array.each do |race|
-          newlines << output_race(race, ssn, values, borrower)
+          newlines += output_race(race, ssn, values, borrower)
         end
       else
-        newlines << output_race(values[borrower+'race'], ssn, values, borrower)
+        newlines += output_race(values[borrower+'race'], ssn, values, borrower)
       end
     end
 
@@ -1377,15 +1404,16 @@ class UserLoanApp < ActiveRecord::Base
   end
 
   def output_ethnicity(e, ssn, values, borrower)
-    line = []
+    newlines = []
     if e.downcase.include? "information"
       ethnicity = "InformationNotProvidedByApplicantInMIT"
     else
       ethnicity = e.split(' ').map {|w| w.capitalize}.join
     end
-    line << [ "ADS" ]
+    line = [ "ADS" ]
     line << ( '%-35.35s' % "HMDAEthnicityType" )
     line << ( '%-50.50s' % "#{ssn}:#{ethnicity}" )
+    newlines << line.join('')
 
     #ethnicity origin type
     if ethnicity == "HispanicOrLatino" && values[borrower+'ethnicity_latino'].present?
@@ -1393,9 +1421,10 @@ class UserLoanApp < ActiveRecord::Base
       if origin == "Other Hispanic or Latino"
         origin = "Other"
       end
-      line << [ "ADS" ]
+      line = [ "ADS" ]
       line << ( '%-35.35s' % "HMDAEthnicityOriginType" )
       line << ( '%-50.50s' % "#{ssn}:#{origin}" )
+      newlines << line.join('')
     else
       origin = nil
     end
@@ -1403,9 +1432,10 @@ class UserLoanApp < ActiveRecord::Base
     #ethnicity origin type other description
     #if they choose hispanic and then "other"
     if origin == "Other"
-      line << [ "ADS" ]
+      line = [ "ADS" ]
       line << ( '%-35.35s' % "HMDAEthnicityOriginTypeOtherDesc" )
       line << ( '%-50.50s' % "#{values[borrower+'other_hispanic_or_latino_origin']}" )
+      newlines << line.join('')
     end
 
     #ethnicity refusal indicator
@@ -1413,27 +1443,30 @@ class UserLoanApp < ActiveRecord::Base
       line = [ "ADS" ]
       line << ( '%-35.35s' % "HMDAEthnicityRefusalIndicator" )
       line << ( '%-50.50s' % "#{ssn}:Y" )
+      newlines << line.join('')
     end
 
-    line.join('')
+    newlines
   end
 
   def output_race(r, ssn, values, borrower)
-    line = []
+    newlines = []
     if r.downcase.include? "information"
       race = "InformationNotProvidedByApplicantInMIT"
     else
       race = r.split(' ').map {|w| w.capitalize}.join
     end
-    line << [ "ADS" ]
+    line = [ "ADS" ]
     line << ( '%-35.35s' % "HMDARaceType" )
     line << ( '%-50.50s' % "#{ssn}:1:#{race}" )
+    newlines << line.join('')
 
     #race refusal indicator
     if race == "InformationNotProvidedByApplicantInMIT"
-      line << [ "ADS" ]
+      line = [ "ADS" ]
       line << ( '%-35.35s' % "HMDARaceRefusalIndicator" )
       line << ( '%-50.50s' % "#{ssn}:Y" )
+      newlines << line.join('')
     end
 
     #race designation type
@@ -1446,12 +1479,13 @@ class UserLoanApp < ActiveRecord::Base
       race_designation = values[borrower+'pacific_islander'].split(' ').map {|w| w.capitalize}.join
     end
     if race_designation.present?
-      line << [ "ADS" ]
+      line = [ "ADS" ]
       line << ( '%-35.35s' % "HMDARaceDesignationType" )
       line << ( '%-50.50s' % "#{ssn}:1:#{race_designation}" )
+      newlines << line.join('')
     end
 
-    line.join('')
+    newlines
   end
 
   def to_import_json field_mappings:nil, company:nil
@@ -1575,7 +1609,6 @@ class UserLoanApp < ActiveRecord::Base
     response['borrower']['credit']['authorized'] = value_is_truthy(values['credit_authorization']) ? 1 : 0
     response['borrower']['credit']['auth_date'] = to_date_or_empty(self.submitted_at&.to_s)
     response['borrower']['credit']['auth_method'] = values['credit_auth_method'] ? values['credit_auth_method'] : 'Internet'
-    values['custom_4079'] = values['credit_auth_notes'] ? values['credit_auth_notes'] : ''
     response['borrower']['credit']['transunion'] = values['credit_transunion'] || values['min_req_fico'] || 0
     response['borrower']['credit']['equifax'] = values['credit_equifax'] || values['min_req_fico'] || 0
     response['borrower']['credit']['experian'] = values['credit_experian'] || values['min_req_fico'] || 0
@@ -1625,7 +1658,7 @@ class UserLoanApp < ActiveRecord::Base
       when 'National Guard'
         values['custom_VAVOB.X72'] = "National Guard"
     end
-    
+
     case values['branch_of_service']
       when 'Air Force'
         values['custom_954'] = "AirForce"
@@ -1642,8 +1675,11 @@ class UserLoanApp < ActiveRecord::Base
     if values['borrower_previous_employer_start_date']
       values['custom_BE0211'] = values['borrower_previous_employer_start_date']
     end
-        if values['borrower_employer_start_date']
+    if values['borrower_employer_start_date']
       values['custom_BE0111'] = values['borrower_employer_start_date']
+    end
+    if values['borrower_employer_end_date']
+      values['custom_BE0114'] = values['borrower_employer_end_date']
     end
 
     if values['borrower_previous_employer_name']
@@ -1696,8 +1732,11 @@ class UserLoanApp < ActiveRecord::Base
     if values['coborrower_previous_employer_start_date']
       values['custom_CE0211'] = values['coborrower_previous_employer_start_date']
     end
-        if values['coborrower_employer_start_date']
+    if values['coborrower_employer_start_date']
       values['custom_CE0111'] = values['coborrower_employer_start_date']
+    end
+    if values['coborrower_employer_end_date']
+      values['custom_CE0114'] = values['coborrower_employer_end_date']
     end
 
     if values['coborrower_previous_employer_name']
@@ -1905,13 +1944,11 @@ class UserLoanApp < ActiveRecord::Base
         end
       end
 
-
       if values.key?('coborrower_has_ownership_interest')
         values['custom_1108'] = boolean_to_yes_no(values['coborrower_has_ownership_interest'])
       end
 
       if value_is_truthy(values['coborrower_has_ownership_interest'])
-
         values['custom_1015'] = values['coborrower_previous_property_type_declaration'] || ''
         if values['coborrower_previous_property_type_declaration'] == 'Primary Residence'
           values['custom_1015'] = 'PrimaryResidence'
@@ -1928,157 +1965,13 @@ class UserLoanApp < ActiveRecord::Base
         elsif values['coborrower_previous_property_title_declaration'] == 'Joint With Other Than Spouse'
           values['custom_1070'] = 'JointWithOtherThanSpouse'
         end
-
       end
 
-      if values['school_years'].present?
-         values['custom_39'] = to_int_or_empty(values['school_years'])
-      end
-      if values['line_of_work'].present?
-         values['custom_FE0116'] = to_int_or_empty(values['line_of_work'])
-      end
       if values['coborrower_line_of_work'].present?
          values['custom_FE0216'] = to_int_or_empty(values['coborrower_line_of_work'])
       end
-      if values['employer_phone'].present?
-         values['custom_FE0117'] = values['employer_phone']
-      end
       if values['coborrower_employer_phone'].present?
          values['custom_FE0217'] = values['coborrower_employer_phone']
-      end
-
-      if values['rent_payment'].present?
-         values['custom_119'] = values['rent_payment']
-      end
-
-      if values['mortgage_and_liens_1'].present?
-         values['custom_FM0117'] = values['mortgage_and_liens_1']
-      end
-      if values['mortgage_and_liens_2'].present?
-         values['custom_FM0217'] = values['mortgage_and_liens_2']
-      end
-      if values['mortgage_and_liens_3'].present?
-         values['custom_FM0317'] = values['mortgage_and_liens_3']
-      end
-      if values['mortgage_payments_1'].present?
-         values['custom_FM0116'] = values['mortgage_payments_1']
-      end
-      if values['mortgage_payments_2'].present?
-         values['custom_FM0216'] = values['mortgage_payments_2']
-      end
-      if values['mortgage_payments_3'].present?
-         values['custom_FM0316'] = values['mortgage_payments_3']
-      end
-      if values['insurance_maintenance_taxes_1'].present?
-         values['custom_FM0121'] = values['insurance_maintenance_taxes_1']
-      end
-      if values['insurance_maintenance_taxes_2'].present?
-         values['custom_FM0221'] = values['insurance_maintenance_taxes_2']
-      end
-      if values['insurance_maintenance_taxes_3'].present?
-         values['custom_FM0321'] = values['insurance_maintenance_taxes_3']
-      end
-      if values['gross_rental_income_1'].present?
-         values['custom_FM0120'] = values['gross_rental_income_1']
-      end
-      if values['gross_rental_income_2'].present?
-         values['custom_FM0220'] = values['gross_rental_income_2']
-      end
-      if values['gross_rental_income_3'].present?
-         values['custom_FM0320'] = values['gross_rental_income_3']
-      end
-      if values['real_estate_own_1_address'].present?
-         values['custom_FM0104'] = values['real_estate_own_1_address']
-      end
-      if values['real_estate_own_1_city'].present?
-         values['custom_FM0106'] = values['real_estate_own_1_city']
-      end
-      if values['real_estate_own_1_state'].present?
-        values['custom_FM0107'] = to_state_or_empty(values['real_estate_own_1_state'])
-      end
-      if values['real_estate_own_1_zip'].present?
-        values['custom_FM0108'] = values['real_estate_own_1_zip']
-      end
-      if values['real_estate_own_2_address'].present?
-        values['custom_FM0204'] = values['real_estate_own_2_address']
-      end
-      if values['real_estate_own_2_city'].present?
-        values['custom_FM0206'] = values['real_estate_own_2_city']
-      end
-      if values['real_estate_own_2_state'].present?
-        values['custom_FM0207'] = to_state_or_empty(values['real_estate_own_2_state'])
-      end
-      if values['real_estate_own_2_zip'].present?
-        values['custom_FM0208'] = values['real_estate_own_2_zip']
-      end
-      if values['real_estate_own_3_address'].present?
-        values['custom_FM0304'] = values['real_estate_own_3_address']
-      end
-      if values['real_estate_own_3_city'].present?
-        values['custom_FM0306'] = values['real_estate_own_3_city']
-      end
-      if values['real_estate_own_3_state'].present?
-        values['custom_FM0307'] = to_state_or_empty(values['real_estate_own_3_state'])
-      end
-      if values['real_estate_own_3_zip'].present?
-        values['custom_FM0308'] = values['real_estate_own_3_zip']
-      end
-
-      if values['monthly_real_estate_tax'].present?
-        values['custom_1405'] = values['monthly_real_estate_tax']
-      end
-      if values['monthly_hazard_insurance_premium'].present?
-        values['custom_230'] = values['monthly_hazard_insurance_premium']
-      end
-
-      if values['property_usage_1'].present?
-         values['custom_FM0141'] = values['property_usage_1']
-      end
-      if values['property_usage_2'].present?
-         values['custom_FM0241'] = values['property_usage_2']
-      end
-      if values['property_usage_3'].present?
-         values['custom_FM0341'] = values['property_usage_3']
-      end
-      if values['real_estate_own_type_of_property_1'].present?
-         values['custom_FM0118'] = values['real_estate_own_type_of_property_1']
-      end
-      if values['real_estate_own_type_of_property_2'].present?
-         values['custom_FM0218'] = values['real_estate_own_type_of_property_2']
-      end
-      if values['real_estate_own_type_of_property_3'].present?
-         values['custom_FM0318'] = values['real_estate_own_type_of_property_3']
-      end
-      if values['present_market_value_1'].present?
-         values['custom_FM0119'] = values['present_market_value_1']
-      end
-      if values['present_market_value_2'].present?
-         values['custom_FM0219'] = values['present_market_value_2']
-      end
-      if values['present_market_value_3'].present?
-         values['custom_FM0319'] = values['present_market_value_3']
-      end
-      if values['net_rental_income_1'].present?
-         values['custom_FM0132'] = values['net_rental_income_1']
-      end
-      if values['net_rental_income_2'].present?
-         values['custom_FM0232'] = values['net_rental_income_2']
-      end
-      if values['net_rental_income_3'].present?
-        values['custom_FM0332'] = values['net_rental_income_3']
-      end
-
-      if values['address_required'].present?
-        values['custom_FR0104'] = values['address_required']
-      end
-      if values['city_required'].present?
-        values['custom_FR0106'] = values['city_required']
-      end
-      if values['state_required'].present?
-        values['custom_FR0107'] = values['state_required']
-      end
-      if values['zip_required'].present?
-        values['custom_FR0108'] = values['zip_required']
       end
       if values['coborrower_address_required'].present?
         values['custom_FR0404'] = values['coborrower_address_required']
@@ -2347,13 +2240,211 @@ class UserLoanApp < ActiveRecord::Base
 
     end # ends has_co_borrower check
 
+    # needed to get a bunch of crap out of coborrower condition
+    if values['school_years'].present?
+       values['custom_39'] = to_int_or_empty(values['school_years'])
+    end
+    if values['line_of_work'].present?
+       values['custom_FE0116'] = to_int_or_empty(values['line_of_work'])
+    end
+
+    if values['employer_phone'].present?
+       values['custom_FE0117'] = values['employer_phone']
+    end
+
+    if values['rent_payment'].present?
+       values['custom_119'] = values['rent_payment']
+    end
+
+    if values['mortgage_and_liens_1'].present?
+       values['custom_FM0117'] = values['mortgage_and_liens_1']
+    end
+    if values['mortgage_and_liens_2'].present?
+       values['custom_FM0217'] = values['mortgage_and_liens_2']
+    end
+    if values['mortgage_and_liens_3'].present?
+       values['custom_FM0317'] = values['mortgage_and_liens_3']
+    end
+    if values['mortgage_payments_1'].present?
+       values['custom_FM0116'] = values['mortgage_payments_1']
+    end
+    if values['mortgage_payments_2'].present?
+       values['custom_FM0216'] = values['mortgage_payments_2']
+    end
+    if values['mortgage_payments_3'].present?
+       values['custom_FM0316'] = values['mortgage_payments_3']
+    end
+    if values['insurance_maintenance_taxes_1'].present?
+       values['custom_FM0121'] = values['insurance_maintenance_taxes_1']
+    end
+    if values['insurance_maintenance_taxes_2'].present?
+       values['custom_FM0221'] = values['insurance_maintenance_taxes_2']
+    end
+    if values['insurance_maintenance_taxes_3'].present?
+       values['custom_FM0321'] = values['insurance_maintenance_taxes_3']
+    end
+    if values['gross_rental_income_1'].present?
+       values['custom_FM0120'] = values['gross_rental_income_1']
+    end
+    if values['gross_rental_income_2'].present?
+       values['custom_FM0220'] = values['gross_rental_income_2']
+    end
+    if values['gross_rental_income_3'].present?
+       values['custom_FM0320'] = values['gross_rental_income_3']
+    end
+    if values['real_estate_own_1_address'].present?
+       values['custom_FM0104'] = values['real_estate_own_1_address']
+    end
+    if values['real_estate_own_1_city'].present?
+       values['custom_FM0106'] = values['real_estate_own_1_city']
+    end
+    if values['real_estate_own_1_state'].present?
+      values['custom_FM0107'] = to_state_or_empty(values['real_estate_own_1_state'])
+    end
+    if values['real_estate_own_1_zip'].present?
+      values['custom_FM0108'] = values['real_estate_own_1_zip']
+    end
+    if values['real_estate_own_1_type'].present?
+      if values['real_estate_own_1_type'].downcase.include? "commercial"
+        values['custom_FM0118'] = "CommercialNonResidential"
+      elsif values['real_estate_own_1_type'].downcase.include? "condo"
+        values['custom_FM0118'] = "Condominium"
+      elsif values['real_estate_own_1_type'].downcase.include? "coop"
+        values['custom_FM0118'] = "Cooperative"
+      elsif values['real_estate_own_1_type'].downcase.include? "farm"
+        values['custom_FM0118'] = "Farm"
+      elsif values['real_estate_own_1_type'].downcase.include? "home and business"
+        values['custom_FM0118'] = "HomeAndBusinessCombined"
+      elsif values['real_estate_own_1_type'].downcase.include? "land"
+        values['custom_FM0118'] = "Land"
+      elsif values['real_estate_own_1_type'].downcase.include? "manufactured"
+        values['custom_FM0118'] = "ManufacturedMobileHome"
+      elsif values['real_estate_own_1_type'].downcase.include? "mixed"
+        values['custom_FM0118'] = "MixedUseResidential"
+      elsif values['real_estate_own_1_type'].downcase.include? "multi"
+        values['custom_FM0118'] = "MultifamilyMoreThanFourUnits"
+      elsif values['real_estate_own_1_type'].downcase.include? "single"
+        values['custom_FM0118'] = "SingleFamily"
+      elsif values['real_estate_own_1_type'].downcase.include? "town"
+        values['custom_FM0118'] = "Townhouse"
+      elsif values['real_estate_own_1_type'].downcase.include? "2" or values['real_estate_own_1_type'].downcase.include? "two"
+        values['custom_FM0118'] = "TwoToFourUnitProperty"
+      else
+        values['custom_FM0118'] = "FM0118NotMapped"
+      end
+    end
+    if values['real_estate_own_1_occupancy'].present?
+      if values['real_estate_own_1_occupancy'].downcase.include? "investment"
+        values['custom_FM0141'] = "Investor"
+      elsif values['real_estate_own_1_occupancy'].downcase.include? "primary"
+        values['custom_FM0141'] = "PrimaryResidence"
+      elsif values['real_estate_own_1_occupancy'].downcase.include? "second"
+        values['custom_FM0141'] = "SecondHome"
+      else
+        values['custom_FM0141'] = "FM0141NotMapped"
+      end
+    end
+    if values['real_estate_own_1_status'].present?
+      if values['real_estate_own_1_status'].downcase.include? "rent"
+        values['custom_FM0124'] = "RetainForRental"
+      elsif values['real_estate_own_1_status'].downcase.include? "sold"
+        values['custom_FM0124'] = "Sold"
+      elsif values['real_estate_own_1_status'].downcase.include? "pending"
+        values['custom_FM0124'] = "PendingSale"
+      else
+        values['custom_FM0124'] = "FM0124NotMapped"
+      end
+    end
+    if values['real_estate_own_2_address'].present?
+      values['custom_FM0204'] = values['real_estate_own_2_address']
+    end
+    if values['real_estate_own_2_city'].present?
+      values['custom_FM0206'] = values['real_estate_own_2_city']
+    end
+    if values['real_estate_own_2_state'].present?
+      values['custom_FM0207'] = to_state_or_empty(values['real_estate_own_2_state'])
+    end
+    if values['real_estate_own_2_zip'].present?
+      values['custom_FM0208'] = values['real_estate_own_2_zip']
+    end
+    if values['real_estate_own_3_address'].present?
+      values['custom_FM0304'] = values['real_estate_own_3_address']
+    end
+    if values['real_estate_own_3_city'].present?
+      values['custom_FM0306'] = values['real_estate_own_3_city']
+    end
+    if values['real_estate_own_3_state'].present?
+      values['custom_FM0307'] = to_state_or_empty(values['real_estate_own_3_state'])
+    end
+    if values['real_estate_own_3_zip'].present?
+      values['custom_FM0308'] = values['real_estate_own_3_zip']
+    end
+
+    if values['monthly_real_estate_tax'].present?
+      values['custom_1405'] = values['monthly_real_estate_tax']
+    end
+    if values['monthly_hazard_insurance_premium'].present?
+      values['custom_230'] = values['monthly_hazard_insurance_premium']
+    end
+
+    if values['property_usage_1'].present?
+       values['custom_FM0141'] = values['property_usage_1']
+    end
+    if values['property_usage_2'].present?
+       values['custom_FM0241'] = values['property_usage_2']
+    end
+    if values['property_usage_3'].present?
+       values['custom_FM0341'] = values['property_usage_3']
+    end
+    if values['real_estate_own_type_of_property_1'].present?
+       values['custom_FM0118'] = values['real_estate_own_type_of_property_1']
+    end
+    if values['real_estate_own_type_of_property_2'].present?
+       values['custom_FM0218'] = values['real_estate_own_type_of_property_2']
+    end
+    if values['real_estate_own_type_of_property_3'].present?
+       values['custom_FM0318'] = values['real_estate_own_type_of_property_3']
+    end
+    if values['present_market_value_1'].present?
+       values['custom_FM0119'] = values['present_market_value_1']
+    end
+    if values['present_market_value_2'].present?
+       values['custom_FM0219'] = values['present_market_value_2']
+    end
+    if values['present_market_value_3'].present?
+       values['custom_FM0319'] = values['present_market_value_3']
+    end
+    if values['net_rental_income_1'].present?
+       values['custom_FM0132'] = values['net_rental_income_1']
+    end
+    if values['net_rental_income_2'].present?
+       values['custom_FM0232'] = values['net_rental_income_2']
+    end
+    if values['net_rental_income_3'].present?
+      values['custom_FM0332'] = values['net_rental_income_3']
+    end
+
+    if values['address_required'].present?
+      values['custom_FR0104'] = values['address_required']
+    end
+    if values['city_required'].present?
+      values['custom_FR0106'] = values['city_required']
+    end
+    if values['state_required'].present?
+      values['custom_FR0107'] = values['state_required']
+    end
+    if values['zip_required'].present?
+      values['custom_FR0108'] = values['zip_required']
+    end
+
+
     # subject property
     response['property'] = {}
     response['property']['street'] = values['property_street'] || ''
     response['property']['city'] = values['property_city'] || ''
     response['property']['state'] = to_state_or_empty(values['property_state'])
     response['property']['zip'] = values['property_zip'] || ''
-    response['property']['estimated_value'] = values['property_est_value'] || ''
+    response['property']['estimated_value'] = values['estimated_property_value'] || ''
     response['property']['appraised_value'] = values['property_appraised_value'] || ''
     if values['property_year_built'].present?
       values['custom_18'] = to_int_or_empty(values['property_year_built'])
@@ -2420,8 +2511,14 @@ class UserLoanApp < ActiveRecord::Base
 
     response['loan']['application_date'] = "#{self.submitted_at}"
 
-    if values['purpose_of_refinance']
-      values['custom_19'] = values['purpose_of_refinance']
+    if values['purpose_of_refinance'].present?
+      if values['purpose_of_refinance'] == 'No Cash-Out Refinance'
+        values['custom_19'] = 'NoCash-Out Refinance'
+      elsif values['purpose_of_refinance'] == 'Cash-Out Refinance'
+        values['custom_19'] == 'Cash-Out Refinance'
+      else
+        values['custom_19'] == 'ConstructionToPermanent'
+      end
     end
 
     if values['current_lien']
@@ -2462,6 +2559,28 @@ class UserLoanApp < ActiveRecord::Base
     #
     #   end
     # end
+
+    # UICCU
+    if company_id == 111336
+      values['custom_CX.SIMPLENEXUS.SOURCE'] = self.find_source
+    end
+
+    # First Financial
+    if company_id == 111325
+
+      if values['joint_credit'].present? && value_is_truthy(values['joint_credit'])
+        values['custom_CX.BORROER.AUTH.CC'] = 'Y'
+      else
+        values['custom_CX.BORROER.AUTH.CC'] = 'N'
+      end
+
+      if values['coborrower_joint_credit'].present? && value_is_truthy(values['coborrower_joint_credit'])
+        values['custom_CX.BORROER2.AUTH.CC'] = 'Y'
+      else
+        values['custom_CX.BORROER2.AUTH.CC'] = 'N'
+      end
+
+    end
 
     # BANKSOUTH
     if company_id == 111320
@@ -2549,7 +2668,14 @@ class UserLoanApp < ActiveRecord::Base
     if company_id == 111310
       values['custom_CX.LOANSOURCE'] = self.find_source
 
-      values['CX.BORROWER.CERT.AUTH '] = values['borrowers_certification']
+      if values.key?('borrowers_certification') && value_is_truthy(values['borrowers_certification'])
+        values['CX.BORROWER.CERT.AUTH'] = self.submitted_at
+      end
+
+      if values.key?('coborrowers_certification') && value_is_truthy(values['coborrowers_certification'])
+        values['CX.COBORROWER.CERT.AUTH'] = self.submitted_at
+      end
+
       values['CX.VDC'] = values['voluntary_documentation']
 
       # values[''] = values['coborrower_voluntary_documentation']
@@ -2569,6 +2695,8 @@ class UserLoanApp < ActiveRecord::Base
     # LeaderOne source mapping
     if company_id == 111172
       values['custom_CX.CD.LEADSOURCE'] = self.find_source
+
+      values['custom_CX.BORRSUMM.JT.CREDIT'] = boolean_to_yes_no(values['joint_credit'])
     end
 
     # First Choice source mapping
@@ -2597,9 +2725,9 @@ class UserLoanApp < ActiveRecord::Base
       end
     end
 
+    #  Mclean mappings
     if company_id == 111211
       if values.key?('borrower_share_info_authorization') && value_is_truthy(values['borrower_share_info_authorization'])
-        #  MCLEAN
         values['custom_CX.BORAUTH.DATE'] = self.submitted_at
       end
     end
@@ -2627,7 +2755,6 @@ class UserLoanApp < ActiveRecord::Base
       values['custom_1716'] = values['assets2'] || 0
       values['custom_1715'] = get_field_description('assets2', field_arr)
     end
-    values['custom_212'] = values['assets_retirement'] || 0
 
     if values.key?('is_down_payment_borrowed')
       values['custom_174'] = boolean_to_y_n(values['is_down_payment_borrowed'])
@@ -2962,13 +3089,26 @@ class UserLoanApp < ActiveRecord::Base
 
     if values['legal_name_borrower']
       values['custom_31'] = values['legal_name_borrower']
+    else
+      # This will be the default.  Most companies should expect it to work this way.
+      values['custom_31'] = "#{response['borrower']['first_name']} #{response['borrower']['middle_name']} #{response['borrower']['last_name']}"
     end
-    if values['legal_name_coborrower']
-      values['custom_1602'] = values['legal_name_coborrower']
+
+    if value_is_truthy(values["has_coborrower"])
+      if values['legal_name_coborrower']
+        values['custom_1602'] = values['legal_name_coborrower']
+      else
+        # This will be the default.  Most companies should expect it to work this way.
+        values['custom_1602'] = "#{response['co_borrower']['first_name']} #{response['co_borrower']['middle_name']} #{response['co_borrower']['last_name']}"
+      end
     end
 
     if values['title_held']
       values['custom_33'] = values['title_held']
+    end
+
+    if values['real_estate_own_1_market_value'].present?
+      values['custom_FM0119'] = values['real_estate_own_1_market_value']
     end
 
     if values['down_payment_source'] && values['down_payment_source'].present?
@@ -3070,6 +3210,47 @@ class UserLoanApp < ActiveRecord::Base
     values['custom_103'] = values['bonuses'] || 0
     values['custom_104'] = values['commission'] || 0
     values['custom_107'] = values['other_income'] || 0
+    if values['detailed_other_income_1_applicant']
+      if values['detailed_other_income_1_applicant'] == "Borrower"
+        values['custom_144'] = 'B'
+      elsif values['detailed_other_income_1_applicant'] == "Coborrower"
+        values['custom_144'] = 'C'
+      end
+    end
+    if values['detailed_other_income_1_description']
+      values['custom_145'] = values['detailed_other_income_1_description']
+    end
+    if values['detailed_other_income_1_amount']
+      values['custom_146'] = values['detailed_other_income_1_amount']
+    end
+    if values['detailed_other_income_2_applicant']
+      if values['detailed_other_income_2_applicant'] == "Borrower"
+        values['custom_147'] = 'B'
+      elsif values['detailed_other_income_2_applicant'] == "Coborrower"
+        values['custom_147'] = 'C'
+      end
+    end
+    if values['detailed_other_income_2_description']
+      values['custom_148'] = values['detailed_other_income_2_description']
+    end
+    if values['detailed_other_income_2_amount']
+      values['custom_149'] = values['detailed_other_income_2_amount']
+    end
+    if values['detailed_other_income_3_applicant']
+      if values['detailed_other_income_3_applicant'] == "Borrower"
+        values['custom_150'] = 'B'
+      elsif values['detailed_other_income_3_applicant'] == "Coborrower"
+        values['custom_150'] = 'C'
+      end
+    end
+    if values['detailed_other_income_3_description']
+      values['custom_151'] = values['detailed_other_income_3_description']
+    end
+    if values['detailed_other_income_3_amount']
+      values['custom_152'] = values['detailed_other_income_3_amount']
+    end
+    # Account 1
+    values['custom_DD0102'] = values['account_institution_name'] || ''
     if values['checking_account']
       values['custom_DD0124'] = 'Borrower'
       values['custom_DD0108'] = 'Checking Account'
@@ -3094,6 +3275,33 @@ class UserLoanApp < ActiveRecord::Base
       values['custom_DD0124'] = 'Borrower'
       values['custom_DD0120'] = 'Gifts Total'
       values['custom_DD0123'] = values['assets_gift_funds'] || 0
+    end
+    #Account 2
+    values['custom_DD0202'] = values['account_2_institution_name'] || ''
+    if values['checking_account_2']
+      values['custom_DD0224'] = 'Borrower'
+      values['custom_DD0208'] = 'Checking Account'
+      values['custom_DD0211'] = values['checking_account_2'] || 0
+    end
+    if values['savings_account_2']
+      values['custom_DD0224'] = 'Borrower'
+      values['custom_DD0212'] = 'Savings Account'
+      values['custom_DD0215'] = values['savings_account_2'] || 0
+    end
+    if values['assets_retirement_2']
+      values['custom_DD0224'] = 'Borrower'
+      values['custom_DD0216'] = 'Retirement Funds'
+      values['custom_DD0219'] = values['assets_retirement'] || 0
+    end
+    if values['assets_other_2']
+      values['custom_DD0224'] = 'Borrower'
+      values['custom_DD0220'] = 'Other Liquid Assets'
+      values['custom_DD0223'] = values['assets_other'] || 0
+    end
+    if values['assets_gift_funds_2']
+      values['custom_DD0224'] = 'Borrower'
+      values['custom_DD0220'] = 'Gifts Total'
+      values['custom_DD0223'] = values['assets_gift_funds'] || 0
     end
 
     values['custom_1821'] = values['estimated_property_value'] || 0
@@ -3877,7 +4085,7 @@ class UserLoanApp < ActiveRecord::Base
     response['lstFields'] << {'FieldID': 'SubProp.State', 'Value': property_state}
     response['lstFields'] << {'FieldID': 'SubProp.Zip', 'Value': values['property_zip'] || ''}
     response['lstFields'] << {'FieldID': 'SubProp.AppraisedValue', 'Value': values['property_appraised_value'] || ''}
-    response['lstFields'] << {'FieldID': 'SubProp.AssessedValue', 'Value': values['property_est_value'] || ''}
+    response['lstFields'] << {'FieldID': 'SubProp.AssessedValue', 'Value': values['estimated_property_value'] || ''}
 
     # # main loan info on application
     # response['loan'] = {}
@@ -4321,6 +4529,8 @@ class UserLoanApp < ActiveRecord::Base
       date = Chronic.parse(value)
       if date
         return date.strftime(format)
+      else
+        return ''
       end
     end
 
@@ -4408,16 +4618,16 @@ class UserLoanApp < ActiveRecord::Base
       share_info_fields = share_info_auth_field_lookup
 
 
-      if (self.app_user&.servicer_profile&.company&.generate_econsent_form || self.servicer_profile&.company&.generate_econsent_form) && econsent_fields[:borrower].present? && fields_in_phase.include?(econsent_fields[:borrower]["key"])
+      if (self.app_user&.servicer_profile&.company.nil? || self.app_user&.servicer_profile&.company&.generate_econsent_form || self.servicer_profile&.company.nil? || self.servicer_profile&.company&.generate_econsent_form) && econsent_fields[:borrower].present? && fields_in_phase.include?(econsent_fields[:borrower]["key"])
         GenerateEconsentDocJob.perform_later( :user_loan_app_id => self.id )
       end #end only generating for companies with the option enabled
 
 
-      if (self.app_user&.servicer_profile&.company&.generate_credit_auth_form || self.servicer_profile&.company&.generate_credit_auth_form) && credit_auth_fields[:borrower].present? && fields_in_phase.include?(credit_auth_fields[:borrower]["key"])
+      if (self.app_user&.servicer_profile&.company.nil? || self.app_user&.servicer_profile&.company&.generate_credit_auth_form || self.servicer_profile&.company.nil? || self.servicer_profile&.company&.generate_credit_auth_form) && credit_auth_fields[:borrower].present? && fields_in_phase.include?(credit_auth_fields[:borrower]["key"])
         GenerateCreditAuthDocJob.perform_later( :user_loan_app_id => self.id )
       end #end only generating if company has setting enabled
 
-      if (self.app_user&.servicer_profile&.company&.generate_share_info_auth_form || self.servicer_profile&.company&.generate_share_info_auth_form) && share_info_fields[:borrower].present? && fields_in_phase.include?(share_info_fields[:borrower]["key"])
+      if (self.app_user&.servicer_profile&.company.nil? || self.app_user&.servicer_profile&.company&.generate_share_info_auth_form || self.servicer_profile&.company.nil? || self.servicer_profile&.company&.generate_share_info_auth_form) && share_info_fields[:borrower].present? && fields_in_phase.include?(share_info_fields[:borrower]["key"])
         GenerateShareInfoAuthDocJob.perform_later( :user_loan_app_id => self.id )
       end #end only generating if company has setting enabled
     end
@@ -4446,7 +4656,7 @@ class UserLoanApp < ActiveRecord::Base
     if ((self.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'econsent').count == 0 &&
       (self.owner_loan.present? && self.owner_loan.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'econsent').count == 0)) &&
       self.econsent_fields_lookup[:borrower].present? &&
-      (self.app_user&.servicer_profile&.company&.generate_econsent_form || self.servicer_profile&.company&.generate_econsent_form))
+      (self.app_user&.servicer_profile&.company.nil? || self.servicer_profile&.company.nil? || self.app_user&.servicer_profile&.company&.generate_econsent_form || self.servicer_profile&.company&.generate_econsent_form))
       return true
     end
     return false
@@ -4605,7 +4815,7 @@ class UserLoanApp < ActiveRecord::Base
     if ((self.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'credit_authorization').count == 0 &&
       (self.owner_loan.present? && self.owner_loan.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'credit_authorization').count == 0)) &&
       self.credit_auth_field_lookup[:borrower].present? &&
-      (self.app_user&.servicer_profile&.company&.generate_credit_auth_form || self.servicer_profile&.company&.generate_credit_auth_form))
+      (self.app_user&.servicer_profile&.company.nil? || self.servicer_profile&.company.nil? || self.app_user&.servicer_profile&.company&.generate_credit_auth_form || self.servicer_profile&.company&.generate_credit_auth_form))
       return true
     end
     return false
@@ -4756,7 +4966,7 @@ class UserLoanApp < ActiveRecord::Base
     if ((self.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'share_info_authorization').count == 0 &&
       (self.owner_loan.present? && self.owner_loan.loan_docs.where(status: ['los-import', 'complete'], doc_type: 'share_info_authorization').count == 0)) &&
       self.share_info_auth_field_lookup[:borrower].present? &&
-      (self.app_user&.servicer_profile&.company&.generate_share_info_auth_form || self.servicer_profile&.company&.generate_credit_auth_form))
+      (self.app_user&.servicer_profile&.company.nil? || self.servicer_profile&.company.nil? || self.app_user&.servicer_profile&.company&.generate_share_info_auth_form || self.servicer_profile&.company&.generate_credit_auth_form))
       return true
     end
     return false
@@ -4909,12 +5119,55 @@ class UserLoanApp < ActiveRecord::Base
   end
 
   def de_obfuscate
-  	self.loan_app_json = de_obfuscate_loan_app_json( self.loan_app_json, self.loan_app_json_was )
+    self.loan_app_json = de_obfuscate_loan_app_json( self.loan_app_json, self.loan_app_json_was )
   end
 
   def safe_dictionary_of_values
     dict = {}
     dict['phases_complete'] = self.phases_complete
+    dict['total_phases'] = self.total_phases
+
+    loan_json = JSON.parse(self.loan_app_json)
+
+    unless loan_json["structure"].first.is_a? Array
+      loan_json["structure"] = [loan_json["structure"]]
+    end
+    servicerOwnedLoanApp = User.where(id: self.app_user&.user_id)&.first&.account_type == 'servicer'
+    if loan_json["structure"][self.phases_complete - 1].present?
+      borrower_loan_app_fields = loan_json["structure"][self.phases_complete - 1].flatten.map{ |s|
+        # If the servicerOwnes the app only show agreements that have servicer in the roles, otherwise show blank roles and borrower roles
+        # Currently we aren't sending an email to servicers and those loans just disappear but its here in case for the future
+        if ( ( (servicerOwnedLoanApp && s["roles"].include?("servicer")) || (!servicerOwnedLoanApp && (s["roles"].blank? || s["roles"].include?("borrower"))) ) &&
+            ( s['condition'].blank? || value_is_truthy( loan_json['values'][s['condition']] ) || loan_json['values'][s['condition']] == s['conditionValue']  ) )
+            # by checking the conditions we are making sure we don't show empty coborrower fields if there was no coborrower on the loan
+          s["fields"]
+        end
+        }.flatten.compact.sort
+    else
+      borrower_loan_app_fields = []
+    end
+
+    reqs = loan_json["fields"].collect{|f| f if (f["type"] == "agreement" && borrower_loan_app_fields.include?(f["key"]))}.compact if loan_json["fields"]
+    borrower_name = self.borrower_name
+    agreements = []
+
+    reqs.each do |req|
+      agreements << "#{req['key'].titleize} Response: #{value_is_truthy(loan_json['values'][ req['key'] ]) ? 'YES' : 'NO'}"
+    end
+    if loan_json['values']['is_firsttimer'].present?
+      agreements << "Is first timer buyer: #{value_is_truthy(loan_json['values']['is_firsttimer']) ? 'YES' : 'NO'}"
+    end
+    if loan_json['values']['is_veteran'].present?
+      agreements << "Is veteran: #{value_is_truthy(loan_json['values']['is_veteran']) ? 'YES' : 'NO'}"
+    end
+
+    if agreements.any?
+      dict['agreement_fields'] =  agreements.join("<br />")
+    else
+      dict['agreement_fields'] =  agreements.join("<br />")
+    end
+
+
     return dict
   end
 

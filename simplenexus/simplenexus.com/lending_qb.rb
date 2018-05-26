@@ -84,8 +84,16 @@ class LendingQB < EncompassBrokerPuller
       values[key] = value.to_s.encode(:xml => :text)
     end
     
-    ssn = ( values["ssn"] || ' ' ).gsub( "-", "" )
-    coborrower_ssn = ( values["coborrower_ssn"] || ' ' ).gsub( "-", "" )
+    if values["ssn"].present?
+      ssn = values["ssn"].gsub( "-", "" )
+    else
+      ssn = " "
+    end
+    if values["coborrower_ssn"].present?
+      coborrower_ssn = values["coborrower_ssn"].gsub( "-", "" )
+    else
+      coborrower_ssn = " "
+    end
 
     loan_fields = []
 
@@ -324,6 +332,7 @@ class LendingQB < EncompassBrokerPuller
     end
 
     if values['mailing_different_than_current'].present? && value_is_truthy(values['mailing_different_than_current'])
+      borrower_fields << {:@id => "aBAddrMailSourceT", :content! => 2}
       if values['mailing_address'].present?
         borrower_fields << {:@id => "aBAddrMail", :content! => values['mailing_address']}
       end
@@ -696,7 +705,8 @@ class LendingQB < EncompassBrokerPuller
         borrower_fields << {:@id => "aCZip", :content! => czip}
       end
 
-      if values['coborrower_mailing_address_different_than_current'].present? && value_is_truthy(values['coborrower_mailing_address_different_than_current'])
+      if values['coborrower_mailing_different_than_current'].present? && value_is_truthy(values['coborrower_mailing_different_than_current'])
+        borrower_fields << {:@id => "aCAddrMailSourceT", :content! => 2}
         if values['coborrower_mailing_address'].present?
           borrower_fields << {:@id => "aCAddrMail", :content! => values['coborrower_mailing_address']}
         end
