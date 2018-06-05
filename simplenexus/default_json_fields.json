@@ -33,6 +33,7 @@
         "borrower_previous_employer_monthly_income",
         "borrower_previous_employer_address",
         "borrower_previous_employer_city",
+        "borrower_previous_employer_job_title",
         "borrower_previous_employer_months",
         "borrower_previous_employer_name",
         "borrower_previous_employer_phone",
@@ -145,6 +146,7 @@
         "coborrower_previous_employer_address",
         "coborrower_previous_employer_city",
         "coborrower_previous_employer_end_date",
+        "coborrower_previous_employer_job_title",
         "coborrower_previous_employer_months",
         "coborrower_previous_employer_name",
         "coborrower_previous_employer_phone",
@@ -289,6 +291,7 @@
         "loan_term",
         "loan_term_in_years",
         "loan_type",
+        "loan_type_other_description",
         "lot_acquisition_date",
         "mailing_address",
         "mailing_city",
@@ -450,7 +453,7 @@
       "description": "Please give any additional info your Loan Officer should have."
     },
     {
-      "title": "Street Address",
+      "title": "Boorrower's Street Address",
       "key": "address",
       "type": "text",
       "required": false
@@ -647,6 +650,12 @@
       "title": "Employer City",
       "key": "borrower_previous_employer_city",
       "description": "Borrower's Previous Employer City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "title": "Job Title",
+      "key": "borrower_previous_employer_job_title",
       "type": "text",
       "required": false
     },
@@ -902,10 +911,9 @@
       "max": 0
     },
     {
-      "min": "0",
       "title": "Ages of Dependents",
       "key": "coborrower_dependents_age",
-      "max": 100,
+      "description": "List age of each dependent not listed by co-borrower, seperated by commas. Example for three children: 5, 8, 12",
       "type": "text",
       "required": false
     },
@@ -1023,7 +1031,7 @@
         "Cuban",
         "Other Hispanic or Latino",
         "Not Hispanic or Latino",
-        "I do not wish to provide this information"
+        "Information not provided"
       ],
       "required": false
     },
@@ -1056,7 +1064,7 @@
       "choices": [
         "Male",
         "Female",
-        "I do not wish to provide this information"
+        "Information not provided"
       ],
       "min_choices": 0,
       "max_choices": 17,
@@ -1210,10 +1218,8 @@
       "required": false
     },
     {
-      "min": "0",
       "title": "Job Title",
       "key": "coborrower_job_title",
-      "max": 22,
       "type": "text",
       "required": false
     },
@@ -1474,6 +1480,12 @@
       "required": false
     },
     {
+      "title": "Job Title",
+      "key": "coborrower_previous_employer_job_title",
+      "type": "text",
+      "required": false
+    },
+    {
       "min": 0,
       "title": "Months at Previous Employer",
       "key": "coborrower_previous_employer_months",
@@ -1634,7 +1646,7 @@
         "Samoan",
         "Other Pacific Islander",
         "White",
-        "I do not wish to provide this information"
+        "Information not provided"
       ],
       "min_choices": 0,
       "max_choices": 17,
@@ -1990,7 +2002,8 @@
       "required": false
     },
     {
-      "title": "Ages of Dependents (List age of each dependent not listed by co-borrower, seperated by commas. Example for three children: 5, 8, 12)",
+      "title": "Ages of Dependents",
+      "description": "List age of each dependent, seperated by commas. Example for three children: 5, 8, 12",
       "key": "dependents_age",
       "type": "text",
       "required": false
@@ -2368,7 +2381,7 @@
         "Cuban",
         "Other Hispanic or Latino",
         "Not Hispanic or Latino",
-        "I do not wish to provide this information"
+        "Information not provided"
       ],
       "required": false
     },
@@ -2408,7 +2421,7 @@
       "choices": [
         "Male",
         "Female",
-        "I do not wish to provide this information"
+        "Information not provided"
       ],
       "min_choices": 0,
       "max_choices": 17,
@@ -2748,8 +2761,17 @@
         "Conventional",
         "FHA",
         "VA",
-        "USDA-RHS"
+        "USDA-RHS",
+        "HELOC",
+        "Other"
       ],
+      "required": false
+    },
+    {
+      "title": "Loan Type Description",
+      "key": "loan_type_other_description",
+      "description": "Please describe your loan type in further detail",
+      "type": "text",
       "required": false
     },
     {
@@ -3117,6 +3139,7 @@
       "key": "prev_state",
       "description": "Borrower's State",
       "type": "state",
+      "allowAllStates": true,
       "required": false
     },
     {
@@ -3362,7 +3385,7 @@
         "Samoan",
         "Other Pacific Islander",
         "White",
-        "I do not wish to provide this information"
+        "Information not provided"
       ],
       "min_choices": 0,
       "max_choices": 17,
@@ -3456,7 +3479,6 @@
       "key": "real_estate_own_1_status",
       "type": "single_choice",
       "choices": [
-        "Residence",
         "Rental",
         "Sold",
         "Pending Sale"
