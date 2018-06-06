@@ -267,6 +267,7 @@
         "insurance_maintenance_taxes_2",
         "insurance_maintenance_taxes_3",
         "intend_to_occupy",
+        "interest_rate",
         "is_comaker_or_endorser",
         "is_comaker_or_endorser_explanation",
         "is_down_payment_borrowed",
@@ -287,12 +288,14 @@
         "legal_name_coborrower",
         "line_of_work",
         "loan_amount",
+        "loan_description",
         "loan_purpose",
         "loan_term",
         "loan_term_in_years",
         "loan_type",
         "loan_type_other_description",
         "lot_acquisition_date",
+        "ltv_percentage",
         "mailing_address",
         "mailing_city",
         "mailing_different_than_current",
@@ -311,6 +314,7 @@
         "mortgage_and_liens_1",
         "mortgage_and_liens_2",
         "mortgage_and_liens_3",
+        "mortgage_payment",
         "mortgage_payments_1",
         "mortgage_payments_2",
         "mortgage_payments_3",
@@ -398,6 +402,7 @@
         "real_estate_own_type_of_property_3",
         "referral_name",
         "rent_expense",
+        "rent_payment",
         "savings_account",
         "savings_account_2",
         "school_completed",
@@ -2566,6 +2571,12 @@
       "required": false
     },
     {
+      "title": "Interest Rate",
+      "key": "interest_rate",
+      "type": "percentage",
+      "required": true
+    },
+    {
       "title": "Have you co-signed on a loan?",
       "key": "is_comaker_or_endorser",
       "type": "boolean",
@@ -2712,6 +2723,12 @@
       "required": false
     },
     {
+      "title": "Loan Description",
+      "key": "loan_description",
+      "type": "text",
+      "required": false
+    },
+    {
       "title": "Purpose",
       "key": "loan_purpose",
       "description": "Purpose of Loan",
@@ -2779,6 +2796,13 @@
       "key": "lot_acquisition_date",
       "type": "date",
       "required": false
+    },
+    {
+      "title": "LTV Percentage",
+      "key": "ltv_percentage",
+      "description": "Loan-to-Value Percentage",
+      "type": "percentage",
+      "required": true
     },
     {
       "title": "Street Address",
@@ -2914,6 +2938,12 @@
     {
       "title": "Amount of Mortgages and Liens - Property 3",
       "key": "mortgage_and_liens_3",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Monthly Mortgage Payment",
+      "key": "mortgage_payment",
       "type": "currency",
       "required": false
     },
@@ -3617,6 +3647,12 @@
       "placeholder": "Amount",
       "title": "Rent Amount",
       "key": "rent_expense",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Monthly Rent Payment",
+      "key": "rent_payment",
       "type": "currency",
       "required": false
     },
