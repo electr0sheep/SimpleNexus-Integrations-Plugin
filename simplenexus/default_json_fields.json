@@ -752,6 +752,7 @@
       "required": true
     },
     {
+      "title": "Branch of Service",
       "key": "branch_of_service",
       "type": "single_choice",
       "choices": [
@@ -1342,16 +1343,19 @@
       "required": false
     },
     {
+      "title": "Market Value",
       "key": "coborrower_other_property_market_value",
       "type": "currency",
       "required": false
     },
     {
+      "title": "Market Value",
       "key": "coborrower_other_property_market_value_2",
       "type": "currency",
       "required": false
     },
     {
+      "title": "Market Value",
       "key": "coborrower_other_property_market_value_3",
       "type": "currency",
       "required": false
@@ -1624,7 +1628,6 @@
       "required": false
     },
     {
-      "title": "",
       "key": "coborrower_provide_demographics_disclaimer",
       "text": "These questions on the next page are required by the Home Mortgage Disclosure Act for government monorting purposes<br><b>The purpose of collecting this information</b> is to help ensure that all applicants are treated fairly and that the housing needs of communities and neighborhoods are being fulfilled. For residential mortgage lending, Federal law requires that we ask applicants for their demographic information (ethnicity, sex, and race) in order to monitor our compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to provide this information, but are encouraged to do so. You may select one or more designations for \"ethnicity\" and one or more designations for \"Race.\" <b>The law provides that we may not discriminate</b> on the basis of this information, or on whether you choose to provide it. However, if you choose not to provide the information and you have made this application in person, Federal regulations require us to note your ethnicity, sex, and race on the basis of visual observation or surname. The law also provides that we may not discriminate on the basis of age or marital status information you provide in this application. If you do not wish to provide some or all of this information, please check below.",
       "type": "info",
@@ -1696,6 +1699,7 @@
       "title": "State",
       "key": "coborrower_real_estate_own_1_state",
       "type": "state",
+      "allowAllStates": true,
       "required": false
     },
     {
@@ -1720,6 +1724,7 @@
       "title": "State",
       "key": "coborrower_real_estate_own_2_state",
       "type": "state",
+      "allowAllStates": true,
       "required": false
     },
     {
@@ -1744,6 +1749,7 @@
       "title": "State",
       "key": "coborrower_real_estate_own_3_state",
       "type": "state",
+      "allowAllStates": true,
       "required": false
     },
     {
@@ -1807,6 +1813,7 @@
       "key": "coborrower_school_completed",
       "type": "single_choice",
       "choices": [
+        "",
         "Some High School",
         "High School Diploma",
         "Some College",
@@ -2835,6 +2842,7 @@
       "key": "mailing_state",
       "description": "Borrower's Mailing State",
       "type": "state",
+      "allowAllStates": true,
       "required": false
     },
     {
@@ -3002,6 +3010,7 @@
       "description": "Borrower's other income",
       "type": "single_choice",
       "choices": [
+        "",
         "Pension/Retirement Income",
         "Social Security",
         "VA Benefits",
@@ -3038,11 +3047,13 @@
       "required": false
     },
     {
+      "title": "Market Value",
       "key": "other_property_market_value_2",
       "type": "currency",
       "required": false
     },
     {
+      "title": "Market Value",
       "key": "other_property_market_value_3",
       "type": "currency",
       "required": false
@@ -3230,7 +3241,6 @@
       "max": 0
     },
     {
-      "title": "",
       "key": "privacy_policy_disclaimer",
       "text": "We take our clients' financial privacy very seriously. During the course of processing your application, we accumulate non-public personal financial information from you and from other sources about your income, your assets, and your credit history in order to allow a lender to make an informed decision about granting you credit. We restrict access to nonpublic personal information about you to those employees who need to know that information to provide products or services to you. We maintain physical, electronic, and procedural safeguards that comply with federal regulations to guard your nonpublic personal information. We collect nonpublic information about you from the following sources: (i) information we receive from you on applications or other forms; (ii) information about your transactions with us, our affiliates, or others; and (iii) information we receive from a consumer reporting agency. We do not disclose any nonpublic information about our customers or former customers to any third party, except as permitted by law.",
       "type": "info",
@@ -3303,6 +3313,7 @@
       "title": "Property State",
       "key": "property_state_required",
       "type": "state",
+      "allowAllStates": true,
       "required": true
     },
     {
@@ -3369,7 +3380,6 @@
       "required": false
     },
     {
-      "title": "",
       "key": "provide_demographics_disclaimer",
       "text": "These questions on the next page are required by the Home Mortgage Disclosure Act for government monorting purposes<br><b>The purpose of collecting this information</b> is to help ensure that all applicants are treated fairly and that the housing needs of communities and neighborhoods are being fulfilled. For residential mortgage lending, Federal law requires that we ask applicants for their demographic information (ethnicity, sex, and race) in order to monitor our compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to provide this information, but are encouraged to do so. You may select one or more designations for \"ethnicity\" and one or more designations for \"Race.\" <b>The law provides that we may not discriminate</b> on the basis of this information, or on whether you choose to provide it. However, if you choose not to provide the information and you have made this application in person, Federal regulations require us to note your ethnicity, sex, and race on the basis of visual observation or surname. The law also provides that we may not discriminate on the basis of age or marital status information you provide in this application. If you do not wish to provide some or all of this information, please check below",
       "type": "info",
@@ -3485,6 +3495,7 @@
       "key": "real_estate_own_1_occupancy",
       "type": "single_choice",
       "choices": [
+        "",
         "Primary Residence",
         "Secondary Residence",
         "Investment"
@@ -3509,6 +3520,7 @@
       "key": "real_estate_own_1_status",
       "type": "single_choice",
       "choices": [
+        "",
         "Rental",
         "Sold",
         "Pending Sale"
@@ -3520,6 +3532,7 @@
       "key": "real_estate_own_1_title",
       "type": "single_choice",
       "choices": [
+        "",
         "Sole",
         "Joint"
       ],
@@ -3530,6 +3543,7 @@
       "key": "real_estate_own_1_type",
       "type": "single_choice",
       "choices": [
+        "",
         "Condo",
         "Single Family",
         "Multi Family",
@@ -3559,6 +3573,7 @@
       "title": "State",
       "key": "real_estate_own_2_state",
       "type": "state",
+      "allowAllStates": true,
       "required": false
     },
     {
@@ -3583,6 +3598,7 @@
       "title": "State",
       "key": "real_estate_own_3_state",
       "type": "state",
+      "allowAllStates": true,
       "required": false
     },
     {
@@ -3676,6 +3692,7 @@
       "key": "school_completed",
       "type": "single_choice",
       "choices": [
+        "",
         "Some High School",
         "High School Diploma",
         "Some College",
@@ -3805,6 +3822,7 @@
       ]
     },
     {
+      "title": "Type of Service",
       "key": "type_of_service",
       "type": "single_choice",
       "choices": [
