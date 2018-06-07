@@ -8,8 +8,25 @@
           "command": "SimpleNexus-Integrations-Plugin:beautify"
         },
         {
-          "label": "Show Available Placeholders",
-          "command": "SimpleNexus-Integrations-Plugin:showAvailablePlaceholders"
+          "label": "Run RegExes",
+          "submenu": [
+            {
+              "label": "Add blank option to single choice fields",
+              "command": "SimpleNexus-Integrations-Plugin:addBlankOptionToSingleChoice"
+            },
+            {
+              "label": "Remove min/max fields where they are both set to 0",
+              "command": "SimpleNexus-Integrations-Plugin:removeMinMaxWhenZero"
+            },
+            {
+              "label": "Remove description fields that are the same as title",
+              "command": "SimpleNexus-Integrations-Plugin:removeDuplicateDescriptions"
+            },
+            {
+              "label": "Remove blank fields",
+              "command": "SimpleNexus-Integrations-Plugin:removeBlankFields"
+            }
+          ]
         },
         {
           "label": "Generate boilerplate",
