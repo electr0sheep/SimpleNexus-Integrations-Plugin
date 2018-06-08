@@ -926,7 +926,6 @@
     {
       "title": "Date of Birth",
       "key": "coborrower_dob",
-      "description": "Co-Borrower Date of Birth",
       "type": "date",
       "required": false
     },
