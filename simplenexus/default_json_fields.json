@@ -582,14 +582,12 @@
     },
     {
       "placeholder": "",
-      "min": 0,
       "title": "I have read the above and agree",
       "text": "I/We authorize BankSouth Mortgage to release our application, any and all supporting documentation, and any verified information to its parent company, BankSouth, for the purpose of marketing banking products and services to me/us. This information includes but is not limited to: employment history, income, bank account balances, credit history, and/or credit report, and copies of income tax returns.",
       "key": "authorization_to_share_information",
       "description": "",
       "required": false,
-      "type": "agreement",
-      "max": 0
+      "type": "agreement"
     },
     {
       "title": "Bank Name",
@@ -606,14 +604,12 @@
     },
     {
       "placeholder": "",
-      "min": 0,
       "title": "\"I Agree\" to the above",
       "text": "<p class='normal'>I/We have applied for a mortgage loan from McLean Mortgage Corporation. </br> As part of the application process, McLean Mortgage Corporation may verify information contained in my/our loan application and in other documents required in connection with the loan, either before the loan is closed or as part of its quality control program. This may include verifying the information provided on the application with the employer and/or the financial institution. </br> A copy of this authorization may be accepted as an original.",
       "key": "borrower_authorization",
       "description": "",
       "required": true,
-      "type": "agreement",
-      "max": 0
+      "type": "agreement"
     },
     {
       "min": 0,
@@ -845,14 +841,12 @@
     },
     {
       "placeholder": "",
-      "min": 0,
       "title": "I have read the above and agree",
       "text": "I/We authorize BankSouth Mortgage to release our application, any and all supporting documentation, and any verified information to its parent company, BankSouth, for the purpose of marketing banking products and services to me/us. This information includes but is not limited to: employment history, income, bank account balances, credit history, and/or credit report, and copies of income tax returns.",
       "key": "coborrower_authorization_to_share_information",
       "description": "",
       "required": false,
-      "type": "agreement",
-      "max": 0
+      "type": "agreement"
     },
     {
       "title": "Bonuses",
@@ -907,14 +901,12 @@
     },
     {
       "placeholder": "",
-      "min": 0,
       "title": "I authorize this Credit Check.",
       "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "coborrower_credit_authorization",
       "description": "",
       "required": false,
-      "type": "agreement",
-      "max": 0
+      "type": "agreement"
     },
     {
       "title": "Ages of Dependents",
@@ -943,14 +935,12 @@
     },
     {
       "placeholder": "",
-      "min": 0,
       "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
       "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain Your consent to receive certain Loan Documents from Us in electronic form rather than in paper form. With Your consent, You will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, We will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.</li><li>If You do not consent to receive these Loan Documents electronically, You will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, We will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, You can do so by clicking on the 'I do not agree' button, or by notifying Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After Your consent is given, You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, You must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, You will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.<br>You can contact Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul>",
       "key": "coborrower_econsent",
       "description": "",
       "required": false,
-      "type": "agreement",
-      "max": 0
+      "type": "agreement"
     },
     {
       "title": "Email",
@@ -1985,14 +1975,12 @@
     },
     {
       "placeholder": "",
-      "min": 0,
       "title": "I authorize this Credit Check.",
       "text": "During your mortgage loan application process, this institution performs a credit check that requires us to obtain and confirm information regarding your personal and financial background. This credit check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "credit_authorization",
       "description": "",
       "required": false,
-      "type": "agreement",
-      "max": 0
+      "type": "agreement"
     },
     {
       "title": "Have you been at your current address for at least 2 years?",
@@ -2291,14 +2279,12 @@
     },
     {
       "placeholder": "",
-      "min": 0,
       "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
       "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain Your consent to receive certain Loan Documents from Us in electronic form rather than in paper form. With Your consent, You will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, We will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.</li><li>If You do not consent to receive these Loan Documents electronically, You will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, We will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, You can do so by clicking on the 'I do not agree' button, or by notifying Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After Your consent is given, You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, You must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, You will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.<br>You can contact Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul>",
       "key": "econsent",
       "description": "",
       "required": false,
-      "type": "agreement",
-      "max": 0
+      "type": "agreement"
     },
     {
       "title": "Email",
@@ -2889,7 +2875,6 @@
       "key": "monthly_hazard_insurance_premium",
       "type": "currency",
       "min": 0,
-      "description": "How much is the monthly hazard insurance premium?",
       "title": "How much is the monthly hazard insurance premium?"
     },
     {
@@ -2927,7 +2912,6 @@
       "key": "monthly_real_estate_tax",
       "type": "currency",
       "min": 0,
-      "description": "How much is the monthly real estate tax/maintenance?",
       "title": "How much is the monthly real estate tax/maintenance?"
     },
     {
@@ -3230,14 +3214,12 @@
       ]
     },
     {
-      "min": 0,
       "title": "I have read and accept the privacy policy",
       "text": "<iframe src=\"YOU NEED TO ENTER THE COMPANY'S PRIVACY AGREEMENT URL HERE!!!!!!!!\" width=\"700\" height=\"1850\"></iframe>",
       "key": "privacy_agreement",
       "description": "",
       "required": false,
-      "type": "boolean",
-      "max": 0
+      "type": "boolean"
     },
     {
       "key": "privacy_policy_disclaimer",
@@ -3711,14 +3693,12 @@
     },
     {
       "placeholder": "",
-      "min": 0,
       "title": "I have received verbal consent from the borrower for this Credit Check.",
       "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "servicer_credit_authorization",
       "description": "",
       "required": true,
-      "type": "agreement",
-      "max": 0
+      "type": "agreement"
     },
     {
       "min": 9,
