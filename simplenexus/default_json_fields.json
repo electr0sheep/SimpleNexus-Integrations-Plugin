@@ -1820,19 +1820,15 @@
       "required": false
     },
     {
-      "min": 9,
       "title": "SSN",
       "key": "coborrower_ssn",
-      "max": 9,
       "description": "Co-Borrower's SSN",
       "type": "ssn",
       "required": false
     },
     {
-      "min": 9,
       "title": "SSN",
       "key": "coborrower_ssn_required",
-      "max": 9,
       "description": "Co-Borrower's SSN",
       "type": "ssn",
       "required": true
@@ -3701,10 +3697,8 @@
       "type": "agreement"
     },
     {
-      "min": 9,
       "title": "SSN",
       "key": "ssn",
-      "max": 9,
       "description": "Borrower's SSN",
       "type": "ssn",
       "required": false

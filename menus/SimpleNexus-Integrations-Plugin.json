@@ -15,8 +15,8 @@
               "command": "SimpleNexus-Integrations-Plugin:addBlankOptionToSingleChoice"
             },
             {
-              "label": "Remove min/max fields where they are both set to 0",
-              "command": "SimpleNexus-Integrations-Plugin:removeMinMaxWhenZero"
+              "label": "Remove min/max fields where they are equal",
+              "command": "SimpleNexus-Integrations-Plugin:removeMinMaxWhenEqual"
             },
             {
               "label": "Remove description fields that are the same as title",
