@@ -60,6 +60,7 @@
         "coborrower_assets_retirement",
         "coborrower_authorization_to_share_information",
         "coborrower_bonuses",
+        "coborrower_branch_of_service",
         "coborrower_cell_phone",
         "coborrower_checking_account",
         "coborrower_city",
@@ -120,6 +121,7 @@
         "coborrower_mailing_zip",
         "coborrower_marital_status",
         "coborrower_middle_name",
+        "coborrower_military_explanation",
         "coborrower_mobile_phone",
         "coborrower_monthly_income",
         "coborrower_number_dependents",
@@ -193,6 +195,8 @@
         "coborrower_suffix",
         "coborrower_two_years_at_current_address",
         "coborrower_two_years_at_current_employer",
+        "coborrower_type_of_service",
+        "coborrower_va_benefits",
         "coborrower_work_phone",
         "coborrower_zip",
         "coborrower_zip_required",
@@ -262,6 +266,11 @@
         "has_outstanding_judgements",
         "has_outstanding_judgements_explanation",
         "has_ownership_interest",
+        "has_stocks_and_bonds_1",
+        "has_vod_1",
+        "has_vod_2",
+        "has_vod_3",
+        "has_vod_4",
         "have_real_estate_agent",
         "insurance_maintenance_taxes_1",
         "insurance_maintenance_taxes_2",
@@ -357,6 +366,7 @@
         "property_address",
         "property_city",
         "property_city_required",
+        "property_county",
         "property_months",
         "property_number_of_units",
         "property_own",
@@ -401,6 +411,7 @@
         "real_estate_own_type_of_property_2",
         "real_estate_own_type_of_property_3",
         "referral_name",
+        "refinance_amount",
         "rent_expense",
         "rent_payment",
         "savings_account",
@@ -412,6 +423,12 @@
         "ssn_required",
         "state",
         "state_required",
+        "stocks_and_bonds_1_name_and_account",
+        "stocks_and_bonds_1_value",
+        "stocks_and_bonds_2_name_and_account",
+        "stocks_and_bonds_2_value",
+        "stocks_and_bonds_3_name_and_account",
+        "stocks_and_bonds_3_value",
         "suffix",
         "title_held",
         "two_years_at_current_address",
@@ -424,6 +441,54 @@
         "verification_of_assets",
         "verify_borrower_answer",
         "verify_borrower_question",
+        "vod_account_one_balance_1",
+        "vod_account_one_name_1",
+        "vod_account_one_number_1",
+        "vod_account_one_type_1",
+        "vod_account_two_balance_1",
+        "vod_account_two_type_1",
+        "vod_account_three_balance_1",
+        "vod_account_three_type_1",
+        "vod_account_four_balance_1",
+        "vod_account_four_type_1",
+        "vod_account_one_balance_2",
+        "vod_account_one_name_2",
+        "vod_account_one_number_2",
+        "vod_account_one_type_2",
+        "vod_account_two_balance_2",
+        "vod_account_two_type_2",
+        "vod_account_three_balance_2",
+        "vod_account_three_type_2",
+        "vod_account_four_balance_2",
+        "vod_account_four_type_2",
+        "vod_account_one_balance_3",
+        "vod_account_one_name_3",
+        "vod_account_one_number_3",
+        "vod_account_one_type_3",
+        "vod_account_two_balance_3",
+        "vod_account_two_type_3",
+        "vod_account_three_balance_3",
+        "vod_account_three_type_3",
+        "vod_account_four_balance_3",
+        "vod_account_four_type_3",
+        "vod_account_one_balance_4",
+        "vod_account_one_name_4",
+        "vod_account_one_number_4",
+        "vod_account_one_type_4",
+        "vod_account_two_balance_4",
+        "vod_account_two_type_4",
+        "vod_account_three_balance_4",
+        "vod_account_three_type_4",
+        "vod_account_four_balance_4",
+        "vod_account_four_type_4",
+        "vod_for_1",
+        "vod_for_2",
+        "vod_for_3",
+        "vod_for_4",
+        "vod_to_name_1",
+        "vod_to_name_2",
+        "vod_to_name_3",
+        "vod_to_name_4",
         "work_phone",
         "working_with_realtor",
         "zip",
@@ -448,14 +513,12 @@
     {
       "key": "additional_conditions",
       "type": "text",
-      "title": "Additional terms and conditions",
-      "description": "Additional terms and conditions"
+      "title": "Additional terms and conditions"
     },
     {
       "type": "text",
       "key": "additional_info",
-      "title": "Please give any additional info your Loan Officer should have.",
-      "description": "Please give any additional info your Loan Officer should have."
+      "title": "Please give any additional info your Loan Officer should have."
     },
     {
       "title": "Boorrower's Street Address",
@@ -470,7 +533,7 @@
       "required": true
     },
     {
-      "title": "Alimony Amount",
+      "title": "Alimony/Child Support Amount",
       "key": "alimony_amount",
       "type": "currency",
       "required": false
@@ -802,7 +865,7 @@
       "required": true
     },
     {
-      "title": "Alimony Amount or Child Support",
+      "title": "Alimony/Child Support Amount",
       "key": "coborrower_alimony_amount",
       "type": "currency",
       "required": false
@@ -853,6 +916,21 @@
       "key": "coborrower_bonuses",
       "description": "Co-Borrower's Bonuses",
       "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Branch of Service",
+      "key": "coborrower_branch_of_service",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Air Force",
+        "Army",
+        "Coast Guard",
+        "Marines",
+        "Navy",
+        "Other"
+      ],
       "required": false
     },
     {
@@ -1294,6 +1372,17 @@
       "description": "Co-Borrower Middle Name",
       "type": "text",
       "required": false
+    },
+    {
+      "title": "Military Status",
+      "key": "coborrower_military_explanation",
+      "type": "single_choice",
+      "required": false,
+      "choices": [
+        "",
+        "Separated from Service",
+        "In Service"
+      ]
     },
     {
       "min": 0,
@@ -1853,8 +1942,7 @@
       "min": 0,
       "title": "Suffix",
       "key": "coborrower_suffix",
-      "max": 100,
-      "description": "Co-Borrower Suffix",
+      "description": "The co-borrower's suffix, for example: Jr, Sr, 3rd.",
       "type": "text",
       "required": false
     },
@@ -1867,6 +1955,24 @@
     {
       "title": "Have you been with your current employer at least 2 years?",
       "key": "coborrower_two_years_at_current_employer",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "title": "Type of Service",
+      "key": "coborrower_type_of_service",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Regular Military",
+        "Reserves",
+        "National Guard"
+      ],
+      "required": false
+    },
+    {
+      "title": "Have you used VA benefits before?",
+      "key": "coborrower_va_benefits",
       "type": "boolean",
       "required": false
     },
@@ -2252,7 +2358,7 @@
         "Rent With Option to Purchase",
         "Retirement Funds",
         "Sale Of Chattel",
-        "Secured Borrower Funds",
+        "Secured Borrowed Funds",
         "Stocks And Bonds",
         "Sweat Equity",
         "Trade Equity",
@@ -2305,8 +2411,9 @@
     },
     {
       "min": 0,
-      "title": "Months at current employment?",
+      "title": "Months at Current Employment",
       "key": "employer_months",
+      "description": "Borrower's Months at Current Employment",
       "max": 11,
       "type": "integer",
       "required": false
@@ -2528,6 +2635,36 @@
       "required": false
     },
     {
+      "title": "Do you have stocks and bonds?",
+      "key": "has_stocks_and_bonds_1",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "title": "Do you have additional accounts?",
+      "key": "has_vod_1",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "title": "Do you have additional accounts?",
+      "key": "has_vod_2",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "title": "Do you have additional accounts?",
+      "key": "has_vod_3",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "title": "Do you have additional accounts?",
+      "key": "has_vod_4",
+      "type": "boolean",
+      "required": false
+    },
+    {
       "title": "Do you have a Real Estate Agent?",
       "key": "have_real_estate_agent",
       "type": "boolean",
@@ -2650,8 +2787,7 @@
     {
       "key": "joint_credit",
       "type": "boolean",
-      "title": "Jointly applying for credit",
-      "description": "Jointly applying for credit"
+      "title": "Jointly applying for credit"
     },
     {
       "placeholder": "last name",
@@ -2857,7 +2993,7 @@
       "max": 40
     },
     {
-      "title": "If served in the Military, what is your current status?",
+      "title": "Military Status",
       "key": "military_explanation",
       "type": "single_choice",
       "required": false,
@@ -3254,6 +3390,12 @@
       "required": true
     },
     {
+      "title": "Property County",
+      "key": "property_county",
+      "type": "text",
+      "required": false
+    },
+    {
       "min": 0,
       "title": "Months at Current Address",
       "key": "property_months",
@@ -3637,6 +3779,13 @@
       "max": 100
     },
     {
+      "title": "Requested Loan Amount",
+      "key": "refinance_amount",
+      "description": "Requested Amount of Loan",
+      "type": "currency",
+      "required": false
+    },
+    {
       "placeholder": "Amount",
       "title": "Rent Amount",
       "key": "rent_expense",
@@ -3727,14 +3876,49 @@
       "required": true
     },
     {
+      "title": "Company Name & Account #",
+      "key": "stocks_and_bonds_1_name_and_account",
+      "type": "text",
+      "required": false
+    },
+    {
+      "title": "Value of Stocks and Bonds #",
+      "key": "stocks_and_bonds_1_value",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Company Name & Account #",
+      "key": "stocks_and_bonds_2_name_and_account",
+      "type": "text",
+      "required": false
+    },
+    {
+      "title": "Value of Stocks and Bonds #",
+      "key": "stocks_and_bonds_2_value",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "title": "Company Name & Account #",
+      "key": "stocks_and_bonds_3_name_and_account",
+      "type": "text",
+      "required": false
+    },
+    {
+      "title": "Value of Stocks and Bonds #",
+      "key": "stocks_and_bonds_3_value",
+      "type": "currency",
+      "required": false
+    },
+    {
       "placeholder": "suffix",
       "min": 0,
       "title": "Suffix",
       "key": "suffix",
-      "description": "Borrower Suffix",
+      "description": "The borrower's suffix, for example: Jr, Sr, 3rd.",
       "required": false,
-      "type": "text",
-      "max": 100
+      "type": "text"
     },
     {
       "title": "Manner in which title will be held",
@@ -3845,6 +4029,622 @@
         "Who is their current mortgage with?"
       ],
       "required": true
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_one_balance_1",
+      "type": "currency"
+    },
+    {
+      "title": "Account in Name of",
+      "key": "vod_account_one_name_1",
+      "type": "text"
+    },
+    {
+      "title": "Account Number",
+      "key": "vod_account_one_number_1",
+      "type": "text"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_one_type_1",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_two_balance_1",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_two_type_1",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_three_balance_1",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_three_type_1",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_four_balance_1",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_four_type_1",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_one_balance_2",
+      "type": "currency"
+    },
+    {
+      "title": "Account in Name of",
+      "key": "vod_account_one_name_2",
+      "type": "text"
+    },
+    {
+      "title": "Account Number",
+      "key": "vod_account_one_number_2",
+      "type": "text"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_one_type_2",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_two_balance_2",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_two_type_2",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_three_balance_2",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_three_type_2",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_four_balance_2",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_four_type_2",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_one_balance_3",
+      "type": "currency"
+    },
+    {
+      "title": "Account in Name of",
+      "key": "vod_account_one_name_3",
+      "type": "text"
+    },
+    {
+      "title": "Account Number",
+      "key": "vod_account_one_number_3",
+      "type": "text"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_one_type_3",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_two_balance_3",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_two_type_3",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_three_balance_3",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_three_type_3",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_four_balance_3",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_four_type_3",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_one_balance_4",
+      "type": "currency"
+    },
+    {
+      "title": "Account in Name of",
+      "key": "vod_account_one_name_4",
+      "type": "text"
+    },
+    {
+      "title": "Account Number",
+      "key": "vod_account_one_number_4",
+      "type": "text"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_one_type_4",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_two_balance_4",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_two_type_4",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_three_balance_4",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_three_type_4",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Balance",
+      "key": "vod_account_four_balance_4",
+      "type": "currency"
+    },
+    {
+      "title": "Account Type",
+      "key": "vod_account_four_type_4",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "title": "Who owns these assets?",
+      "key": "vod_for_1",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Borrower",
+        "Co-Borrower",
+        "Both"
+      ]
+    },
+    {
+      "title": "Who owns these assets?",
+      "key": "vod_for_2",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Borrower",
+        "Co-Borrower",
+        "Both"
+      ]
+    },
+    {
+      "title": "Who owns these assets?",
+      "key": "vod_for_3",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Borrower",
+        "Co-Borrower",
+        "Both"
+      ]
+    },
+    {
+      "title": "Who owns these assets?",
+      "key": "vod_for_4",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Borrower",
+        "Co-Borrower",
+        "Both"
+      ]
+    },
+    {
+      "title": "Institution Name",
+      "key": "vod_to_name_1",
+      "type": "text"
+    },
+    {
+      "title": "Institution Name",
+      "key": "vod_to_name_2",
+      "type": "text"
+    },
+    {
+      "title": "Institution Name",
+      "key": "vod_to_name_3",
+      "type": "text"
+    },
+    {
+      "title": "Institution Name",
+      "key": "vod_to_name_4",
+      "type": "text"
     },
     {
       "min": 0,
