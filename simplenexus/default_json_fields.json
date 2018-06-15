@@ -774,8 +774,6 @@
     {
       "key": "authorization_to_share_information",
       "title": "I have read the above and agree",
-      "description": "",
-      "placeholder": "",
       "text": "I/We authorize BankSouth Mortgage to release our application, any and all supporting documentation, and any verified information to its parent company, BankSouth, for the purpose of marketing banking products and services to me/us. This information includes but is not limited to: employment history, income, bank account balances, credit history, and/or credit report, and copies of income tax returns.",
       "type": "agreement",
       "required": false
@@ -796,8 +794,6 @@
     {
       "key": "borrower_authorization",
       "title": "\"I Agree\" to the above",
-      "description": "",
-      "placeholder": "",
       "text": "<p class='normal'>I/We have applied for a mortgage loan from McLean Mortgage Corporation. </br> As part of the application process, McLean Mortgage Corporation may verify information contained in my/our loan application and in other documents required in connection with the loan, either before the loan is closed or as part of its quality control program. This may include verifying the information provided on the application with the employer and/or the financial institution. </br> A copy of this authorization may be accepted as an original.",
       "type": "agreement",
       "required": true
@@ -901,6 +897,7 @@
       "key": "borrower_previous_employer_years",
       "title": "Years at Previous Employer",
       "description": "Borrower's Years at Previous Employer",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -914,6 +911,7 @@
     {
       "key": "borrower_previous_line_of_work_years",
       "title": "Previous Years Employed in Line of Work/Profession",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -1065,6 +1063,7 @@
     {
       "key": "borrower_voe_employment_line_of_work_years_1",
       "title": "Years in Line of work",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -1079,6 +1078,7 @@
     {
       "key": "borrower_voe_employment_years_in_job_1",
       "title": "Years in this Job",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -1262,6 +1262,7 @@
     {
       "key": "borrower_voe_employment_line_of_work_years_2",
       "title": "Years in Line of work",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -1276,6 +1277,7 @@
     {
       "key": "borrower_voe_employment_years_in_job_2",
       "title": "Years in this Job",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -1366,7 +1368,6 @@
     {
       "key": "city_required",
       "title": "City",
-      "description": "",
       "min": 1,
       "max": 22,
       "type": "text",
@@ -1427,8 +1428,6 @@
     {
       "key": "coborrower_authorization_to_share_information",
       "title": "I have read the above and agree",
-      "description": "",
-      "placeholder": "",
       "text": "I/We authorize BankSouth Mortgage to release our application, any and all supporting documentation, and any verified information to its parent company, BankSouth, for the purpose of marketing banking products and services to me/us. This information includes but is not limited to: employment history, income, bank account balances, credit history, and/or credit report, and copies of income tax returns.",
       "type": "agreement",
       "required": false
@@ -1502,8 +1501,6 @@
     {
       "key": "coborrower_credit_authorization",
       "title": "I authorize this Credit Check.",
-      "description": "",
-      "placeholder": "",
       "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "type": "agreement",
       "required": false
@@ -1536,8 +1533,6 @@
     {
       "key": "coborrower_econsent",
       "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
-      "description": "",
-      "placeholder": "",
       "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain Your consent to receive certain Loan Documents from Us in electronic form rather than in paper form. With Your consent, You will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, We will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.</li><li>If You do not consent to receive these Loan Documents electronically, You will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, We will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, You can do so by clicking on the 'I do not agree' button, or by notifying Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After Your consent is given, You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, You must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, You will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.<br>You can contact Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul>",
       "type": "agreement",
       "required": false
@@ -1605,6 +1600,7 @@
       "key": "coborrower_employer_years",
       "title": "Years at Current Employment",
       "description": "Co-Borrower's Years at Current Employment",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -1828,6 +1824,7 @@
     {
       "key": "coborrower_line_of_work",
       "title": "Years in the industry",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -1923,6 +1920,7 @@
     {
       "key": "coborrower_number_dependents",
       "title": "Number of Dependents",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2046,6 +2044,7 @@
     {
       "key": "coborrower_prev_property_years",
       "title": "Years at Previous Address",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2143,6 +2142,7 @@
       "key": "coborrower_previous_employer_years",
       "title": "Years at Previous Employer",
       "description": "Borrower's Years at Previous Employer",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2156,6 +2156,7 @@
     {
       "key": "coborrower_previous_line_of_work_years",
       "title": "Previous Years Employed in Line of Work/Profession",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2214,6 +2215,7 @@
       "key": "coborrower_property_years",
       "title": "Years at Current Address",
       "description": "Co-Borrower's Years at Current Address",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2423,6 +2425,7 @@
     {
       "key": "coborrower_school_years",
       "title": "Years of School",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2636,6 +2639,7 @@
     {
       "key": "coborrower_voe_employment_line_of_work_years_1",
       "title": "Years in Line of work",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2650,6 +2654,7 @@
     {
       "key": "coborrower_voe_employment_years_in_job_1",
       "title": "Years in this Job",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2833,6 +2838,7 @@
     {
       "key": "coborrower_voe_employment_line_of_work_years_2",
       "title": "Years in Line of work",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2847,6 +2853,7 @@
     {
       "key": "coborrower_voe_employment_years_in_job_2",
       "title": "Years in this Job",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -2934,7 +2941,6 @@
     {
       "key": "cost_of_construction",
       "title": "Cost of Construction",
-      "description": "",
       "type": "currency",
       "required": false
     },
@@ -2990,8 +2996,6 @@
     {
       "key": "credit_authorization",
       "title": "I authorize this Credit Check.",
-      "description": "",
-      "placeholder": "",
       "text": "During your mortgage loan application process, this institution performs a credit check that requires us to obtain and confirm information regarding your personal and financial background. This credit check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "type": "agreement",
       "required": false
@@ -3294,8 +3298,6 @@
     {
       "key": "econsent",
       "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
-      "description": "",
-      "placeholder": "",
       "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain Your consent to receive certain Loan Documents from Us in electronic form rather than in paper form. With Your consent, You will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before We can engage in this transaction electronically, it is important that You understand Your rights and responsibilities. Please read the following and affirm Your consent to conduct business with Us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'You' and 'Your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'We', 'Our' and 'Us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom You are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which You are applying. If You provide Your consent by clicking the 'I agree' button at the bottom of the page, We will conduct this transaction electronically, instead of providing You with the Loan Documents in paper form.</li><li>If a document related to Your loan is not available in electronic form, a paper copy will be provided to You free of charge.</li><li>Conducting this transaction electronically is an option. If You choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to You.</li><li>If You do not consent to receive these Loan Documents electronically, You will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw Your consent at any time. By declining or revoking Your consent to receive eDisclosures, We will provide You with the Loan Documents in paper form.</li><li>If You originally consent to receive eDisclosures, but later decide to withdraw Your consent, You can do so by clicking on the 'I do not agree' button, or by notifying Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You originally consent to receive eDisclosures, but later withdraw Your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After Your consent is given, You may request from Us paper copies of Your Loan Documents. Please send this request to Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If You request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, You must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of Your eDisclosures for Your records.</li><li>If the software or hardware requirements change in the future, and You are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to You once You notify Us that You are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify You before such requirements change. If You choose to withdraw Your consent upon notification of the change, You will be able to do so without penalty.</li></ul><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify Us if there is a change in Your email address or in other information needed to contact You electronically.<br>You can contact Us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event Your email address on file is invalid; Your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in Your computer, browser, Internet service and/or software; or for other reasons beyond Our control.</li></ul>",
       "type": "agreement",
       "required": false
@@ -3365,6 +3367,7 @@
       "key": "employer_years",
       "title": "Years at Current Employment",
       "description": "Borrower's Years at Current Employment",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -3652,7 +3655,6 @@
     {
       "key": "is_renovation",
       "title": "Is this a Renovation?",
-      "description": "",
       "type": "boolean",
       "required": false
     },
@@ -3746,6 +3748,7 @@
     {
       "key": "line_of_work",
       "title": "Years in the industry",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -4001,6 +4004,7 @@
     {
       "key": "number_dependents",
       "title": "Number of Dependents",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -4143,7 +4147,6 @@
     {
       "key": "present_lot_value",
       "title": "Present Lot Value",
-      "description": "",
       "type": "currency",
       "required": false
     },
@@ -4197,6 +4200,7 @@
     {
       "key": "prev_property_years",
       "title": "Years at Previous Address",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -4258,7 +4262,6 @@
     {
       "key": "privacy_agreement",
       "title": "I have read and accept the privacy policy",
-      "description": "",
       "text": "<iframe src=\"YOU NEED TO ENTER THE COMPANY'S PRIVACY AGREEMENT URL HERE!!!!!!!!\" width=\"700\" height=\"1850\"></iframe>",
       "type": "boolean",
       "required": false
@@ -4376,7 +4379,7 @@
     {
       "key": "property_year_built",
       "title": "What year was the property built?",
-      "min": 0,
+      "min": 1775,
       "max": 2018,
       "type": "integer",
       "required": false
@@ -4385,6 +4388,7 @@
       "key": "property_years",
       "title": "Years at Current Address",
       "description": "Borrower's Years at Current Address",
+      "min": 0,
       "type": "integer",
       "required": false
     },
@@ -4741,14 +4745,13 @@
       "key": "school_years",
       "title": "Years of Schooling",
       "description": "Borrower's Years of Schooling",
+      "min": 0,
       "type": "integer",
       "required": false
     },
     {
       "key": "servicer_credit_authorization",
       "title": "I have received verbal consent from the borrower for this Credit Check.",
-      "description": "",
-      "placeholder": "",
       "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "type": "agreement",
       "required": true
@@ -4778,7 +4781,6 @@
     {
       "key": "state_required",
       "title": "State",
-      "description": "",
       "type": "state",
       "allowAllStates": true,
       "required": true
@@ -5579,7 +5581,6 @@
     {
       "key": "zip_required",
       "title": "Zip Code",
-      "description": "",
       "type": "zip",
       "required": true
     }

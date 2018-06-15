@@ -71,9 +71,6 @@
       "instructions": "Please enter your social security number. This is secure & encrypted."
     },
     {
-      "fields": []
-    },
-    {
       "fields": [
         "is_self_employed",
         "employer_name",
@@ -460,442 +457,373 @@
       "fields": [
         "ready_to_submit"
       ],
-      "instructions": "Are you ready to submit the loan app?"
+      "instructions": "Are you ready to submit the loan application?"
     }
   ],
   "values": {},
   "fields": [
     {
-      "min": 0,
-      "title": "Purpose",
       "key": "loan_purpose",
-      "max": 0,
+      "title": "Purpose",
       "description": "Purpose of Loan",
       "type": "single_choice",
-      "required": false,
       "choices": [
         "",
         "Purchase",
         "Cash-Out Refinance",
         "No Cash-Out Refinance"
-      ]
+      ],
+      "required": false
     },
     {
-      "placeholder": "first name",
-      "min": 1,
-      "title": "First Name",
       "key": "first_name",
+      "title": "First Name",
       "description": "Borrower First Name",
-      "required": true,
+      "min": 1,
+      "max": 40,
       "type": "text",
-      "max": 40
+      "required": true
     },
     {
-      "placeholder": "middle name",
-      "min": 1,
-      "title": "Middle Name",
       "key": "middle_name",
+      "title": "Middle Name",
       "description": "Borrower Middle Name",
-      "required": false,
-      "type": "text",
-      "max": 40
-    },
-    {
-      "placeholder": "last name",
       "min": 1,
-      "title": "Last Name",
+      "max": 40,
+      "type": "text",
+      "required": false
+    },
+    {
       "key": "last_name",
+      "title": "Last Name",
       "description": "Borrower Last Name",
-      "required": true,
+      "min": 1,
+      "max": 40,
       "type": "text",
-      "max": 40
+      "required": true
     },
     {
-      "placeholder": "suffix",
-      "min": 0,
-      "title": "Suffix",
       "key": "suffix",
+      "title": "Suffix",
       "description": "Borrower Suffix",
-      "required": false,
+      "min": 0,
+      "max": 100,
       "type": "text",
-      "max": 100
+      "required": false
     },
     {
-      "min": 0,
-      "title": "Street Address",
       "key": "address",
-      "max": 0,
+      "title": "Street Address",
       "description": "Borrower Street Address",
       "type": "text",
       "required": true
     },
     {
-      "min": 1,
-      "title": "City",
       "key": "city",
-      "max": 22,
+      "title": "City",
       "description": "Borrower City",
+      "min": 1,
+      "max": 22,
       "type": "text",
       "required": true
     },
     {
-      "min": 0,
-      "title": "State",
       "key": "state",
-      "max": 0,
+      "title": "State",
       "description": "Borrower State",
       "type": "state",
       "allowAllStates": true,
       "required": true
     },
     {
-      "min": 0,
-      "title": "Zip Code",
       "key": "zip",
-      "max": 0,
+      "title": "Zip Code",
       "description": "Borrower Zip Code",
       "type": "zip",
       "required": true
     },
     {
-      "min": 0,
-      "title": "Do you currently own?",
       "key": "property_own",
-      "max": 0,
+      "title": "Do you currently own?",
       "description": "Does Borrower currently own?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Have you been at your current address for at least 2 years?",
       "key": "two_years_at_current_address",
-      "max": 0,
+      "title": "Have you been at your current address for at least 2 years?",
       "description": "Has Borrower been at their current address for at least 2 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Years at Current Address",
       "key": "property_years",
-      "max": 0,
+      "title": "Years at Current Address",
       "description": "Borrower Years at Current Address",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Months at Current Address",
       "key": "property_months",
-      "max": 0,
+      "title": "Months at Current Address",
       "description": "Borrower Months at Current Address",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Previous Street Address",
       "key": "prev_address",
-      "max": 0,
+      "title": "Previous Street Address",
       "description": "Borrower Previous Street Address",
       "type": "text",
       "required": false
     },
     {
-      "min": 1,
-      "title": "Previous City",
       "key": "prev_city",
-      "max": 22,
+      "title": "Previous City",
       "description": "Borrower Previous City",
+      "min": 1,
+      "max": 22,
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Previous State",
       "key": "prev_state",
-      "max": 0,
+      "title": "Previous State",
       "description": "Borrower Previous State",
       "type": "state",
+      "allowAllStates": true,
       "required": false
     },
     {
-      "min": 0,
-      "title": "Previous Zip Code",
       "key": "prev_zip",
-      "max": 0,
+      "title": "Previous Zip Code",
       "description": "Borrower Previous Zip Code",
       "type": "zip",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Years at Previous Address",
       "key": "prev_property_years",
-      "max": 0,
+      "title": "Years at Previous Address",
       "description": "Borrower Years at Previous Address",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Months at Previous Address",
       "key": "prev_property_months",
-      "max": 0,
+      "title": "Months at Previous Address",
       "description": "Borrower Months at Previous Address",
       "type": "integer",
       "required": false
     },
     {
-      "title": "Date of Birth",
       "key": "dob",
-      "description": "Borrower Date of Birth",
+      "title": "Date of Birth",
       "type": "date",
       "required": false
     },
     {
-      "min": 0,
-      "title": "First-time homebuyer?",
       "key": "is_firsttimer",
-      "max": 0,
+      "title": "First-time homebuyer?",
       "description": "Is Borrower a first-time homebuyer?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Served in the military?",
       "key": "is_veteran",
-      "max": 0,
+      "title": "Served in the military?",
       "description": "Has Borrower served in the military?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Home Phone",
       "key": "borrower_home_phone",
-      "max": 0,
+      "title": "Home Phone",
       "description": "Borrower Home Phone Number",
       "type": "phone",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Cell-Phone",
       "key": "borrower_cell_phone",
-      "max": 17,
+      "title": "Cell-Phone",
       "description": "Borrower Cell-Phone Number",
+      "min": 0,
+      "max": 17,
       "type": "phone",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Email",
       "key": "email",
-      "max": 0,
+      "title": "Email",
       "description": "Borrower Email",
       "type": "email",
       "required": false
     },
     {
-      "placeholder": "",
-      "min": 0,
-      "title": "I authorize this Credit Check.",
-      "text": "During your mortgage loan application process, this institution performs a credit check that requires us to obtain and confirm information regarding your personal and financial background. This credit check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "credit_authorization",
+      "title": "I authorize this Credit Check.",
       "description": "Borrower Credit Authorization",
-      "required": false,
+      "text": "During your mortgage loan application process, this institution performs a credit check that requires us to obtain and confirm information regarding your personal and financial background. This credit check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "type": "agreement",
-      "max": 0
+      "required": false
     },
     {
-      "min": 0,
-      "title": "SSN",
       "key": "ssn",
-      "max": 0,
+      "title": "SSN",
       "description": "Borrower SSN",
       "type": "ssn",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Are you self-employed?",
       "key": "is_self_employed",
-      "max": 0,
+      "title": "Are you self-employed?",
       "description": "Is Borrower self-employed?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer Name",
       "key": "employer_name",
-      "max": 22,
+      "title": "Employer Name",
       "description": "Borrower Employer Name",
+      "min": 0,
+      "max": 22,
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer Address",
       "key": "employer_address",
-      "max": 0,
+      "title": "Employer Address",
       "description": "Borrower Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer City",
       "key": "employer_city",
-      "max": 0,
+      "title": "Employer City",
       "description": "Borrower Employer City",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer State",
       "key": "employer_state",
-      "max": 0,
+      "title": "Employer State",
       "description": "Borrower Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer Zip",
       "key": "employer_zip",
-      "max": 0,
+      "title": "Employer Zip",
       "description": "Borrower Employer Zip",
       "type": "zip",
       "required": false
     },
     {
-      "title": "Have you been with your current employer at least 2 years?",
       "key": "two_years_at_current_employer",
+      "title": "Have you been with your current employer at least 2 years?",
       "description": "Has Borrower been with their current employer at least 2 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Monthly Gross Income",
       "key": "monthly_income",
-      "max": 0,
+      "title": "Monthly Gross Income",
       "description": "Borrower Monthly Gross Income",
       "type": "currency",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Years at Current Employment",
       "key": "employer_years",
-      "max": 0,
+      "title": "Years at Current Employment",
       "description": "Borrower Years at Current Employment",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Months at Current Employment?",
       "key": "employer_months",
-      "max": 0,
+      "title": "Months at Current Employment?",
       "description": "Borrower Months at Current Employment",
       "type": "integer",
       "required": false
     },
     {
-      "title": "Previous Employer Name",
       "key": "borrower_previous_employer_name",
+      "title": "Previous Employer Name",
       "description": "Borrower Previous Employer Name",
       "type": "text",
       "required": false
     },
     {
-      "title": "Previous Employer Address",
       "key": "borrower_previous_employer_address",
+      "title": "Previous Employer Address",
       "description": "Borrower Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "title": "Previous Employer City",
       "key": "borrower_previous_employer_city",
+      "title": "Previous Employer City",
       "description": "Borrower Previous Employer City",
       "type": "text",
       "required": false
     },
     {
-      "title": "Previous Employer State",
       "key": "borrower_previous_employer_state",
+      "title": "Previous Employer State",
       "description": "Borrower Previous Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
-      "title": "Previous Employer Zip",
       "key": "borrower_previous_employer_zip",
+      "title": "Previous Employer Zip",
       "description": "Borrower Previous Employer Zip",
       "type": "zip",
       "required": false
     },
     {
-      "title": "Years at Previous Employer",
       "key": "borrower_previous_employer_years",
+      "title": "Years at Previous Employer",
       "description": "Borrower Years at Previous Employer",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Months at Previous Employer",
       "key": "borrower_previous_employer_months",
-      "max": 0,
+      "title": "Months at Previous Employer",
       "description": "Borrower Months at Previous Employer",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Home Purchase Price",
       "key": "purchase_price",
-      "max": 0,
+      "title": "Home Purchase Price",
       "type": "currency",
       "required": false
     },
     {
-      "min": 0,
+      "key": "loan_term",
       "title": "Loan Term (Calculated in months, this is for 30, 15 and 10 years)",
+      "description": "Loan Term ( Calculated in months, this is for 10, 15 and 30 years )",
+      "type": "single_choice",
       "choices": [
         "",
         "360",
         "180",
         "120"
       ],
-      "key": "loan_term",
-      "max": 0,
-      "description": "Loan Term ( Calculated in months, this is for 10, 15 and 30 years )",
-      "type": "single_choice",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Are you currently under contract?",
       "key": "under_contract",
-      "max": 0,
+      "title": "Are you currently under contract?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Property Type",
       "key": "property_type",
-      "max": 0,
+      "title": "Property Type",
       "type": "single_choice",
       "choices": [
         "",
@@ -909,251 +837,198 @@
       "required": false
     },
     {
-      "min": 0,
-      "title": "Occupancy Type",
       "key": "type_of_property",
-      "max": 0,
+      "title": "Occupancy Type",
       "description": "Occupancy Property",
       "type": "single_choice",
-      "required": false,
       "choices": [
         "",
         "Primary Residence",
         "Secondary Residence",
         "Investment"
-      ]
+      ],
+      "required": false
     },
     {
-      "min": 0,
-      "title": "Property City",
       "key": "property_city",
-      "max": 0,
+      "title": "Property City",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Property State",
       "key": "property_state",
-      "max": 0,
+      "title": "Property State",
       "type": "state",
       "required": true
     },
     {
-      "min": 0,
-      "title": "Property Zip",
       "key": "property_zip",
-      "max": 0,
+      "title": "Property Zip",
       "type": "zip",
       "required": false
     },
     {
-      "placeholder": "Realtor Name",
-      "min": 0,
-      "title": "Realtor Name",
       "key": "referral_name",
+      "title": "Realtor Name",
       "description": "If you are working with a Realtor, please provide their name",
-      "required": false,
+      "min": 0,
+      "max": 100,
       "type": "text",
-      "max": 100
+      "required": false
     },
     {
-      "min": 0,
-      "title": "Estimated value of the property?",
       "key": "estimated_property_value",
-      "max": 0,
+      "title": "Estimated value of the property?",
       "description": "Estimated value of the subject property",
       "type": "currency",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Checking Account",
       "key": "checking_account",
-      "max": 0,
+      "title": "Checking Account",
       "description": "Checking Account Balance",
       "type": "currency",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Savings Account",
       "key": "savings_account",
-      "max": 0,
+      "title": "Savings Account",
       "description": "Savings Account Balance",
       "type": "currency",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Other Assets",
       "key": "assets_other",
-      "max": 0,
+      "title": "Other Assets",
       "description": "Other Assets Balance",
       "type": "currency",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Do you have any outstanding judgements against you?",
       "key": "has_outstanding_judgements",
-      "max": 0,
+      "title": "Do you have any outstanding judgements against you?",
       "description": "Any outstanding judgements against you?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Have you had a bankruptcy within past 7 years?",
       "key": "has_bankruptcy",
-      "max": 0,
+      "title": "Have you had a bankruptcy within past 7 years?",
       "description": "Have you had a bankruptcy within the past 7 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Have you had a foreclosure within the past 7 years?",
       "key": "has_foreclosure",
-      "max": 0,
+      "title": "Have you had a foreclosure within the past 7 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Are you a party to a lawsuit?",
       "key": "party_to_lawsuit",
-      "max": 0,
+      "title": "Are you a party to a lawsuit?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Have you had any loans that resulted in foreclosure, or judgement?",
       "key": "has_obligations",
-      "max": 0,
+      "title": "Have you had any loans that resulted in foreclosure, or judgement?",
       "description": "Any loans that resulted in foreclosure, or judgement?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Are you delinquent on any federal or state debt?",
       "key": "has_delinquent_debt",
-      "max": 0,
+      "title": "Are you delinquent on any federal or state debt?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Do you pay alimony, child support, or separate maintenance?",
       "key": "has_alimony",
-      "max": 0,
+      "title": "Do you pay alimony, child support, or separate maintenance?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Have you co-signed on a loan?",
       "key": "is_comaker_or_endorser",
-      "max": 0,
+      "title": "Have you co-signed on a loan?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Are you a U.S. Citizen?",
       "key": "is_us_citizen",
-      "max": 0,
+      "title": "Are you a U.S. Citizen?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Are you a permanent resident alien?",
       "key": "is_permanent_resident",
-      "max": 0,
+      "title": "Are you a permanent resident alien?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Will this property be your primary residence?",
       "key": "is_primary_residence",
-      "max": 0,
+      "title": "Will this property be your primary residence?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Have you had ownership in a property within the past 3 years?",
       "key": "has_ownership_interest",
-      "max": 0,
+      "title": "Have you had ownership in a property within the past 3 years?",
       "description": "Had ownership in a property within the past 3 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Is any part of the down payment borrowed?",
       "key": "is_down_payment_borrowed",
-      "max": 0,
+      "title": "Is any part of the down payment borrowed?",
       "description": "Is the down payment borrowed?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "What is/was your previous property used for?",
       "key": "previous_property_type_declaration",
-      "max": 0,
+      "title": "What is/was your previous property used for?",
       "type": "single_choice",
-      "required": false,
       "choices": [
         "",
         "Primary Residence",
         "Second Home",
         "Investment Property"
-      ]
+      ],
+      "required": false
     },
     {
-      "min": 0,
-      "title": "How is/was the title held?",
       "key": "previous_property_title_declaration",
-      "max": 0,
+      "title": "How is/was the title held?",
       "type": "single_choice",
-      "required": false,
       "choices": [
         "",
         "Sole Ownership",
         "Joint With Spouse",
         "Joint With Other Than Spouse"
-      ]
+      ],
+      "required": false
     },
     {
-      "min": 0,
-      "title": "Alimony and/or Child Support Amount",
       "key": "alimony_amount",
-      "max": 0,
+      "title": "Alimony and/or Child Support Amount",
       "description": "Borrower Alimony and/or Child Support Amount",
       "type": "currency",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Provide demographic information?",
-      "text": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below.",
       "key": "provide_demographics",
-      "max": 0,
+      "title": "Provide demographic information?",
       "description": "Would you like to enter demographic information?",
+      "text": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below.",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Ethnicity",
       "key": "ethnicity",
-      "max": 0,
+      "title": "Ethnicity",
       "type": "multi_choice",
       "choices": [
         "Hispanic or Latino",
@@ -1189,10 +1064,7 @@
         "White",
         "I do not wish to provide this information"
       ],
-      "min_choices": 0,
-      "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your race"
+      "required": false
     },
     {
       "key": "gender",
@@ -1203,569 +1075,472 @@
         "Female",
         "I do not wish to provide this information"
       ],
-      "min_choices": 0,
-      "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your gender"
+      "required": false
     },
     {
-      "min": 0,
-      "title": "Please enter your Hispanic or Latino Origin",
       "key": "other_hispanic_or_latino_origin",
-      "max": 0,
+      "title": "Please enter your Hispanic or Latino Origin",
       "description": "For example: Argentinean, Colombian, Dominican, Nicaraguan, Salvadoran, Spaniard, and so on",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Please enter the name of your tribe",
       "key": "race_american_indian_other",
-      "max": 0,
+      "title": "Please enter the name of your tribe",
       "description": "Name of enrolled or principle tribe",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Please enter your Asian Origin",
       "key": "asian_origin_other",
-      "max": 0,
+      "title": "Please enter your Asian Origin",
       "description": "For example: Hmong, Laotian, Thai, Pakistani, Cambodian, and so on",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Please enter your Pacific Islander Origin",
       "key": "pacific_islander_other",
-      "max": 0,
+      "title": "Please enter your Pacific Islander Origin",
       "description": "For example: Fijian, Tongan, and so on",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Co-Borrower on Loan?",
       "key": "has_coborrower",
-      "max": 0,
+      "title": "Co-Borrower on Loan?",
       "description": "Co-Borrower on Loan",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 1,
-      "title": "First Name",
       "key": "coborrower_first_name",
-      "max": 100,
+      "title": "First Name",
       "description": "Co-Borrower First Name",
-      "type": "text",
-      "required": true
-    },
-    {
-      "min": 0,
-      "title": "Middle Name",
-      "key": "coborrower_middle_name",
-      "max": 100,
-      "description": "Co-Borrower Middle Name",
-      "type": "text",
-      "required": false
-    },
-    {
       "min": 1,
-      "title": "Last Name",
-      "key": "coborrower_last_name",
       "max": 100,
-      "description": "Co-Borrower Last Name",
       "type": "text",
       "required": true
     },
     {
+      "key": "coborrower_middle_name",
+      "title": "Middle Name",
+      "description": "Co-Borrower Middle Name",
       "min": 0,
-      "title": "Suffix",
-      "key": "coborrower_suffix",
       "max": 100,
-      "description": "Co-Borrower Suffix",
       "type": "text",
       "required": false
     },
     {
+      "key": "coborrower_last_name",
+      "title": "Last Name",
+      "description": "Co-Borrower Last Name",
+      "min": 1,
+      "max": 100,
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "coborrower_suffix",
+      "title": "Suffix",
+      "description": "Co-Borrower Suffix",
       "min": 0,
-      "title": "Street Address",
+      "max": 100,
+      "type": "text",
+      "required": false
+    },
+    {
       "key": "coborrower_address",
-      "max": 0,
+      "title": "Street Address",
       "description": "Co-Borrower Street Address",
       "type": "text",
       "required": true
     },
     {
-      "min": 0,
-      "title": "City",
       "key": "coborrower_city",
-      "max": 0,
+      "title": "City",
       "description": "Co-Borrower City",
       "type": "text",
       "required": true
     },
     {
-      "min": 0,
-      "title": "State",
       "key": "coborrower_state",
-      "max": 0,
+      "title": "State",
       "description": "Co-Borrower State",
-      "allowAllStates": true,
       "type": "state",
+      "allowAllStates": true,
       "required": true
     },
     {
-      "min": 0,
-      "title": "Zip Code",
       "key": "coborrower_zip",
-      "max": 0,
+      "title": "Zip Code",
       "description": "Co-Borrower Zip Code",
       "type": "zip",
       "required": true
     },
     {
-      "min": 0,
-      "title": "Does the Co-Borrower currently own?",
       "key": "coborrower_property_own",
-      "max": 0,
+      "title": "Does the Co-Borrower currently own?",
       "type": "boolean",
       "required": false
     },
     {
-      "title": "Has the Co-Borrower been at their current address for at least 2 years?",
       "key": "coborrower_two_years_at_current_address",
+      "title": "Has the Co-Borrower been at their current address for at least 2 years?",
       "description": "Has Co-Borrower been at their current address for at least 2 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Years at Current Address",
       "key": "coborrower_property_years",
-      "max": 0,
+      "title": "Years at Current Address",
       "description": "Co-Borrower Years at Current Address",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Months at Current Address",
       "key": "coborrower_property_months",
-      "max": 0,
+      "title": "Months at Current Address",
       "description": "Coborrower Months at Current Address",
       "type": "integer",
       "required": false
     },
     {
-      "title": "Street Address",
       "key": "coborrower_prev_address",
+      "title": "Street Address",
       "description": "Co-Borrower Previous Street Address",
       "type": "text",
       "required": false
     },
     {
-      "title": "City",
       "key": "coborrower_prev_city",
+      "title": "City",
       "description": "Co-Borrower Previous City",
       "type": "text",
       "required": false
     },
     {
-      "title": "State",
       "key": "coborrower_prev_state",
+      "title": "State",
       "description": "Co-Borrower Previous State",
-      "allowAllStates": true,
       "type": "state",
+      "allowAllStates": true,
       "required": false
     },
     {
-      "title": "Zip Code",
       "key": "coborrower_prev_zip",
+      "title": "Zip Code",
       "description": "Co-Borrower Previous Zip Code",
       "type": "zip",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Years at Previous Address",
       "key": "coborrower_prev_property_years",
-      "max": 0,
+      "title": "Years at Previous Address",
       "description": "Co-Borrower Years at Previous Address",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Months at Previous Address",
       "key": "coborrower_prev_property_months",
-      "max": 0,
+      "title": "Months at Previous Address",
       "description": "Co-Borrower Months at Previous Address",
       "type": "integer",
       "required": false
     },
     {
-      "title": "Date of Birth",
       "key": "coborrower_dob",
-      "description": "Co-Borrower Date of Birth",
+      "title": "Date of Birth",
       "type": "date",
       "required": false
     },
     {
-      "min": 0,
-      "title": "First-time homebuyer?",
       "key": "coborrower_is_firsttimer",
-      "max": 0,
+      "title": "First-time homebuyer?",
       "description": "Is Co-Borrower a first-time homebuyer?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Served in the military?",
       "key": "coborrower_is_veteran",
-      "max": 0,
+      "title": "Served in the military?",
       "description": "Has Co-Borrower served in the military?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": "0",
-      "title": "Home Phone",
       "key": "coborrower_home_phone",
-      "max": "17",
+      "title": "Home Phone",
       "description": "Co-Borrower Home Phone Number",
+      "min": "0",
+      "max": "17",
       "type": "phone",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Cell-Phone",
       "key": "coborrower_cell_phone",
-      "max": 17,
+      "title": "Cell-Phone",
       "description": "Co-Borrower Cell-Phone Number",
+      "min": 0,
+      "max": 17,
       "type": "phone",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Email",
       "key": "coborrower_email",
-      "max": 0,
+      "title": "Email",
       "description": "Co-Borrower Email",
       "type": "email",
       "required": false
     },
     {
-      "placeholder": "",
-      "min": 0,
-      "title": "I authorize this Credit Check.",
-      "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "key": "coborrower_credit_authorization",
+      "title": "I authorize this Credit Check.",
       "description": "Co-Borrower Credit Authorization",
-      "required": false,
+      "text": "During your mortgage loan application process, this institution performs a Credit Check that requires us to obtain and confirm information regarding your personal and financial background. This Credit Check includes, but is not limited to, your marital status, number of dependents, current and past employers, current deposit accounts, current and past consumer credit accounts, and your mortgage and/or rental history.",
       "type": "agreement",
-      "max": 0
+      "required": false
     },
     {
-      "min": 0,
-      "title": "SSN",
       "key": "coborrower_ssn",
-      "max": 0,
+      "title": "SSN",
       "description": "Co-Borrower SSN",
       "type": "ssn",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Is the Co-Borrower self-employed?",
       "key": "coborrower_is_self_employed",
-      "max": 0,
+      "title": "Is the Co-Borrower self-employed?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer Name",
       "key": "coborrower_employer_name",
-      "max": 0,
+      "title": "Employer Name",
       "description": "Co-Borrower Employer Name",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer Address",
       "key": "coborrower_employer_address",
-      "max": 0,
+      "title": "Employer Address",
       "description": "Co-Borrower Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer City",
       "key": "coborrower_employer_city",
-      "max": 0,
+      "title": "Employer City",
       "description": "Co-Borrower Employer City",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer State",
       "key": "coborrower_employer_state",
-      "max": 0,
+      "title": "Employer State",
       "description": "Co-Borrower Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
-      "min": 0,
-      "title": "Employer Zip",
       "key": "coborrower_employer_zip",
-      "max": 0,
+      "title": "Employer Zip",
       "description": "Co-Borrower Employer Zip",
       "type": "zip",
       "required": false
     },
     {
-      "title": "Has the Co-Borrower been with their current employer at least 2 years?",
       "key": "coborrower_two_years_at_current_employer",
+      "title": "Has the Co-Borrower been with their current employer at least 2 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Monthly Gross Income",
       "key": "coborrower_monthly_income",
-      "max": 0,
+      "title": "Monthly Gross Income",
       "description": "Co-Borrower Monthly Gross Income",
       "type": "currency",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Years at Current Employment",
       "key": "coborrower_employer_years",
-      "max": 0,
+      "title": "Years at Current Employment",
       "description": "Co-Borrower Years at Current Employment",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Months at Current Employment",
       "key": "coborrower_employer_months",
-      "max": 0,
+      "title": "Months at Current Employment",
       "description": "Co-Borrower Months at Current Employment",
       "type": "integer",
       "required": false
     },
     {
-      "title": "Employer Name",
       "key": "coborrower_previous_employer_name",
+      "title": "Employer Name",
       "description": "Co-Borrower's Previous Employer Name",
       "type": "text",
       "required": false
     },
     {
-      "title": "Employer Address",
       "key": "coborrower_previous_employer_address",
+      "title": "Employer Address",
       "description": "Co-Borrower's Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "title": "Employer City",
       "key": "coborrower_previous_employer_city",
+      "title": "Employer City",
       "description": "Co-Borrower's Previous Employer City",
       "type": "text",
       "required": false
     },
     {
-      "title": "Employer State",
       "key": "coborrower_previous_employer_state",
+      "title": "Employer State",
       "description": "Co-Borrower's Previous Employer State",
       "type": "state",
       "allowAllStates": true,
       "required": false
     },
     {
-      "title": "Employer Zip",
       "key": "coborrower_previous_employer_zip",
+      "title": "Employer Zip",
       "description": "Co-Borrower's Previous Employer Zip",
       "type": "zip",
       "required": false
     },
     {
-      "title": "Years at Previous Employer",
       "key": "coborrower_previous_employer_years",
+      "title": "Years at Previous Employer",
       "description": "Borrower's Years at Previous Employer",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Months at Previous Employer",
       "key": "coborrower_previous_employer_months",
-      "max": 0,
+      "title": "Months at Previous Employer",
       "type": "integer",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Does Co-Borrower have any outstanding judgements against them?",
       "key": "coborrower_has_outstanding_judgements",
-      "max": 0,
+      "title": "Does Co-Borrower have any outstanding judgements against them?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Has Co-Borrower had a bankruptcy within past 7 years?",
       "key": "coborrower_has_bankruptcy",
-      "max": 0,
+      "title": "Has Co-Borrower had a bankruptcy within past 7 years?",
       "description": "Has Co-Borrower had bankruptcy within past 7 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Has Co-Borrower had a foreclosure within past 7 years?",
       "key": "coborrower_has_foreclosure",
-      "max": 0,
+      "title": "Has Co-Borrower had a foreclosure within past 7 years?",
       "description": "Has Co-Borrower had foreclosure within past 7 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Is Co-Borrower party to a lawsuit?",
       "key": "coborrower_party_to_lawsuit",
-      "max": 0,
+      "title": "Is Co-Borrower party to a lawsuit?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Has Co-Borrower had any loans that resulted in foreclosure, or judgement?",
       "key": "coborrower_has_obligations",
-      "max": 0,
+      "title": "Has Co-Borrower had any loans that resulted in foreclosure, or judgement?",
       "description": "Any loans that resulted in foreclosure, or judgement?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Is Co-Borrower delinquent on any federal or state debt?",
       "key": "coborrower_has_delinquent_debt",
-      "max": 0,
+      "title": "Is Co-Borrower delinquent on any federal or state debt?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Does Co-Borrower pay alimony, child support, or separate maintenance?",
       "key": "coborrower_has_alimony",
-      "max": 0,
+      "title": "Does Co-Borrower pay alimony, child support, or separate maintenance?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Has Co-Borrower co-signed on a loan?",
       "key": "coborrower_is_comaker_or_endorser",
-      "max": 0,
+      "title": "Has Co-Borrower co-signed on a loan?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Is Co-Borrower a U.S. Citizen?",
       "key": "coborrower_is_us_citizen",
-      "max": 0,
+      "title": "Is Co-Borrower a U.S. Citizen?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Is Co-Borrower a permanent resident alien?",
       "key": "coborrower_is_permanent_resident",
-      "max": 0,
+      "title": "Is Co-Borrower a permanent resident alien?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Will this property be Co-Borrower's primary residence?",
       "key": "coborrower_is_primary_residence",
-      "max": 0,
+      "title": "Will this property be Co-Borrower's primary residence?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Has Co-Borrower had ownership in a property in the past 3 years?",
       "key": "coborrower_has_ownership_interest",
-      "max": 0,
+      "title": "Has Co-Borrower had ownership in a property in the past 3 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "What is/was Co-Borrower's previous property used for?",
       "key": "coborrower_previous_property_type_declaration",
-      "max": 0,
+      "title": "What is/was Co-Borrower's previous property used for?",
       "type": "single_choice",
-      "required": false,
       "choices": [
         "",
         "Primary Residence",
         "Second Home",
         "Investment Property"
-      ]
+      ],
+      "required": false
     },
     {
-      "min": 0,
-      "title": "How is/was coborrower's title held?",
       "key": "coborrower_previous_property_title_declaration",
-      "max": 0,
+      "title": "How is/was coborrower's title held?",
       "type": "single_choice",
-      "required": false,
       "choices": [
         "",
         "Sole Ownership",
         "Joint With Spouse",
         "Joint With Other Than Spouse"
-      ]
+      ],
+      "required": false
     },
     {
-      "min": 0,
-      "title": "Alimony and/or Child Support Amount",
       "key": "coborrower_alimony_amount",
-      "max": 0,
+      "title": "Alimony and/or Child Support Amount",
       "type": "currency",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Provide demographic information?",
       "key": "coborrower_provide_demographics",
-      "text": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below.",
-      "max": 0,
+      "title": "Provide demographic information?",
       "description": "Would Co-Borrower like to provide demographic information?",
+      "text": "The following information is requested by the federal government for certain types of loans related to a dwelling in order to monitor the lender's compliance with equal credit opportunity, fair housing, and home mortgage disclosure laws. You are not required to furnish this information, but are encouraged to do so. You may select one or more designations for Race. The law provides that a lender may not discriminate on the basis of this information, or on whether you choose to furnish it. However, if you choose not to furnish the information and you have made this application in person, under federal regulations the lender is required to note ethnicity, race, and sex on the basis of visual observation or surname. If you do not wish to furnish the information, please check below.",
       "type": "boolean",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Ethnicity",
       "key": "coborrower_ethnicity",
-      "max": 0,
+      "title": "Ethnicity",
       "type": "multi_choice",
       "choices": [
         "Hispanic or Latino",
@@ -1801,10 +1576,7 @@
         "White",
         "I do not wish to provide this information"
       ],
-      "min_choices": 0,
-      "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your race"
+      "required": false
     },
     {
       "key": "coborrower_gender",
@@ -1815,76 +1587,55 @@
         "Female",
         "I do not wish to provide this information"
       ],
-      "min_choices": 0,
-      "max_choices": 17,
-      "required": false,
-      "instructions": "Please select your gender"
+      "required": false
     },
     {
-      "min": 0,
-      "title": "Please enter your Hispanic or Latino Origin",
       "key": "coborrower_other_hispanic_or_latino_origin",
-      "max": 0,
+      "title": "Please enter your Hispanic or Latino Origin",
       "description": "For example: Argentinean, Colombian, Dominican, Nicaraguan, Salvadoran, Spaniard, and so on",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Please enter the name of your tribe",
       "key": "coborrower_race_american_indian_other",
-      "max": 0,
+      "title": "Please enter the name of your tribe",
       "description": "Name of enrolled or principle tribe",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Please enter your Asian origin",
       "key": "coborrower_asian_origin_other",
-      "max": 0,
+      "title": "Please enter your Asian origin",
       "description": "For example: Hmong, Laotian, Thai, Pakistani, Cambodian, and so on",
       "type": "text",
       "required": false
     },
     {
-      "min": 0,
-      "title": "Please enter your Pacific Islander Origin",
       "key": "coborrower_pacific_islander_other",
-      "max": 0,
+      "title": "Please enter your Pacific Islander Origin",
       "description": "For example: Fijian, Tongan, and so on",
       "type": "text",
       "required": false
     },
     {
-      "placeholder": "",
-      "min": 0,
-      "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
-      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain your consent to receive certain Loan Documents from us in electronic form rather than in paper form. With your consent, you will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before we can engage in this transaction electronically, it is important that you understand your rights and responsibilities. Please read the following and affirm your consent to conduct business with us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'you' and 'your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'we', 'our' and 'us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom you are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which you are applying. If you provide your consent by clicking the 'I agree' button at the bottom of the page, we will conduct this transaction electronically, instead of providing you with the Loan Documents in paper form.</li><li>If a document related to your loan is not available in electronic form, a paper copy will be provided to you free of charge.</li><li>Conducting this transaction electronically is an option. If you choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to you.</li><li>If you do not consent to receive these Loan Documents electronically, you will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw your consent at any time. By declining or revoking your consent to receive eDisclosures, we will provide you with the Loan Documents in paper form.</li><li>If you originally consent to receive eDisclosures, but later decide to withdraw your consent, you can do so by clicking on the 'I do not agree' button, or by notifying us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you originally consent to receive eDisclosures, but later withdraw your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After your consent is given, you may request from us paper copies of your Loan Documents. Please send this request to us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, you must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of your eDisclosures for your records.</li><li>If the software or hardware requirements change in the future, and you are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to you once you notify us that you are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify you before such requirements change. If you choose to withdraw your consent upon notification of the change, you will be able to do so without penalty.</li></ul><br><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify us if there is a change in your email address or in other information needed to contact you electronically.<br>You can contact us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event your email address on file is invalid; your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in your computer, browser, Internet service and/or software; or for other reasons beyond our control.</li></ul>",
       "key": "econsent",
-      "description": "",
-      "required": false,
-      "type": "agreement",
-      "max": 0
-    },
-    {
-      "placeholder": "",
-      "min": 0,
       "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
       "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain your consent to receive certain Loan Documents from us in electronic form rather than in paper form. With your consent, you will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before we can engage in this transaction electronically, it is important that you understand your rights and responsibilities. Please read the following and affirm your consent to conduct business with us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'you' and 'your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'we', 'our' and 'us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom you are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which you are applying. If you provide your consent by clicking the 'I agree' button at the bottom of the page, we will conduct this transaction electronically, instead of providing you with the Loan Documents in paper form.</li><li>If a document related to your loan is not available in electronic form, a paper copy will be provided to you free of charge.</li><li>Conducting this transaction electronically is an option. If you choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to you.</li><li>If you do not consent to receive these Loan Documents electronically, you will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw your consent at any time. By declining or revoking your consent to receive eDisclosures, we will provide you with the Loan Documents in paper form.</li><li>If you originally consent to receive eDisclosures, but later decide to withdraw your consent, you can do so by clicking on the 'I do not agree' button, or by notifying us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you originally consent to receive eDisclosures, but later withdraw your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After your consent is given, you may request from us paper copies of your Loan Documents. Please send this request to us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, you must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of your eDisclosures for your records.</li><li>If the software or hardware requirements change in the future, and you are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to you once you notify us that you are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify you before such requirements change. If you choose to withdraw your consent upon notification of the change, you will be able to do so without penalty.</li></ul><br><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify us if there is a change in your email address or in other information needed to contact you electronically.<br>You can contact us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event your email address on file is invalid; your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in your computer, browser, Internet service and/or software; or for other reasons beyond our control.</li></ul>",
-      "key": "coborrower_econsent",
-      "description": "",
-      "required": false,
       "type": "agreement",
-      "max": 0
+      "required": false
     },
     {
-      "min": 0,
-      "title": "I am ready to submit the loan app",
+      "key": "coborrower_econsent",
+      "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
+      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain your consent to receive certain Loan Documents from us in electronic form rather than in paper form. With your consent, you will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before we can engage in this transaction electronically, it is important that you understand your rights and responsibilities. Please read the following and affirm your consent to conduct business with us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'you' and 'your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'we', 'our' and 'us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom you are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which you are applying. If you provide your consent by clicking the 'I agree' button at the bottom of the page, we will conduct this transaction electronically, instead of providing you with the Loan Documents in paper form.</li><li>If a document related to your loan is not available in electronic form, a paper copy will be provided to you free of charge.</li><li>Conducting this transaction electronically is an option. If you choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to you.</li><li>If you do not consent to receive these Loan Documents electronically, you will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw your consent at any time. By declining or revoking your consent to receive eDisclosures, we will provide you with the Loan Documents in paper form.</li><li>If you originally consent to receive eDisclosures, but later decide to withdraw your consent, you can do so by clicking on the 'I do not agree' button, or by notifying us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you originally consent to receive eDisclosures, but later withdraw your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After your consent is given, you may request from us paper copies of your Loan Documents. Please send this request to us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, you must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of your eDisclosures for your records.</li><li>If the software or hardware requirements change in the future, and you are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to you once you notify us that you are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify you before such requirements change. If you choose to withdraw your consent upon notification of the change, you will be able to do so without penalty.</li></ul><br><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify us if there is a change in your email address or in other information needed to contact you electronically.<br>You can contact us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event your email address on file is invalid; your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in your computer, browser, Internet service and/or software; or for other reasons beyond our control.</li></ul>",
+      "type": "agreement",
+      "required": false
+    },
+    {
       "key": "ready_to_submit",
-      "max": 0,
-      "required": true,
-      "type": "agreement"
+      "title": "I am ready to submit the loan application",
+      "type": "agreement",
+      "required": true
     }
   ],
   "version": "1.0"
