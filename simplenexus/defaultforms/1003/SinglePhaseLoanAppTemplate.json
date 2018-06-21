@@ -167,18 +167,18 @@
         "vod_account_one_name_1",
         "vod_account_one_number_1",
         "vod_account_one_balance_1",
-        "vod_account_one_type_2",
-        "vod_account_one_name_2",
-        "vod_account_one_number_2",
-        "vod_account_one_balance_2",
-        "vod_account_one_type_3",
-        "vod_account_one_name_3",
-        "vod_account_one_number_3",
-        "vod_account_one_balance_3",
-        "vod_account_one_type_4",
-        "vod_account_one_name_4",
-        "vod_account_one_number_4",
-        "vod_account_one_balance_4"
+        "vod_account_two_type_1",
+        "vod_account_two_name_1",
+        "vod_account_two_number_1",
+        "vod_account_two_balance_1",
+        "vod_account_three_type_1",
+        "vod_account_three_name_1",
+        "vod_account_three_number_1",
+        "vod_account_three_balance_1",
+        "vod_account_four_type_1",
+        "vod_account_four_name_1",
+        "vod_account_four_number_1",
+        "vod_account_four_balance_1"
       ],
       "instructions": "Please enter your financial information"
     },
@@ -475,7 +475,6 @@
   ],
   "values": {
     "vod_for_1": "Borrower",
-    "vod_for_3": "Coborrower",
     "borrower_voe_employment_is_current_1": true,
     "coborrower_voe_employment_is_current_1": true
   },
@@ -941,8 +940,8 @@
       "type": "currency"
     },
     {
-      "key": "vod_account_one_type_2",
-      "title": "Account 2 - Account Type",
+      "key": "vod_account_two_type_1",
+      "title": "Account Type",
       "description": "The type of the account.",
       "type": "single_choice",
       "choices": [
@@ -969,27 +968,14 @@
       ]
     },
     {
-      "key": "vod_account_one_name_2",
-      "title": "Account 2 - Account in Name of",
-      "description": "The name in which the account is held.",
-      "type": "text"
-    },
-    {
-      "key": "vod_account_one_number_2",
-      "title": "Account 2 - Account Number",
-      "description": "The account's identification number.",
-      "type": "text"
-    },
-    {
-      "key": "vod_account_one_balance_2",
-      "title": "Account 2 - Balance",
+      "key": "vod_account_two_balance_1",
+      "title": "Balance",
       "description": "The current balance in the account.",
       "type": "currency"
     },
     {
-      "key": "vod_account_one_type_3",
-      "title": "Account 3 - Account Type",
-      "description": "The type of the account.",
+      "key": "vod_account_three_type_1",
+      "title": "Account Type",
       "type": "single_choice",
       "choices": [
         "",
@@ -1015,27 +1001,13 @@
       ]
     },
     {
-      "key": "vod_account_one_name_3",
-      "title": "Account 3 - Account in Name of",
-      "description": "The name in which the account is held.",
-      "type": "text"
-    },
-    {
-      "key": "vod_account_one_number_3",
-      "title": "Account 3 - Account Number",
-      "description": "The account's identification number.",
-      "type": "text"
-    },
-    {
-      "key": "vod_account_one_balance_3",
-      "title": "Account 3 - Balance",
-      "description": "The current balance in the account.",
+      "key": "vod_account_three_balance_1",
+      "title": "Balance",
       "type": "currency"
     },
     {
-      "key": "vod_account_one_type_4",
-      "title": "Account 4 - Account Type",
-      "description": "The type of the account.",
+      "key": "vod_account_four_type_1",
+      "title": "Account Type",
       "type": "single_choice",
       "choices": [
         "",
@@ -1061,21 +1033,8 @@
       ]
     },
     {
-      "key": "vod_account_one_name_4",
-      "title": "Account 4 - Account in Name of",
-      "description": "The name in which the account is held.",
-      "type": "text"
-    },
-    {
-      "key": "vod_account_one_number_4",
-      "title": "Account 4 - Account Number",
-      "description": "The account's identification number.",
-      "type": "text"
-    },
-    {
-      "key": "vod_account_one_balance_4",
-      "title": "Account 4 - Balance",
-      "description": "The current balance in the account.",
+      "key": "vod_account_four_balance_1",
+      "title": "Balance",
       "type": "currency"
     },
     {

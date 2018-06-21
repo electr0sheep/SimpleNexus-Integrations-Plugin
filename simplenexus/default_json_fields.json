@@ -591,10 +591,16 @@
         "vod_account_one_number_1",
         "vod_account_one_type_1",
         "vod_account_two_balance_1",
+        "vod_account_two_name_1",
+        "vod_account_two_number_1",
         "vod_account_two_type_1",
         "vod_account_three_balance_1",
+        "vod_account_three_name_1",
+        "vod_account_three_number_1",
         "vod_account_three_type_1",
         "vod_account_four_balance_1",
+        "vod_account_four_name_1",
+        "vod_account_four_number_1",
         "vod_account_four_type_1",
         "vod_account_one_balance_2",
         "vod_account_one_name_2",
@@ -5131,6 +5137,18 @@
       "type": "currency"
     },
     {
+      "key": "vod_account_two_name_1",
+      "title": "Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_two_number_1",
+      "title": "Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
+    },
+    {
       "key": "vod_account_two_type_1",
       "title": "Account Type",
       "description": "The type of the account.",
@@ -5164,6 +5182,18 @@
       "type": "currency"
     },
     {
+      "key": "vod_account_three_name_1",
+      "title": "Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_three_number_1",
+      "title": "Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
+    },
+    {
       "key": "vod_account_three_type_1",
       "title": "Account Type",
       "type": "single_choice",
@@ -5194,6 +5224,18 @@
       "key": "vod_account_four_balance_1",
       "title": "Balance",
       "type": "currency"
+    },
+    {
+      "key": "vod_account_four_name_1",
+      "title": "Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_four_number_1",
+      "title": "Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
     },
     {
       "key": "vod_account_four_type_1",
