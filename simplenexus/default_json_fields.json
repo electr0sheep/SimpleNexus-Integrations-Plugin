@@ -10,6 +10,7 @@
         "address",
         "address_required",
         "alimony_amount",
+        "alimony_description",
         "alimony_payment",
         "amortization_type",
         "asian_origin_other",
@@ -24,6 +25,12 @@
         "assets_retirement",
         "assets_retirement_2",
         "authorization_to_share_information",
+        "auto_make_and_year_1",
+        "auto_value_1",
+        "auto_make_and_year_2",
+        "auto_value_2",
+        "auto_make_and_year_3",
+        "auto_value_3",
         "bank_name",
         "bonuses",
         "borrower_authorization",
@@ -32,6 +39,7 @@
         "borrower_is_employed",
         "borrower_previous_employer_monthly_income",
         "borrower_previous_employer_address",
+        "borrower_previous_employer_bonuses",
         "borrower_previous_employer_city",
         "borrower_previous_employer_job_title",
         "borrower_previous_employer_months",
@@ -117,6 +125,7 @@
         "coborrower_address",
         "coborrower_address_required",
         "coborrower_alimony_amount",
+        "coborrower_alimony_description",
         "coborrower_alimony_payment",
         "coborrower_asian_origin_other",
         "coborrower_assets_gift_funds",
@@ -210,9 +219,11 @@
         "coborrower_prev_state",
         "coborrower_prev_zip",
         "coborrower_previous_employer_address",
+        "coborrower_previous_employer_bonus",
         "coborrower_previous_employer_city",
         "coborrower_previous_employer_end_date",
         "coborrower_previous_employer_job_title",
+        "coborrower_previous_employer_monthly_income",
         "coborrower_previous_employer_months",
         "coborrower_previous_employer_name",
         "coborrower_previous_employer_phone",
@@ -249,6 +260,7 @@
         "coborrower_real_estate_own_type_of_property_1",
         "coborrower_real_estate_own_type_of_property_2",
         "coborrower_real_estate_own_type_of_property_3",
+        "coborrower_receives_alimony",
         "coborrower_savings_account",
         "coborrower_school_completed",
         "coborrower_school_years",
@@ -400,6 +412,7 @@
         "has_vod_3",
         "has_vod_4",
         "have_real_estate_agent",
+        "hoa_dues",
         "insurance_maintenance_taxes_1",
         "insurance_maintenance_taxes_2",
         "insurance_maintenance_taxes_3",
@@ -451,15 +464,18 @@
         "mortgage_and_liens_1",
         "mortgage_and_liens_2",
         "mortgage_and_liens_3",
+        "mortgage_insurance",
         "mortgage_payment",
         "mortgage_payments_1",
         "mortgage_payments_2",
         "mortgage_payments_3",
         "number_dependents",
         "occupancy_type",
+        "other_fin",
         "other_hispanic_or_latino_origin",
         "other_income",
         "other_income_source",
+        "other_monthly_housing_expense",
         "other_property_is_current_residence",
         "other_property_market_value",
         "other_property_market_value_2",
@@ -538,6 +554,7 @@
         "real_estate_own_type_of_property_1",
         "real_estate_own_type_of_property_2",
         "real_estate_own_type_of_property_3",
+        "receives_alimony",
         "referral_name",
         "refinance_amount",
         "rent_expense",
@@ -617,6 +634,30 @@
         "vod_to_name_2",
         "vod_to_name_3",
         "vod_to_name_4",
+        "vom_address_1",
+        "vom_city_1",
+        "vom_comments_1",
+        "vom_date_acquired_1",
+        "vom_from_fax_1",
+        "vom_from_phone_1",
+        "vom_from_print_title_1",
+        "vom_from_title_1",
+        "vom_is_subject_property_1",
+        "vom_market_value_1",
+        "vom_mortgage_balance_1",
+        "vom_mortgage_payment_1",
+        "vom_net_income_loss_1",
+        "vom_participation_1",
+        "vom_print_signature_1",
+        "vom_property_status_1",
+        "vom_property_used_as_1",
+        "vom_purchase_price_1",
+        "vom_rental_income_1",
+        "vom_rental_percentage_1",
+        "vom_state_1",
+        "vom_taxes_1",
+        "vom_type_of_property_1",
+        "vom_zip_1",
         "work_phone",
         "working_with_realtor",
         "zip",
@@ -664,6 +705,19 @@
       "key": "alimony_amount",
       "title": "Alimony/Child Support Amount",
       "type": "currency",
+      "required": false
+    },
+    {
+      "key": "alimony_description",
+      "title": "Description",
+      "description": "Description of the receiver of the alimony and/or child support payment.",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Alimony",
+        "Child Support",
+        "Both"
+      ],
       "required": false
     },
     {
@@ -779,6 +833,48 @@
       "required": false
     },
     {
+      "key": "auto_make_and_year_1",
+      "title": "Make and Year",
+      "description": "Description of the owned automobile.",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "auto_value_1",
+      "title": "Value",
+      "description": "The current value of the owned automobile.",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "auto_make_and_year_2",
+      "title": "Make and Year",
+      "description": "Description of the owned automobile.",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "auto_value_2",
+      "title": "Value",
+      "description": "The current value of the owned automobile.",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "auto_make_and_year_3",
+      "title": "Make and Year",
+      "description": "Description of the owned automobile.",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "auto_value_3",
+      "title": "Value",
+      "description": "The current value of the owned automobile.",
+      "type": "currency",
+      "required": false
+    },
+    {
       "key": "bank_name",
       "title": "Bank Name",
       "type": "text",
@@ -802,8 +898,6 @@
       "key": "borrower_cell_phone",
       "title": "Cell Phone",
       "description": "Cell Phone Number",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -832,6 +926,13 @@
       "title": "Employer Address",
       "description": "Borrower's Previous Employer Address",
       "type": "text",
+      "required": false
+    },
+    {
+      "key": "borrower_previous_employer_bonuses",
+      "title": "Previous Bonuses",
+      "description": "Borrower's Previous Bonuses",
+      "type": "currency",
       "required": false
     },
     {
@@ -866,8 +967,6 @@
     {
       "key": "borrower_previous_employer_phone",
       "title": "Employer Phone",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -1085,8 +1184,6 @@
     {
       "key": "borrower_voe_employment_percent_owned_1",
       "title": "% Business Owned",
-      "min": 0,
-      "max": 100,
       "type": "integer",
       "required": false
     },
@@ -1284,8 +1381,6 @@
     {
       "key": "borrower_voe_employment_percent_owned_2",
       "title": "% Business Owned",
-      "min": 0,
-      "max": 100,
       "type": "integer",
       "required": false
     },
@@ -1322,8 +1417,6 @@
     {
       "key": "borrower_work_phone",
       "title": "Business Phone",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -1394,6 +1487,19 @@
       "required": false
     },
     {
+      "key": "coborrower_alimony_description",
+      "title": "Description",
+      "description": "Description of the receiver of the alimony and/or child support payment.",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Alimony",
+        "Child Support",
+        "Both"
+      ],
+      "required": false
+    },
+    {
       "key": "coborrower_alimony_payment",
       "title": "Alimony or Child Support Amount",
       "type": "currency",
@@ -1458,8 +1564,6 @@
       "key": "coborrower_cell_phone",
       "title": "Coborrower Cell Phone",
       "description": "Cell Phone Number",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -1577,8 +1681,6 @@
       "key": "coborrower_employer_phone",
       "title": "Employer Phone",
       "description": "Employer Phone Number",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -1643,8 +1745,6 @@
       "key": "coborrower_first_name",
       "title": "First Name",
       "description": "Co-Borrower First Name",
-      "min": 1,
-      "max": 100,
       "type": "text",
       "required": true
     },
@@ -1733,8 +1833,6 @@
       "key": "coborrower_home_phone",
       "title": "Home Phone",
       "description": "Coborrower Home Phone",
-      "min": "0",
-      "max": "17",
       "type": "phone",
       "required": false
     },
@@ -1816,8 +1914,6 @@
       "key": "coborrower_last_name",
       "title": "Last Name",
       "description": "Co-Borrower Last Name",
-      "min": 1,
-      "max": 100,
       "type": "text",
       "required": true
     },
@@ -1838,8 +1934,6 @@
       "key": "coborrower_mailing_city",
       "title": "Mailing City",
       "description": "City",
-      "min": 0,
-      "max": 100,
       "type": "text",
       "required": false
     },
@@ -1885,8 +1979,6 @@
       "key": "coborrower_middle_name",
       "title": "Middle Name",
       "description": "Co-Borrower Middle Name",
-      "min": 0,
-      "max": 100,
       "type": "text",
       "required": false
     },
@@ -1905,8 +1997,6 @@
       "key": "coborrower_mobile_phone",
       "title": "Phone",
       "description": "Phone Number",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -2071,6 +2161,13 @@
       "required": false
     },
     {
+      "key": "coborrower_previous_employer_bonus",
+      "title": "Previous Bonuses",
+      "description": "Co-Borrower's Previous Bonuses",
+      "type": "currency",
+      "required": false
+    },
+    {
       "key": "coborrower_previous_employer_city",
       "title": "Employer City",
       "description": "Co-Borrower's Previous Employer City",
@@ -2092,6 +2189,13 @@
       "required": false
     },
     {
+      "key": "coborrower_previous_employer_monthly_income",
+      "title": "Monthly Gross Income",
+      "description": "Co-Borrower's Previous Monthly Gross Income",
+      "type": "currency",
+      "required": false
+    },
+    {
       "key": "coborrower_previous_employer_months",
       "title": "Months at Previous Employer",
       "min": 0,
@@ -2109,8 +2213,6 @@
     {
       "key": "coborrower_previous_employer_phone",
       "title": "Previous Employer Phone",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -2399,6 +2501,13 @@
       "required": true
     },
     {
+      "key": "coborrower_receives_alimony",
+      "title": "Do you receive alimony or child support payments?",
+      "description": "Does Co-Borrower recieve alimony or child support payments?",
+      "type": "boolean",
+      "required": false
+    },
+    {
       "key": "coborrower_savings_account",
       "title": "Savings Account Balance",
       "description": "Savings Account",
@@ -2661,8 +2770,6 @@
     {
       "key": "coborrower_voe_employment_percent_owned_1",
       "title": "% Business Owned",
-      "min": 0,
-      "max": 100,
       "type": "integer",
       "required": false
     },
@@ -2860,8 +2967,6 @@
     {
       "key": "coborrower_voe_employment_percent_owned_2",
       "title": "% Business Owned",
-      "min": 0,
-      "max": 100,
       "type": "integer",
       "required": false
     },
@@ -2898,8 +3003,6 @@
     {
       "key": "coborrower_work_phone",
       "title": "Business Phone",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -3009,12 +3112,14 @@
     {
       "key": "current_expense_hazard_ins",
       "title": "Home Owners Insurance Monthly Payment",
+      "description": "The present monthly hazard insurance premium.",
       "type": "currency",
       "required": false
     },
     {
       "key": "current_expense_tax",
       "title": "Property Tax",
+      "description": "The present monthly property tax payments.",
       "type": "currency",
       "required": false
     },
@@ -3344,8 +3449,6 @@
     {
       "key": "employer_phone",
       "title": "Employer Phone",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -3581,6 +3684,13 @@
       "key": "have_real_estate_agent",
       "title": "Do you have a Real Estate Agent?",
       "type": "boolean",
+      "required": false
+    },
+    {
+      "key": "hoa_dues",
+      "title": "Homeowner Association Dues",
+      "description": "The present monthly homeowner's association dues, if any.",
+      "type": "currency",
       "required": false
     },
     {
@@ -3978,8 +4088,16 @@
       "required": false
     },
     {
+      "key": "mortgage_insurance",
+      "title": "Mortgage Insurance",
+      "description": "The present monthly mortgage insurance premium, if any.",
+      "type": "currency",
+      "required": false
+    },
+    {
       "key": "mortgage_payment",
       "title": "Monthly Mortgage Payment",
+      "description": "The present first monthly mortgage payment.",
       "type": "currency",
       "required": false
     },
@@ -4017,6 +4135,13 @@
         "Owner Occupied",
         "Non-Owner Occupied"
       ],
+      "required": false
+    },
+    {
+      "key": "other_fin",
+      "title": "Other Mortgage Payments",
+      "description": "Any present monthly mortgage payments, in addition to the first mortgage.",
+      "type": "currency",
       "required": false
     },
     {
@@ -4060,6 +4185,13 @@
         "Military Variable Housing",
         "Other"
       ],
+      "required": false
+    },
+    {
+      "key": "other_monthly_housing_expense",
+      "title": "Other Housing Expenses",
+      "description": "Other present monthly housing expenses not documented above, for example flood insurance premiums.",
+      "type": "currency",
       "required": false
     },
     {
@@ -4681,12 +4813,17 @@
       "required": true
     },
     {
+      "key": "receives_alimony",
+      "title": "Do you receive alimony or child support payments?",
+      "description": "Does Borrower recieve alimony or child support payments?",
+      "type": "boolean",
+      "required": false
+    },
+    {
       "key": "referral_name",
       "title": "Realtor Name",
       "description": "If you are working with a Realtor, please provide their name",
       "placeholder": "Realtor Name",
-      "min": 0,
-      "max": 100,
       "type": "text",
       "required": false
     },
@@ -4707,6 +4844,7 @@
     {
       "key": "rent_payment",
       "title": "Monthly Rent Payment",
+      "description": "The present monthly payment for rent on the borrower's primary residence.",
       "type": "currency",
       "required": false
     },
@@ -4943,21 +5081,25 @@
     {
       "key": "vod_account_one_balance_1",
       "title": "Balance",
+      "description": "The current balance in the account.",
       "type": "currency"
     },
     {
       "key": "vod_account_one_name_1",
       "title": "Account in Name of",
+      "description": "The name in which the account is held.",
       "type": "text"
     },
     {
       "key": "vod_account_one_number_1",
       "title": "Account Number",
+      "description": "The account's identification number.",
       "type": "text"
     },
     {
       "key": "vod_account_one_type_1",
       "title": "Account Type",
+      "description": "The type of the account.",
       "type": "single_choice",
       "choices": [
         "",
@@ -4985,11 +5127,13 @@
     {
       "key": "vod_account_two_balance_1",
       "title": "Balance",
+      "description": "The current balance in the account.",
       "type": "currency"
     },
     {
       "key": "vod_account_two_type_1",
       "title": "Account Type",
+      "description": "The type of the account.",
       "type": "single_choice",
       "choices": [
         "",
@@ -5081,21 +5225,25 @@
     {
       "key": "vod_account_one_balance_2",
       "title": "Balance",
+      "description": "The current balance in the account.",
       "type": "currency"
     },
     {
       "key": "vod_account_one_name_2",
       "title": "Account in Name of",
+      "description": "The name in which the account is held.",
       "type": "text"
     },
     {
       "key": "vod_account_one_number_2",
       "title": "Account Number",
+      "description": "The account's identification number.",
       "type": "text"
     },
     {
       "key": "vod_account_one_type_2",
       "title": "Account Type",
+      "description": "The type of the account.",
       "type": "single_choice",
       "choices": [
         "",
@@ -5123,11 +5271,13 @@
     {
       "key": "vod_account_two_balance_2",
       "title": "Balance",
+      "description": "The current balance in the account.",
       "type": "currency"
     },
     {
       "key": "vod_account_two_type_2",
       "title": "Account Type",
+      "description": "The type of the account.",
       "type": "single_choice",
       "choices": [
         "",
@@ -5219,21 +5369,25 @@
     {
       "key": "vod_account_one_balance_3",
       "title": "Balance",
+      "description": "The current balance in the account.",
       "type": "currency"
     },
     {
       "key": "vod_account_one_name_3",
       "title": "Account in Name of",
+      "description": "The name in which the account is held.",
       "type": "text"
     },
     {
       "key": "vod_account_one_number_3",
       "title": "Account Number",
+      "description": "The account's identification number.",
       "type": "text"
     },
     {
       "key": "vod_account_one_type_3",
       "title": "Account Type",
+      "description": "The type of the account.",
       "type": "single_choice",
       "choices": [
         "",
@@ -5261,11 +5415,13 @@
     {
       "key": "vod_account_two_balance_3",
       "title": "Balance",
+      "description": "The current balance in the account.",
       "type": "currency"
     },
     {
       "key": "vod_account_two_type_3",
       "title": "Account Type",
+      "description": "The type of the account.",
       "type": "single_choice",
       "choices": [
         "",
@@ -5357,21 +5513,25 @@
     {
       "key": "vod_account_one_balance_4",
       "title": "Balance",
+      "description": "The current balance in the account.",
       "type": "currency"
     },
     {
       "key": "vod_account_one_name_4",
       "title": "Account in Name of",
+      "description": "The name in which the account is held.",
       "type": "text"
     },
     {
       "key": "vod_account_one_number_4",
       "title": "Account Number",
+      "description": "The account's identification number.",
       "type": "text"
     },
     {
       "key": "vod_account_one_type_4",
       "title": "Account Type",
+      "description": "The type of the account.",
       "type": "single_choice",
       "choices": [
         "",
@@ -5399,11 +5559,13 @@
     {
       "key": "vod_account_two_balance_4",
       "title": "Balance",
+      "description": "The current balance in the account.",
       "type": "currency"
     },
     {
       "key": "vod_account_two_type_4",
       "title": "Account Type",
+      "description": "The type of the account.",
       "type": "single_choice",
       "choices": [
         "",
@@ -5539,28 +5701,227 @@
     {
       "key": "vod_to_name_1",
       "title": "Institution Name",
+      "description": "The name of the depository.",
       "type": "text"
     },
     {
       "key": "vod_to_name_2",
       "title": "Institution Name",
+      "description": "The name of the depository.",
       "type": "text"
     },
     {
       "key": "vod_to_name_3",
       "title": "Institution Name",
+      "description": "The name of the depository.",
       "type": "text"
     },
     {
       "key": "vod_to_name_4",
       "title": "Institution Name",
+      "description": "The name of the depository.",
       "type": "text"
+    },
+    {
+      "key": "vom_address_1",
+      "title": "Address",
+      "description": "The street address of the mortgaged property.",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "vom_city_1",
+      "title": "City",
+      "description": "The city in which the mortgaged property is located.",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "vom_comments_1",
+      "title": "Comments",
+      "description": "Additional information or comments related to the mortgaged property.",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "vom_date_acquired_1",
+      "title": "Date Acquired",
+      "description": "The date the property was acquired.",
+      "type": "date",
+      "required": false
+    },
+    {
+      "key": "vom_from_fax_1",
+      "title": "From Fax",
+      "description": "Fax number for the individual at your company who can be contacted with questions regarding the verification.",
+      "type": "phone",
+      "required": false
+    },
+    {
+      "key": "vom_from_phone_1",
+      "title": "From Phone",
+      "description": "Phone number for the individual at your company who can be contacted with questions regarding the verification.",
+      "type": "phone",
+      "required": false
+    },
+    {
+      "key": "vom_from_print_title_1",
+      "title": "Print user's name as title",
+      "description": "If selected, the name of the logged-in user is printed in the Title field on the verification's output form.",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "key": "vom_from_title_1",
+      "title": "From Title",
+      "description": "The title of the requestor of the verification information.",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "vom_is_subject_property_1",
+      "title": "Subject Property",
+      "description": "Indicates that the mortgage and property information is for the loan's subject property.",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "key": "vom_market_value_1",
+      "title": "Present Market Value",
+      "description": "The mortgaged property's current market value.",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "vom_mortgage_balance_1",
+      "title": "Mortgage Balance",
+      "description": "The total balance of the associated mortgage (or mortgages) imported from the VOL.",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "vom_mortgage_payment_1",
+      "title": "Mortgage Payment",
+      "description": "The total monthly payment of the associated mortgage (or mortgages) imported from the VOL.",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "vom_net_income_loss_1",
+      "title": "Net Income / Loss",
+      "description": "The net income or loss from the mortgaged property.",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "vom_participation_1",
+      "title": "Participation %",
+      "description": "The percentage of the property owned by the borrower or co-borrower.",
+      "min": 0,
+      "max": 100,
+      "type": "integer",
+      "required": false
+    },
+    {
+      "key": "vom_print_signature_1",
+      "title": "Print on signature line",
+      "description": "Select to print the statement 'See attached borrower's authorization' on the applicant's signature line of the printed form.",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "key": "vom_property_status_1",
+      "title": "Property Status",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Sold",
+        "Pending Sale",
+        "Retain For Rental"
+      ],
+      "required": false
+    },
+    {
+      "key": "vom_property_used_as_1",
+      "title": "Property is used as",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Primary Residence",
+        "Second Home",
+        "Investment Property"
+      ],
+      "required": false
+    },
+    {
+      "key": "vom_purchase_price_1",
+      "title": "Purchase Price",
+      "description": "The price paid to acquire the property",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "vom_rental_income_1",
+      "title": "Gross Rental Income",
+      "description": "The monthly gross rental income from the mortgaged property.",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "vom_rental_percentage_1",
+      "title": "Percentage of Rental",
+      "description": "The average percentage of the properties total units that are rented, if applicable. The industry standard is 75%.",
+      "min": 0,
+      "max": 100,
+      "type": "integer",
+      "required": false
+    },
+    {
+      "key": "vom_state_1",
+      "title": "State",
+      "description": "The state in which the mortgaged property is located.",
+      "type": "state",
+      "allowAllStates": true,
+      "required": false
+    },
+    {
+      "key": "vom_taxes_1",
+      "title": "Taxes, Ins, Expenses",
+      "description": "The monthly expenditure for taxes, insurance, and other expenses related to the mortgaged property.",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "vom_type_of_property_1",
+      "title": "Type of Property",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Single Family",
+        "Condominium",
+        "Townhouse",
+        "Cooperative",
+        "2 to 4 Units",
+        "Multi-Family+4",
+        "Mobile Home",
+        "Commercial",
+        "Home And Business Combined",
+        "Mixed Use",
+        "Farm",
+        "Land"
+      ],
+      "required": false
+    },
+    {
+      "key": "vom_zip_1",
+      "title": "Zip",
+      "description": "The zip in which the mortgaged properthy is located.",
+      "type": "zip",
+      "required": false
     },
     {
       "key": "work_phone",
       "title": "Business Phone",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },

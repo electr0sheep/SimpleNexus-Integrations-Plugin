@@ -72,21 +72,20 @@
     },
     {
       "fields": [
-        "is_self_employed",
-        "employer_name",
-        "employer_address",
-        "employer_city",
-        "employer_state",
-        "employer_zip",
+        "borrower_voe_employment_is_self_employed_1",
+        "borrower_voe_to_name_1",
+        "borrower_voe_to_address_1",
+        "borrower_voe_to_city_1",
+        "borrower_voe_to_state_1",
+        "borrower_voe_to_zip_1",
         "two_years_at_current_employer",
-        "monthly_income"
+        "borrower_voe_income_base_pay_1"
       ],
       "instructions": "Please enter details about your current employment and income"
     },
     {
       "fields": [
-        "employer_years",
-        "employer_months"
+        "borrower_voe_employment_date_hired_1"
       ],
       "instructions": "Please enter length of time at current employer"
     },
@@ -94,13 +93,13 @@
       "condition": "two_years_at_current_employer",
       "conditionValue": "0",
       "fields": [
-        "borrower_previous_employer_name",
-        "borrower_previous_employer_address",
-        "borrower_previous_employer_city",
-        "borrower_previous_employer_state",
-        "borrower_previous_employer_zip",
-        "borrower_previous_employer_years",
-        "borrower_previous_employer_months"
+        "borrower_voe_to_name_2",
+        "borrower_voe_to_address_2",
+        "borrower_voe_to_city_2",
+        "borrower_voe_to_state_2",
+        "borrower_voe_to_zip_2",
+        "borrower_voe_employment_date_hired_2",
+        "borrower_voe_employment_date_terminated_2"
       ],
       "instructions": "Please enter details about your previous employment and income"
     },
@@ -109,7 +108,7 @@
       "conditionValue": "Purchase",
       "fields": [
         "purchase_price",
-        "loan_term"
+        "loan_term_in_years"
       ],
       "instructions": "Please enter the details of your new home"
     },
@@ -137,7 +136,7 @@
       "condition": "loan_purpose",
       "conditionValue": "Cash-Out Refinance",
       "fields": [
-        "loan_term"
+        "loan_term_in_years"
       ],
       "instructions": "Please enter loan amount and term requested"
     },
@@ -163,9 +162,23 @@
     },
     {
       "fields": [
-        "checking_account",
-        "savings_account",
-        "assets_other"
+        "vod_to_name_1",
+        "vod_account_one_type_1",
+        "vod_account_one_name_1",
+        "vod_account_one_number_1",
+        "vod_account_one_balance_1",
+        "vod_account_one_type_2",
+        "vod_account_one_name_2",
+        "vod_account_one_number_2",
+        "vod_account_one_balance_2",
+        "vod_account_one_type_3",
+        "vod_account_one_name_3",
+        "vod_account_one_number_3",
+        "vod_account_one_balance_3",
+        "vod_account_one_type_4",
+        "vod_account_one_name_4",
+        "vod_account_one_number_4",
+        "vod_account_one_balance_4"
       ],
       "instructions": "Please enter your financial information"
     },
@@ -327,35 +340,35 @@
     {
       "condition": "has_coborrower",
       "fields": [
-        "coborrower_is_self_employed",
-        "coborrower_employer_name",
-        "coborrower_employer_address",
-        "coborrower_employer_city",
-        "coborrower_employer_state",
-        "coborrower_employer_zip",
+        "coborrower_voe_employment_is_self_employed_1",
+        "coborrower_voe_to_name_1",
+        "coborrower_voe_to_address_1",
+        "coborrower_voe_to_city_1",
+        "coborrower_voe_to_state_1",
+        "coborrower_voe_to_zip_1",
         "coborrower_two_years_at_current_employer",
-        "coborrower_monthly_income"
+        "coborrower_voe_income_base_pay_1"
       ],
       "instructions": "Please enter details about Co-Borrower's current employment"
     },
     {
       "condition": "has_coborrower",
       "fields": [
-        "coborrower_employer_years",
-        "coborrower_employer_months"
+        "coborrower_voe_employment_date_hired_1"
       ],
       "instructions": "Please enter length of time at Co-Borrower's current employer"
     },
     {
       "condition": "coborrower_two_years_at_current_employer",
+      "conditionValue": "0",
       "fields": [
-        "coborrower_previous_employer_name",
-        "coborrower_previous_employer_address",
-        "coborrower_previous_employer_city",
-        "coborrower_previous_employer_state",
-        "coborrower_previous_employer_zip",
-        "coborrower_previous_employer_years",
-        "coborrower_previous_employer_months"
+        "coborrower_voe_to_name_2",
+        "coborrower_voe_to_address_2",
+        "coborrower_voe_to_city_2",
+        "coborrower_voe_to_state_2",
+        "coborrower_voe_to_zip_2",
+        "coborrower_voe_employment_date_hired_2",
+        "coborrower_voe_employment_date_terminated_2"
       ],
       "instructions": "Please enter details about Co-Borrower's previous employment and income"
     },
@@ -460,7 +473,12 @@
       "instructions": "Are you ready to submit the loan application?"
     }
   ],
-  "values": {},
+  "values": {
+    "vod_for_1": "Borrower",
+    "vod_for_3": "Coborrower",
+    "borrower_voe_employment_is_current_1": true,
+    "coborrower_voe_employment_is_current_1": true
+  },
   "fields": [
     {
       "key": "loan_purpose",
@@ -646,8 +664,6 @@
       "key": "borrower_cell_phone",
       "title": "Cell-Phone",
       "description": "Borrower Cell-Phone Number",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -674,37 +690,35 @@
       "required": false
     },
     {
-      "key": "is_self_employed",
+      "key": "borrower_voe_employment_is_self_employed_1",
       "title": "Are you self-employed?",
       "description": "Is Borrower self-employed?",
       "type": "boolean",
       "required": false
     },
     {
-      "key": "employer_name",
+      "key": "borrower_voe_to_name_1",
       "title": "Employer Name",
       "description": "Borrower Employer Name",
-      "min": 0,
-      "max": 22,
       "type": "text",
       "required": false
     },
     {
-      "key": "employer_address",
+      "key": "borrower_voe_to_address_1",
       "title": "Employer Address",
       "description": "Borrower Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "key": "employer_city",
+      "key": "borrower_voe_to_city_1",
       "title": "Employer City",
       "description": "Borrower Employer City",
       "type": "text",
       "required": false
     },
     {
-      "key": "employer_state",
+      "key": "borrower_voe_to_state_1",
       "title": "Employer State",
       "description": "Borrower Employer State",
       "type": "state",
@@ -712,7 +726,7 @@
       "required": false
     },
     {
-      "key": "employer_zip",
+      "key": "borrower_voe_to_zip_1",
       "title": "Employer Zip",
       "description": "Borrower Employer Zip",
       "type": "zip",
@@ -721,54 +735,45 @@
     {
       "key": "two_years_at_current_employer",
       "title": "Have you been with your current employer at least 2 years?",
-      "description": "Has Borrower been with their current employer at least 2 years?",
       "type": "boolean",
       "required": false
     },
     {
-      "key": "monthly_income",
+      "key": "borrower_voe_income_base_pay_1",
       "title": "Monthly Gross Income",
       "description": "Borrower Monthly Gross Income",
       "type": "currency",
       "required": false
     },
     {
-      "key": "employer_years",
-      "title": "Years at Current Employment",
-      "description": "Borrower Years at Current Employment",
-      "type": "integer",
+      "key": "borrower_voe_employment_date_hired_1",
+      "title": "Start Date at Current Employer",
+      "type": "date",
       "required": false
     },
     {
-      "key": "employer_months",
-      "title": "Months at Current Employment?",
-      "description": "Borrower Months at Current Employment",
-      "type": "integer",
-      "required": false
-    },
-    {
-      "key": "borrower_previous_employer_name",
+      "key": "borrower_voe_to_name_2",
       "title": "Previous Employer Name",
       "description": "Borrower Previous Employer Name",
       "type": "text",
       "required": false
     },
     {
-      "key": "borrower_previous_employer_address",
+      "key": "borrower_voe_to_address_2",
       "title": "Previous Employer Address",
       "description": "Borrower Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "key": "borrower_previous_employer_city",
+      "key": "borrower_voe_to_city_2",
       "title": "Previous Employer City",
       "description": "Borrower Previous Employer City",
       "type": "text",
       "required": false
     },
     {
-      "key": "borrower_previous_employer_state",
+      "key": "borrower_voe_to_state_2",
       "title": "Previous Employer State",
       "description": "Borrower Previous Employer State",
       "type": "state",
@@ -776,24 +781,22 @@
       "required": false
     },
     {
-      "key": "borrower_previous_employer_zip",
+      "key": "borrower_voe_to_zip_2",
       "title": "Previous Employer Zip",
       "description": "Borrower Previous Employer Zip",
       "type": "zip",
       "required": false
     },
     {
-      "key": "borrower_previous_employer_years",
-      "title": "Years at Previous Employer",
-      "description": "Borrower Years at Previous Employer",
-      "type": "integer",
+      "key": "borrower_voe_employment_date_hired_2",
+      "title": "Start Date at Previous Employer",
+      "type": "date",
       "required": false
     },
     {
-      "key": "borrower_previous_employer_months",
-      "title": "Months at Previous Employer",
-      "description": "Borrower Months at Previous Employer",
-      "type": "integer",
+      "key": "borrower_voe_employment_date_terminated_2",
+      "title": "End Date at Previous Employer",
+      "type": "date",
       "required": false
     },
     {
@@ -803,15 +806,17 @@
       "required": false
     },
     {
-      "key": "loan_term",
-      "title": "Loan Term (Calculated in months, this is for 30, 15 and 10 years)",
-      "description": "Loan Term ( Calculated in months, this is for 10, 15 and 30 years )",
+      "key": "loan_term_in_years",
+      "title": "Loan Term In Years",
       "type": "single_choice",
       "choices": [
         "",
-        "360",
-        "180",
-        "120"
+        "40",
+        "30",
+        "25",
+        "20",
+        "15",
+        "10"
       ],
       "required": false
     },
@@ -884,25 +889,194 @@
       "required": false
     },
     {
-      "key": "checking_account",
-      "title": "Checking Account",
-      "description": "Checking Account Balance",
-      "type": "currency",
-      "required": false
+      "key": "vod_to_name_1",
+      "title": "Account 1 - Institution Name",
+      "description": "The name of the depository.",
+      "type": "text"
     },
     {
-      "key": "savings_account",
-      "title": "Savings Account",
-      "description": "Savings Account Balance",
-      "type": "currency",
-      "required": false
+      "key": "vod_account_one_type_1",
+      "title": "Account 1 - Account Type",
+      "description": "The type of the account.",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
     },
     {
-      "key": "assets_other",
-      "title": "Other Assets",
-      "description": "Other Assets Balance",
-      "type": "currency",
-      "required": false
+      "key": "vod_account_one_name_1",
+      "title": "Account 1 - Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_one_number_1",
+      "title": "Account 1 - Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_one_balance_1",
+      "title": "Account 1 - Balance",
+      "description": "The current balance in the account.",
+      "type": "currency"
+    },
+    {
+      "key": "vod_account_one_type_2",
+      "title": "Account 2 - Account Type",
+      "description": "The type of the account.",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "key": "vod_account_one_name_2",
+      "title": "Account 2 - Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_one_number_2",
+      "title": "Account 2 - Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_one_balance_2",
+      "title": "Account 2 - Balance",
+      "description": "The current balance in the account.",
+      "type": "currency"
+    },
+    {
+      "key": "vod_account_one_type_3",
+      "title": "Account 3 - Account Type",
+      "description": "The type of the account.",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "key": "vod_account_one_name_3",
+      "title": "Account 3 - Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_one_number_3",
+      "title": "Account 3 - Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_one_balance_3",
+      "title": "Account 3 - Balance",
+      "description": "The current balance in the account.",
+      "type": "currency"
+    },
+    {
+      "key": "vod_account_one_type_4",
+      "title": "Account 4 - Account Type",
+      "description": "The type of the account.",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Checking Account",
+        "Savings Account",
+        "Mutual Fund",
+        "Other Liquid Assets",
+        "Pending Net Sale Proceeds From Real Estate Assets",
+        "Certificate Of Deposit Time Deposit",
+        "Money Market Fund",
+        "Trust Account",
+        "Retirement Fund",
+        "Gifts Total",
+        "Gifts Not Deposited",
+        "Gift Of Equity",
+        "Bridge Loan Not Deposited",
+        "Secured Borrowed Funds Not Deposited",
+        "Cash Deposit On Sales Contract",
+        "Cash On Hand",
+        "Net Worth Of Business Owned",
+        "Other Non Liquid Assets",
+        "Net Equity"
+      ]
+    },
+    {
+      "key": "vod_account_one_name_4",
+      "title": "Account 4 - Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_one_number_4",
+      "title": "Account 4 - Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_one_balance_4",
+      "title": "Account 4 - Balance",
+      "description": "The current balance in the account.",
+      "type": "currency"
     },
     {
       "key": "has_outstanding_judgements",
@@ -1039,6 +1213,15 @@
         "Not Hispanic or Latino",
         "I do not wish to provide this information"
       ],
+      "indentations": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
       "required": false
     },
     {
@@ -1063,6 +1246,25 @@
         "Other Pacific Islander",
         "White",
         "I do not wish to provide this information"
+      ],
+      "indentations": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
       ],
       "required": false
     },
@@ -1271,8 +1473,6 @@
       "key": "coborrower_home_phone",
       "title": "Home Phone",
       "description": "Co-Borrower Home Phone Number",
-      "min": "0",
-      "max": "17",
       "type": "phone",
       "required": false
     },
@@ -1280,8 +1480,6 @@
       "key": "coborrower_cell_phone",
       "title": "Cell-Phone",
       "description": "Co-Borrower Cell-Phone Number",
-      "min": 0,
-      "max": 17,
       "type": "phone",
       "required": false
     },
@@ -1308,34 +1506,34 @@
       "required": false
     },
     {
-      "key": "coborrower_is_self_employed",
+      "key": "coborrower_voe_employment_is_self_employed_1",
       "title": "Is the Co-Borrower self-employed?",
       "type": "boolean",
       "required": false
     },
     {
-      "key": "coborrower_employer_name",
+      "key": "coborrower_voe_to_name_1",
       "title": "Employer Name",
       "description": "Co-Borrower Employer Name",
       "type": "text",
       "required": false
     },
     {
-      "key": "coborrower_employer_address",
+      "key": "coborrower_voe_to_address_1",
       "title": "Employer Address",
       "description": "Co-Borrower Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "key": "coborrower_employer_city",
+      "key": "coborrower_voe_to_city_1",
       "title": "Employer City",
       "description": "Co-Borrower Employer City",
       "type": "text",
       "required": false
     },
     {
-      "key": "coborrower_employer_state",
+      "key": "coborrower_voe_to_state_1",
       "title": "Employer State",
       "description": "Co-Borrower Employer State",
       "type": "state",
@@ -1343,7 +1541,7 @@
       "required": false
     },
     {
-      "key": "coborrower_employer_zip",
+      "key": "coborrower_voe_to_zip_1",
       "title": "Employer Zip",
       "description": "Co-Borrower Employer Zip",
       "type": "zip",
@@ -1356,49 +1554,41 @@
       "required": false
     },
     {
-      "key": "coborrower_monthly_income",
+      "key": "coborrower_voe_income_base_pay_1",
       "title": "Monthly Gross Income",
       "description": "Co-Borrower Monthly Gross Income",
       "type": "currency",
       "required": false
     },
     {
-      "key": "coborrower_employer_years",
-      "title": "Years at Current Employment",
-      "description": "Co-Borrower Years at Current Employment",
-      "type": "integer",
+      "key": "coborrower_voe_employment_date_hired_1",
+      "title": "Start Date at Current Employer",
+      "type": "date",
       "required": false
     },
     {
-      "key": "coborrower_employer_months",
-      "title": "Months at Current Employment",
-      "description": "Co-Borrower Months at Current Employment",
-      "type": "integer",
-      "required": false
-    },
-    {
-      "key": "coborrower_previous_employer_name",
+      "key": "coborrower_voe_to_name_2",
       "title": "Employer Name",
       "description": "Co-Borrower's Previous Employer Name",
       "type": "text",
       "required": false
     },
     {
-      "key": "coborrower_previous_employer_address",
+      "key": "coborrower_voe_to_address_2",
       "title": "Employer Address",
       "description": "Co-Borrower's Previous Employer Address",
       "type": "text",
       "required": false
     },
     {
-      "key": "coborrower_previous_employer_city",
+      "key": "coborrower_voe_to_city_2",
       "title": "Employer City",
       "description": "Co-Borrower's Previous Employer City",
       "type": "text",
       "required": false
     },
     {
-      "key": "coborrower_previous_employer_state",
+      "key": "coborrower_voe_to_state_2",
       "title": "Employer State",
       "description": "Co-Borrower's Previous Employer State",
       "type": "state",
@@ -1406,23 +1596,22 @@
       "required": false
     },
     {
-      "key": "coborrower_previous_employer_zip",
+      "key": "coborrower_voe_to_zip_2",
       "title": "Employer Zip",
       "description": "Co-Borrower's Previous Employer Zip",
       "type": "zip",
       "required": false
     },
     {
-      "key": "coborrower_previous_employer_years",
-      "title": "Years at Previous Employer",
-      "description": "Borrower's Years at Previous Employer",
-      "type": "integer",
+      "key": "coborrower_voe_employment_date_hired_2",
+      "title": "Start Date at Previous Employer",
+      "type": "date",
       "required": false
     },
     {
-      "key": "coborrower_previous_employer_months",
-      "title": "Months at Previous Employer",
-      "type": "integer",
+      "key": "coborrower_voe_employment_date_terminated_2",
+      "title": "End Date at Previous Employer",
+      "type": "date",
       "required": false
     },
     {
@@ -1551,6 +1740,15 @@
         "Not Hispanic or Latino",
         "I do not wish to provide this information"
       ],
+      "indentations": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
       "required": false
     },
     {
@@ -1575,6 +1773,25 @@
         "Other Pacific Islander",
         "White",
         "I do not wish to provide this information"
+      ],
+      "indentations": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
       ],
       "required": false
     },
