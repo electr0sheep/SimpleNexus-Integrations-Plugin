@@ -168,6 +168,7 @@
         "coborrower_has_foreclosure",
         "coborrower_has_obligations",
         "coborrower_has_obligations_explanation",
+        "coborrower_has_other_income",
         "coborrower_has_outstanding_judgements",
         "coborrower_has_outstanding_judgements_explanation",
         "coborrower_has_ownership_interest",
@@ -423,9 +424,10 @@
         "is_down_payment_borrowed",
         "is_down_payment_borrowed_explanation",
         "is_firsttimer",
+        "is_married_to_coborrower",
         "is_permanent_resident",
-        "is_renovation",
         "is_primary_residence",
+        "is_renovation",
         "is_retired",
         "is_self_employed",
         "is_us_citizen",
@@ -1436,6 +1438,7 @@
     {
       "key": "branch_of_service",
       "title": "Branch of Service",
+      "description": "Borrower Branch of Service",
       "type": "single_choice",
       "choices": [
         "",
@@ -1554,6 +1557,7 @@
     {
       "key": "coborrower_branch_of_service",
       "title": "Branch of Service",
+      "description": "Co-Borrower Branch of Service",
       "type": "single_choice",
       "choices": [
         "",
@@ -1730,7 +1734,16 @@
         "Cuban",
         "Other Hispanic or Latino",
         "Not Hispanic or Latino",
-        "Information not provided"
+        "I do not wish to provide this information"
+      ],
+      "indentations": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
       ],
       "required": false
     },
@@ -1814,6 +1827,12 @@
       "key": "coborrower_has_obligations_explanation",
       "title": "Loans resulted in foreclosure or judgement explanation",
       "type": "text",
+      "required": false
+    },
+    {
+      "key": "coborrower_has_other_income",
+      "title": "Does Co-Borrower receive any other income?",
+      "type": "boolean",
       "required": false
     },
     {
@@ -1991,6 +2010,7 @@
     {
       "key": "coborrower_military_explanation",
       "title": "Military Status",
+      "description": "Co-Borrower Military Status",
       "type": "single_choice",
       "choices": [
         "",
@@ -2362,7 +2382,26 @@
         "Samoan",
         "Other Pacific Islander",
         "White",
-        "Information not provided"
+        "I do not wish to provide this information"
+      ],
+      "indentations": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
       ],
       "required": false
     },
@@ -2597,6 +2636,7 @@
     {
       "key": "coborrower_type_of_service",
       "title": "Type of Service",
+      "description": "Co-Borrower Type of Service",
       "type": "single_choice",
       "choices": [
         "",
@@ -3505,7 +3545,16 @@
         "Cuban",
         "Other Hispanic or Latino",
         "Not Hispanic or Latino",
-        "Information not provided"
+        "I do not wish to provide this information"
+      ],
+      "indentations": [
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
       ],
       "required": false
     },
@@ -3763,20 +3812,27 @@
       "required": false
     },
     {
+      "key": "is_married_to_coborrower",
+      "title": "Are you married to the Co-Borrower?",
+      "description": "The Borrower and Co-Borrower are married, and plan on applying for joint credit, have joint assets and liabilities, etc.",
+      "type": "boolean",
+      "required": false
+    },
+    {
       "key": "is_permanent_resident",
       "title": "Are you a permanent resident alien?",
       "type": "boolean",
       "required": false
     },
     {
-      "key": "is_renovation",
-      "title": "Is this a Renovation?",
+      "key": "is_primary_residence",
+      "title": "Will this property be your primary residence?",
       "type": "boolean",
       "required": false
     },
     {
-      "key": "is_primary_residence",
-      "title": "Will this property be your primary residence?",
+      "key": "is_renovation",
+      "title": "Is this a Renovation?",
       "type": "boolean",
       "required": false
     },
@@ -4024,6 +4080,7 @@
     {
       "key": "military_explanation",
       "title": "Military Status",
+      "description": "Borrower Military Status",
       "type": "single_choice",
       "choices": [
         "",
@@ -4596,7 +4653,26 @@
         "Samoan",
         "Other Pacific Islander",
         "White",
-        "Information not provided"
+        "I do not wish to provide this information"
+      ],
+      "indentations": [
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1,
+        0,
+        0
       ],
       "required": false
     },
@@ -5035,6 +5111,7 @@
     {
       "key": "type_of_service",
       "title": "Type of Service",
+      "description": "Borrower Type of Service",
       "type": "single_choice",
       "choices": [
         "",

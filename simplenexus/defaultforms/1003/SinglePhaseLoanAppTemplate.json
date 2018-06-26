@@ -5,7 +5,71 @@
       "fields": [
         "loan_purpose"
       ],
-      "instructions": "What is the purpose of your loan?"
+      "instructions": "What is the purpose of your loan?",
+      "step": "Loan Information"
+    },
+    {
+      "condition": "loan_purpose",
+      "conditionValue": "Purchase",
+      "fields": [
+        "purchase_price",
+        "loan_term_in_years"
+      ],
+      "instructions": "Please enter the details of your new home",
+      "step": "Loan Information"
+    },
+    {
+      "condition": "loan_purpose",
+      "conditionValue": "Purchase",
+      "fields": [
+        "under_contract",
+        "property_type",
+        "type_of_property"
+      ],
+      "instructions": "What type of property are you pursuing?",
+      "step": "Loan Information"
+    },
+    {
+      "condition": "under_contract",
+      "fields": [
+        "property_city",
+        "property_state",
+        "property_zip",
+        "referral_name"
+      ],
+      "instructions": "Please enter the subject property information",
+      "step": "Loan Information"
+    },
+    {
+      "condition": "loan_purpose",
+      "conditionValue": "Cash-Out Refinance",
+      "fields": [
+        "loan_term_in_years"
+      ],
+      "instructions": "Please enter loan amount and term requested",
+      "step": "Loan Information"
+    },
+    {
+      "condition": "loan_purpose",
+      "conditionValue": "Cash-Out Refinance",
+      "fields": [
+        "estimated_property_value",
+        "property_type",
+        "type_of_property"
+      ],
+      "instructions": "Please enter the estimated value and type of property",
+      "step": "Loan Information"
+    },
+    {
+      "condition": "loan_purpose",
+      "conditionValue": "Cash-Out Refinance",
+      "fields": [
+        "property_city",
+        "property_state",
+        "property_zip"
+      ],
+      "instructions": "Please enter the subject property information",
+      "step": "Loan Information"
     },
     {
       "fields": [
@@ -14,7 +78,8 @@
         "last_name",
         "suffix"
       ],
-      "instructions": "Please enter your legal name"
+      "instructions": "Please enter your legal name",
+      "step": "Borrower Information"
     },
     {
       "fields": [
@@ -25,14 +90,16 @@
         "property_own",
         "two_years_at_current_address"
       ],
-      "instructions": "Please enter your current address"
+      "instructions": "Please enter your current address",
+      "step": "Borrower Information"
     },
     {
       "fields": [
         "property_years",
         "property_months"
       ],
-      "instructions": "Please enter the length of time at current address"
+      "instructions": "Please enter the length of time at current address",
+      "step": "Borrower Information"
     },
     {
       "condition": "two_years_at_current_address",
@@ -45,30 +112,57 @@
         "prev_property_years",
         "prev_property_months"
       ],
-      "instructions": "Please enter details about your previous address"
+      "instructions": "Please enter details about your previous address",
+      "step": "Borrower Information"
     },
     {
       "fields": [
         "dob",
+        "marital_status",
         "is_firsttimer",
         "is_veteran",
         "borrower_home_phone",
         "borrower_cell_phone",
         "email"
       ],
-      "instructions": "Please enter the following information"
+      "instructions": "Please enter the following information",
+      "step": "Borrower Information"
     },
     {
+      "condition": "marital_status",
+      "conditionValue": "Married",
+      "fields": [
+        "is_married_to_coborrower"
+      ],
+      "instructions": "Please provide further information about your marital status",
+      "step": "Borrower Information"
+    },
+    {
+      "condition": "is_veteran",
+      "fields": [
+        "branch_of_service",
+        "military_explanation",
+        "type_of_service"
+      ],
+      "instructions": "Please enter the following veteran information",
+      "step": "Borrower Information"
+    },
+    {
+      "roles": [
+        "borrower"
+      ],
       "fields": [
         "credit_authorization"
       ],
-      "instructions": "Borrower Credit Authorization"
+      "instructions": "Borrower Credit Authorization",
+      "step": "Borrower Information"
     },
     {
       "fields": [
         "ssn"
       ],
-      "instructions": "Please enter your social security number. This is secure & encrypted."
+      "instructions": "Please enter your social security number. This is secure & encrypted.",
+      "step": "Borrower Information"
     },
     {
       "fields": [
@@ -81,7 +175,8 @@
         "two_years_at_current_employer",
         "borrower_voe_income_base_pay_1"
       ],
-      "instructions": "Please enter details about your current employment and income"
+      "instructions": "Please enter details about your current employment and income",
+      "step": "Borrower Information"
     },
     {
       "fields": [
@@ -101,64 +196,8 @@
         "borrower_voe_employment_date_hired_2",
         "borrower_voe_employment_date_terminated_2"
       ],
-      "instructions": "Please enter details about your previous employment and income"
-    },
-    {
-      "condition": "loan_purpose",
-      "conditionValue": "Purchase",
-      "fields": [
-        "purchase_price",
-        "loan_term_in_years"
-      ],
-      "instructions": "Please enter the details of your new home"
-    },
-    {
-      "condition": "loan_purpose",
-      "conditionValue": "Purchase",
-      "fields": [
-        "under_contract",
-        "property_type",
-        "type_of_property"
-      ],
-      "instructions": "What type of property are you pursuing?"
-    },
-    {
-      "condition": "under_contract",
-      "fields": [
-        "property_city",
-        "property_state",
-        "property_zip",
-        "referral_name"
-      ],
-      "instructions": "Please enter the subject property information"
-    },
-    {
-      "condition": "loan_purpose",
-      "conditionValue": "Cash-Out Refinance",
-      "fields": [
-        "loan_term_in_years"
-      ],
-      "instructions": "Please enter loan amount and term requested"
-    },
-    {
-      "condition": "loan_purpose",
-      "conditionValue": "Cash-Out Refinance",
-      "fields": [
-        "estimated_property_value",
-        "property_type",
-        "type_of_property"
-      ],
-      "instructions": "Please enter the estimated value and type of property"
-    },
-    {
-      "condition": "loan_purpose",
-      "conditionValue": "Cash-Out Refinance",
-      "fields": [
-        "property_city",
-        "property_state",
-        "property_zip"
-      ],
-      "instructions": "Please enter the subject property information"
+      "instructions": "Please enter details about your previous employment and income",
+      "step": "Borrower Information"
     },
     {
       "fields": [
@@ -180,7 +219,8 @@
         "vod_account_four_number_1",
         "vod_account_four_balance_1"
       ],
-      "instructions": "Please enter your financial information"
+      "instructions": "Please enter your financial information",
+      "step": "Borrower Information"
     },
     {
       "fields": [
@@ -198,7 +238,8 @@
         "has_ownership_interest",
         "is_down_payment_borrowed"
       ],
-      "instructions": "Please answer the following declarations"
+      "instructions": "Please answer the following declarations",
+      "step": "Borrower Information"
     },
     {
       "condition": "has_ownership_interest",
@@ -206,20 +247,23 @@
         "previous_property_type_declaration",
         "previous_property_title_declaration"
       ],
-      "instructions": "What was the purpose of your other property?"
+      "instructions": "What was the purpose of your other property?",
+      "step": "Borrower Information"
     },
     {
       "condition": "has_alimony",
       "fields": [
         "alimony_amount"
       ],
-      "instructions": "What is the amount of your alimony and/or child support?"
+      "instructions": "What is the amount of your alimony and/or child support?",
+      "step": "Borrower Information"
     },
     {
       "fields": [
         "provide_demographics"
       ],
-      "instructions": "Borrower demographic information"
+      "instructions": "Borrower demographic information",
+      "step": "Borrower Information"
     },
     {
       "condition": "provide_demographics",
@@ -228,7 +272,8 @@
         "race",
         "gender"
       ],
-      "instructions": "Please answer demographic questions"
+      "instructions": "Please answer demographic questions",
+      "step": "Borrower Information"
     },
     {
       "condition": "ethnicity",
@@ -236,7 +281,8 @@
       "fields": [
         "other_hispanic_or_latino_origin"
       ],
-      "instructions": "Please answer ethnicity question"
+      "instructions": "Please answer ethnicity question",
+      "step": "Borrower Information"
     },
     {
       "condition": "race",
@@ -244,7 +290,8 @@
       "fields": [
         "race_american_indian_other"
       ],
-      "instructions": "Please answer race question"
+      "instructions": "Please answer race question",
+      "step": "Borrower Information"
     },
     {
       "condition": "race",
@@ -252,7 +299,8 @@
       "fields": [
         "asian_origin_other"
       ],
-      "instructions": "Please answer race question"
+      "instructions": "Please answer race question",
+      "step": "Borrower Information"
     },
     {
       "condition": "race",
@@ -260,7 +308,18 @@
       "fields": [
         "pacific_islander_other"
       ],
-      "instructions": "Please answer race question"
+      "instructions": "Please answer race question",
+      "step": "Borrower Information"
+    },
+    {
+      "roles": [
+        "borrower"
+      ],
+      "fields": [
+        "econsent"
+      ],
+      "instructions": "Borrower eConsent",
+      "step": "Borrower Information"
     },
     {
       "fields": [
@@ -276,7 +335,8 @@
         "coborrower_last_name",
         "coborrower_suffix"
       ],
-      "instructions": "Please enter Co-Borrower's legal name"
+      "instructions": "Please enter Co-Borrower's legal name",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "has_coborrower",
@@ -288,7 +348,8 @@
         "coborrower_property_own",
         "coborrower_two_years_at_current_address"
       ],
-      "instructions": "Please enter Co-Borrower's current address"
+      "instructions": "Please enter Co-Borrower's current address",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "has_coborrower",
@@ -296,7 +357,8 @@
         "coborrower_property_years",
         "coborrower_property_months"
       ],
-      "instructions": "Please enter the length of time at Co-Borrower's current address"
+      "instructions": "Please enter the length of time at Co-Borrower's current address",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "coborrower_two_years_at_current_address",
@@ -309,33 +371,51 @@
         "coborrower_prev_property_years",
         "coborrower_prev_property_months"
       ],
-      "instructions": "Please enter details about Co-Borrower's previous address"
+      "instructions": "Please enter details about Co-Borrower's previous address",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "has_coborrower",
       "fields": [
         "coborrower_dob",
+        "coborrower_marital_status",
         "coborrower_is_firsttimer",
         "coborrower_is_veteran",
         "coborrower_home_phone",
         "coborrower_cell_phone",
         "coborrower_email"
       ],
-      "instructions": "Please enter the following information for Co-Borrower"
+      "instructions": "Please enter the following information for Co-Borrower",
+      "step": "Co-Borrower Information"
     },
     {
+      "condition": "coborrower_is_veteran",
+      "fields": [
+        "coborrower_branch_of_service",
+        "coborrower_military_explanation",
+        "coborrower_type_of_service"
+      ],
+      "instructions": "Please enter the following veteran information for Co-Borrower",
+      "step": "Co-Borrower Information"
+    },
+    {
+      "roles": [
+        "borrower"
+      ],
       "condition": "has_coborrower",
       "fields": [
         "coborrower_credit_authorization"
       ],
-      "instructions": "Co-Borrower Credit Authorization"
+      "instructions": "Co-Borrower Credit Authorization",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "has_coborrower",
       "fields": [
         "coborrower_ssn"
       ],
-      "instructions": "Please enter Co-Borrower's social security number."
+      "instructions": "Please enter Co-Borrower's social security number.",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "has_coborrower",
@@ -349,14 +429,16 @@
         "coborrower_two_years_at_current_employer",
         "coborrower_voe_income_base_pay_1"
       ],
-      "instructions": "Please enter details about Co-Borrower's current employment"
+      "instructions": "Please enter details about Co-Borrower's current employment",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "has_coborrower",
       "fields": [
         "coborrower_voe_employment_date_hired_1"
       ],
-      "instructions": "Please enter length of time at Co-Borrower's current employer"
+      "instructions": "Please enter length of time at Co-Borrower's current employer",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "coborrower_two_years_at_current_employer",
@@ -370,7 +452,8 @@
         "coborrower_voe_employment_date_hired_2",
         "coborrower_voe_employment_date_terminated_2"
       ],
-      "instructions": "Please enter details about Co-Borrower's previous employment and income"
+      "instructions": "Please enter details about Co-Borrower's previous employment and income",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "has_coborrower",
@@ -388,7 +471,8 @@
         "coborrower_is_primary_residence",
         "coborrower_has_ownership_interest"
       ],
-      "instructions": "Please answer the following declarations for Co-Borrower"
+      "instructions": "Please answer the following declarations for Co-Borrower",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "coborrower_has_ownership_interest",
@@ -396,21 +480,24 @@
         "coborrower_previous_property_type_declaration",
         "coborrower_previous_property_title_declaration"
       ],
-      "instructions": "What was the purpose of Co-Borrower's other property?"
+      "instructions": "What was the purpose of Co-Borrower's other property?",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "coborrower_has_alimony",
       "fields": [
         "coborrower_alimony_amount"
       ],
-      "instructions": "What is the amount of Co-Borrower's alimony and/or child support?"
+      "instructions": "What is the amount of Co-Borrower's alimony and/or child support?",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "has_coborrower",
       "fields": [
         "coborrower_provide_demographics"
       ],
-      "instructions": "Co-Borrower demographic information"
+      "instructions": "Co-Borrower demographic information",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "coborrower_provide_demographics",
@@ -419,7 +506,8 @@
         "coborrower_race",
         "coborrower_gender"
       ],
-      "instructions": "Please answer demographic questions for Co-Borrower"
+      "instructions": "Please answer demographic questions for Co-Borrower",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "coborrower_ethnicity",
@@ -427,7 +515,8 @@
       "fields": [
         "coborrower_other_hispanic_or_latino_origin"
       ],
-      "instructions": "Please answer ethnicity question"
+      "instructions": "Please answer ethnicity question",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "coborrower_race",
@@ -435,7 +524,8 @@
       "fields": [
         "coborrower_race_american_indian_other"
       ],
-      "instructions": "Please answer race question"
+      "instructions": "Please answer race question",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "coborrower_race",
@@ -443,7 +533,8 @@
       "fields": [
         "coborrower_asian_origin_other"
       ],
-      "instructions": "Please answer race question"
+      "instructions": "Please answer race question",
+      "step": "Co-Borrower Information"
     },
     {
       "condition": "coborrower_race",
@@ -451,20 +542,19 @@
       "fields": [
         "coborrower_pacific_islander_other"
       ],
-      "instructions": "Please answer race question"
+      "instructions": "Please answer race question",
+      "step": "Co-Borrower Information"
     },
     {
-      "fields": [
-        "econsent"
+      "roles": [
+        "borrower"
       ],
-      "instructions": "Borrower eConsent"
-    },
-    {
       "condition": "has_coborrower",
       "fields": [
         "coborrower_econsent"
       ],
-      "instructions": "Co-Borrower eConsent"
+      "instructions": "Co-Borrower eConsent",
+      "step": "Co-Borrower Information"
     },
     {
       "fields": [
@@ -490,6 +580,95 @@
         "Cash-Out Refinance",
         "No Cash-Out Refinance"
       ],
+      "required": false
+    },
+    {
+      "key": "purchase_price",
+      "title": "Home Purchase Price",
+      "type": "currency",
+      "required": false
+    },
+    {
+      "key": "loan_term_in_years",
+      "title": "Loan Term In Years",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "40",
+        "30",
+        "25",
+        "20",
+        "15",
+        "10"
+      ],
+      "required": false
+    },
+    {
+      "key": "under_contract",
+      "title": "Are you currently under contract?",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "key": "property_type",
+      "title": "Property Type",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Single Family",
+        "Condo",
+        "Multi-Unit Property",
+        "Detached Condo",
+        "Manufactured Home",
+        "PUD"
+      ],
+      "required": false
+    },
+    {
+      "key": "type_of_property",
+      "title": "Occupancy Type",
+      "description": "Occupancy Property",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Primary Residence",
+        "Secondary Residence",
+        "Investment"
+      ],
+      "required": false
+    },
+    {
+      "key": "property_city",
+      "title": "Property City",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "property_state",
+      "title": "Property State",
+      "type": "state",
+      "required": true
+    },
+    {
+      "key": "property_zip",
+      "title": "Property Zip",
+      "type": "zip",
+      "required": false
+    },
+    {
+      "key": "referral_name",
+      "title": "Realtor Name",
+      "description": "If you are working with a Realtor, please provide their name",
+      "min": 0,
+      "max": 100,
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "estimated_property_value",
+      "title": "Estimated value of the property?",
+      "description": "Estimated value of the subject property",
+      "type": "currency",
       "required": false
     },
     {
@@ -639,6 +818,19 @@
       "required": false
     },
     {
+      "key": "marital_status",
+      "title": "Marital Status",
+      "description": "Borrower Marital Status",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Married",
+        "Unmarried",
+        "Separated"
+      ],
+      "required": false
+    },
+    {
       "key": "is_firsttimer",
       "title": "First-time homebuyer?",
       "description": "Is Borrower a first-time homebuyer?",
@@ -671,6 +863,54 @@
       "title": "Email",
       "description": "Borrower Email",
       "type": "email",
+      "required": false
+    },
+    {
+      "key": "is_married_to_coborrower",
+      "title": "Are you married to the Co-Borrower? (if applicable)",
+      "description": "The Borrower and Co-Borrower are married, and plan on applying for joint credit, have joint assets and liabilities, etc.",
+      "type": "boolean",
+      "required": false
+    },
+    {
+      "key": "branch_of_service",
+      "title": "Branch of Service",
+      "description": "Borrower Branch of Service",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Air Force",
+        "Army",
+        "Coast Guard",
+        "Marines",
+        "Navy",
+        "Other"
+      ],
+      "required": false
+    },
+    {
+      "key": "military_explanation",
+      "title": "Military Status",
+      "description": "Borrower Military Status",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Separated from Service",
+        "In Service"
+      ],
+      "required": false
+    },
+    {
+      "key": "type_of_service",
+      "title": "Type of Service",
+      "description": "Borrower Type of Service",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Regular Military",
+        "Reserves",
+        "National Guard"
+      ],
       "required": false
     },
     {
@@ -799,95 +1039,6 @@
       "required": false
     },
     {
-      "key": "purchase_price",
-      "title": "Home Purchase Price",
-      "type": "currency",
-      "required": false
-    },
-    {
-      "key": "loan_term_in_years",
-      "title": "Loan Term In Years",
-      "type": "single_choice",
-      "choices": [
-        "",
-        "40",
-        "30",
-        "25",
-        "20",
-        "15",
-        "10"
-      ],
-      "required": false
-    },
-    {
-      "key": "under_contract",
-      "title": "Are you currently under contract?",
-      "type": "boolean",
-      "required": false
-    },
-    {
-      "key": "property_type",
-      "title": "Property Type",
-      "type": "single_choice",
-      "choices": [
-        "",
-        "Single Family",
-        "Condo",
-        "Multi-Unit Property",
-        "Detached Condo",
-        "Manufactured Home",
-        "PUD"
-      ],
-      "required": false
-    },
-    {
-      "key": "type_of_property",
-      "title": "Occupancy Type",
-      "description": "Occupancy Property",
-      "type": "single_choice",
-      "choices": [
-        "",
-        "Primary Residence",
-        "Secondary Residence",
-        "Investment"
-      ],
-      "required": false
-    },
-    {
-      "key": "property_city",
-      "title": "Property City",
-      "type": "text",
-      "required": false
-    },
-    {
-      "key": "property_state",
-      "title": "Property State",
-      "type": "state",
-      "required": true
-    },
-    {
-      "key": "property_zip",
-      "title": "Property Zip",
-      "type": "zip",
-      "required": false
-    },
-    {
-      "key": "referral_name",
-      "title": "Realtor Name",
-      "description": "If you are working with a Realtor, please provide their name",
-      "min": 0,
-      "max": 100,
-      "type": "text",
-      "required": false
-    },
-    {
-      "key": "estimated_property_value",
-      "title": "Estimated value of the property?",
-      "description": "Estimated value of the subject property",
-      "type": "currency",
-      "required": false
-    },
-    {
       "key": "vod_to_name_1",
       "title": "Account 1 - Institution Name",
       "description": "The name of the depository.",
@@ -968,6 +1119,18 @@
       ]
     },
     {
+      "key": "vod_account_two_name_1",
+      "title": "Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_two_number_1",
+      "title": "Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
+    },
+    {
       "key": "vod_account_two_balance_1",
       "title": "Balance",
       "description": "The current balance in the account.",
@@ -1001,6 +1164,18 @@
       ]
     },
     {
+      "key": "vod_account_three_name_1",
+      "title": "Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_three_number_1",
+      "title": "Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
+    },
+    {
       "key": "vod_account_three_balance_1",
       "title": "Balance",
       "type": "currency"
@@ -1031,6 +1206,18 @@
         "Other Non Liquid Assets",
         "Net Equity"
       ]
+    },
+    {
+      "key": "vod_account_four_name_1",
+      "title": "Account in Name of",
+      "description": "The name in which the account is held.",
+      "type": "text"
+    },
+    {
+      "key": "vod_account_four_number_1",
+      "title": "Account Number",
+      "description": "The account's identification number.",
+      "type": "text"
     },
     {
       "key": "vod_account_four_balance_1",
@@ -1267,6 +1454,13 @@
       "required": false
     },
     {
+      "key": "econsent",
+      "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
+      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain your consent to receive certain Loan Documents from us in electronic form rather than in paper form. With your consent, you will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before we can engage in this transaction electronically, it is important that you understand your rights and responsibilities. Please read the following and affirm your consent to conduct business with us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'you' and 'your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'we', 'our' and 'us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom you are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which you are applying. If you provide your consent by clicking the 'I agree' button at the bottom of the page, we will conduct this transaction electronically, instead of providing you with the Loan Documents in paper form.</li><li>If a document related to your loan is not available in electronic form, a paper copy will be provided to you free of charge.</li><li>Conducting this transaction electronically is an option. If you choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to you.</li><li>If you do not consent to receive these Loan Documents electronically, you will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw your consent at any time. By declining or revoking your consent to receive eDisclosures, we will provide you with the Loan Documents in paper form.</li><li>If you originally consent to receive eDisclosures, but later decide to withdraw your consent, you can do so by clicking on the 'I do not agree' button, or by notifying us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you originally consent to receive eDisclosures, but later withdraw your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After your consent is given, you may request from us paper copies of your Loan Documents. Please send this request to us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, you must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of your eDisclosures for your records.</li><li>If the software or hardware requirements change in the future, and you are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to you once you notify us that you are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify you before such requirements change. If you choose to withdraw your consent upon notification of the change, you will be able to do so without penalty.</li></ul><br><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify us if there is a change in your email address or in other information needed to contact you electronically.<br>You can contact us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event your email address on file is invalid; your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in your computer, browser, Internet service and/or software; or for other reasons beyond our control.</li></ul>",
+      "type": "agreement",
+      "required": false
+    },
+    {
       "key": "has_coborrower",
       "title": "Co-Borrower on Loan?",
       "description": "Co-Borrower on Loan",
@@ -1415,6 +1609,19 @@
       "required": false
     },
     {
+      "key": "coborrower_marital_status",
+      "title": "Marital Status",
+      "description": "Co-Borrower Marital Status",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Married",
+        "Unmarried",
+        "Separated"
+      ],
+      "required": false
+    },
+    {
       "key": "coborrower_is_firsttimer",
       "title": "First-time homebuyer?",
       "description": "Is Co-Borrower a first-time homebuyer?",
@@ -1447,6 +1654,47 @@
       "title": "Email",
       "description": "Co-Borrower Email",
       "type": "email",
+      "required": false
+    },
+    {
+      "key": "coborrower_branch_of_service",
+      "title": "Branch of Service",
+      "description": "Co-Borrower Branch of Service",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Air Force",
+        "Army",
+        "Coast Guard",
+        "Marines",
+        "Navy",
+        "Other"
+      ],
+      "required": false
+    },
+    {
+      "key": "coborrower_military_explanation",
+      "title": "Military Status",
+      "description": "Co-Borrower Military Status",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Separated from Service",
+        "In Service"
+      ],
+      "required": false
+    },
+    {
+      "key": "coborrower_type_of_service",
+      "title": "Type of Service",
+      "description": "Co-Borrower Type of Service",
+      "type": "single_choice",
+      "choices": [
+        "",
+        "Regular Military",
+        "Reserves",
+        "National Guard"
+      ],
       "required": false
     },
     {
@@ -1791,13 +2039,6 @@
       "title": "Please enter your Pacific Islander Origin",
       "description": "For example: Fijian, Tongan, and so on",
       "type": "text",
-      "required": false
-    },
-    {
-      "key": "econsent",
-      "title": "\"I Agree\" to consent to do business electronically and to view Loan Documents electronically.",
-      "text": "<p class='normal'>The loan for which you are applying involves various disclosures, records, and documents ('Loan Documents'), including this eDisclosure Agreement. The purpose of this eDisclosure Agreement is to obtain your consent to receive certain Loan Documents from us in electronic form rather than in paper form. With your consent, you will also be able to sign and authorize these Loan Documents electronically, rather than on paper.</p><p class='normal'>Before we can engage in this transaction electronically, it is important that you understand your rights and responsibilities. Please read the following and affirm your consent to conduct business with us electronically. For purposes of this eDisclosure Agreement, 'eDisclosures' means the Loan Documents related to this transaction that are provided electronically, 'you' and 'your' mean the borrower(s) under the applicable loan to which such Loan Documents apply, and 'we', 'our' and 'us' mean the applicable mortgage broker(s), loan processor(s) or mortgage banker(s) with whom you are transacting business for such loan(s).</p><p class='headerUnderline'><b><u>YOUR CONSENT</u></b></p><ul markerindent=0><li>Your consent to participate in this transaction electronically will apply to all Loan Documents for the applicable loans for which you are applying. If you provide your consent by clicking the 'I agree' button at the bottom of the page, we will conduct this transaction electronically, instead of providing you with the Loan Documents in paper form.</li><li>If a document related to your loan is not available in electronic form, a paper copy will be provided to you free of charge.</li><li>Conducting this transaction electronically is an option. If you choose not to accept receipt of eDisclosures, paper Loan Documents will be mailed to you.</li><li>If you do not consent to receive these Loan Documents electronically, you will be provided with copies of the Loan Documents in paper form. Additionally:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>WITHDRAWAL OF CONSENT</u></b></p><ul markerindent=0><li>You have the right to withdraw your consent at any time. By declining or revoking your consent to receive eDisclosures, we will provide you with the Loan Documents in paper form.</li><li>If you originally consent to receive eDisclosures, but later decide to withdraw your consent, you can do so by clicking on the 'I do not agree' button, or by notifying us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you originally consent to receive eDisclosures, but later withdraw your consent:<br />You will not be required to pay a fee for withdrawing consent and receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>OBTAINING PAPER COPIES</u></b></p><ul markerindent=0><li>After your consent is given, you may request from us paper copies of your Loan Documents. Please send this request to us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>If you request paper copies of the Loan Documents:<br />You will not be required to pay a fee for receiving paper copies of the Loan Documents.</li></ul><br><p class='headerUnderline'><b><u>SYSTEM REQUIREMENTS</u></b></p><ul markerindent=0><li>In order to receive eDisclosures, you must have a computer with Internet access and an Internet email account and address; an Internet browser using 128-bit encryption or higher, Adobe Acrobat 7.0 or higher, SSL encryption and access to a printer or the ability to download information in order to keep copies of your eDisclosures for your records.</li><li>If the software or hardware requirements change in the future, and you are unable to continue receiving eDisclosures, paper copies of such Loan Documents will be mailed to you once you notify us that you are no longer able to access the eDisclosures because of the changed requirements. We will use commercially reasonable efforts to notify you before such requirements change. If you choose to withdraw your consent upon notification of the change, you will be able to do so without penalty.</li></ul><br><p class='headerUnderline'><b><u>HOW WE CAN REACH YOU</u></b></p><ul markerindent=0><li>You must promptly notify us if there is a change in your email address or in other information needed to contact you electronically.<br>You can contact us at:<br />Phone: [COMPANY_PHONE]<br />Address: [COMPANY_ADDRESS]</li><li>We will not assume liability for non-receipt of notification of the availability of eDisclosures in the event your email address on file is invalid; your email or Internet service provider filters the notification as 'spam' or 'junk mail'; there is a malfunction in your computer, browser, Internet service and/or software; or for other reasons beyond our control.</li></ul>",
-      "type": "agreement",
       "required": false
     },
     {
