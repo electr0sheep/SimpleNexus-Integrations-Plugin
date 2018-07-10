@@ -4,8 +4,12 @@
       "label": "SimpleNexus Integrations Team",
       "submenu": [
         {
-          "label": "Beautify SimpleNexus JSON",
+          "label": "Beautify JSON",
           "command": "SimpleNexus-Integrations-Plugin:beautify"
+        },
+        {
+          "label": "Add Condition",
+          "command": "SimpleNexus-Integrations-Plugin:addCondition"
         },
         {
           "label": "Run RegExes",

@@ -1,5 +1,6 @@
 {
   "atom-workspace": {
-    "cmd-ctrl-alt-b": "SimpleNexus-Integrations-Plugin:beautify"
+    "cmd-ctrl-alt-b": "SimpleNexus-Integrations-Plugin:beautify",
+    "cmd-ctrl-alt-c": "SimpleNexus-Integrations-Plugin:addCondition"
   }
 }
